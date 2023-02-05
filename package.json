@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "name": "secure-the-pass-web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/R3ap/Secure-the-Pass-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/R3ap/Secure-the-Pass-Web/issues"
+  },
+  "homepage": "https://github.com/R3ap/Secure-the-Pass-Web#readme",
+  "description": "",
+  "engines": {
+    "node": "v19.6.0"
+  }
+}
