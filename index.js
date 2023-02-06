@@ -18,7 +18,6 @@ app.get("/api", (req, res) => {
 // });
 
 app.get("/:id", (req, res) => {
-  console.log("id: ", req.params)
   const { id } = req.params
   const content = [
     { id: 1, name: 'david', logo: '💎' },
