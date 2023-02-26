@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "pg": "^8.9.0"
   },
   "name": "secure-the-pass-web",
   "version": "1.0.0",
@@ -22,6 +25,6 @@
   "homepage": "https://github.com/R3ap/Secure-the-Pass-Web#readme",
   "description": "",
   "engines": {
-    "node": "v19.6.0"
+    "node": "v19.5.0"
   }
 }
