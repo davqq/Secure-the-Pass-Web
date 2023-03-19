@@ -59,14 +59,25 @@ app.get("/:id", (req, res) => {
     { id: 2, name: 'jonas', logo: '🔥' },
     { id: 3, name: 'christian', logo: '🛡️' }
   ];
+<<<<<<< Updated upstream
+
+  let user = content.find((user) => user.id == id)  
+
+=======
   
   
   let user = content.find((user) => user.id == id)
+>>>>>>> Stashed changes
   if (!user) {
     res.status(404).send('User not found')
     return;
+<<<<<<< Updated upstream
   } 
+
+=======
+  }
   
+>>>>>>> Stashed changes
   res.json({
     id: `Your id is ${user.id}`,
     name: `Your name is ${user.name}`,

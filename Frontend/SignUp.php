@@ -27,24 +27,12 @@
       <form>
         <input type="text" id="email" class="fadeIn second" name="login" placeholder="Email" />
 
-        <?php
-          if ($_GET['page'] == 'SignUp') {
-            echo "
-            <input type='text' id='username' class='fadeIn second' name='login' placeholder='Username' />
-            ";
-          }  
-        ?>
+        <input type='text' id='username' class='fadeIn second' name='login' placeholder='Username' />
 
         <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password" />
         
         
-        <?php
-          if ($_GET['page'] == 'SignUp') {
-            echo "
             <input type='password' id='passwordConfirm' class='fadeIn third' name='login' placeholder='Password Confirm' />
-            ";
-          }
-        ?>
         <input type="submit" class="fadeIn fourth" value="Sign Up" onclick="window.location.replace('Menu.html');" />
       </form>
     </div>
