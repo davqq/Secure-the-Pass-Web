@@ -1,15 +1,13 @@
-import { servicesVersion } from 'typescript';
 import './Home.css'
+import { Outlet } from "react-router-dom";
 
 export async function loader() {
-    // await sleep(1000);
-    localStorage.getItem("darkMode") === "true" && document.body.classList.add("dark-mode");
+    if (localStorage.getItem("dark") === 'true') {
+        document.querySelector("body").classList.add("dark");
+    }
     return null;
 }
 
-async function sleep(msec) {
-    return new Promise(resolve => setTimeout(resolve, msec));
-}
 
 export default function Home() {
     const searching = navigation.location
@@ -24,7 +22,7 @@ export default function Home() {
                     <div className="image-text">
                         <span className="image">
                             <img
-                                src="https://i.ibb.co/7bQQYkX/avataaars.png"
+                                src="https://avatars.githubusercontent.com/u/68165812?v=4"
                                 alt=""
                             />
                         </span>
@@ -45,7 +43,7 @@ export default function Home() {
                 <div className="menu-bar">
                     <div className="menu">
                         <li className="search-box" role="search">
-                            <input
+                            {/* <input
                                 id="q"
                                 aria-label="Search contacts"
                                 placeholder="Search"
@@ -61,18 +59,19 @@ export default function Home() {
                             <div
                                 className="sr-only"
                                 aria-live="polite"
-                            ></div>
-                            {/* <i className="bx bx-search icon" onClick={() => {
+                            ></div> */}
+                            
+                            <i className="bx bx-search icon" onClick={() => {
                                 const body = document.querySelector("body"),
                                     sidebar = body.querySelector("nav");
                                 sidebar.classList.toggle("close");
                             }} ></i>
-                            <input type="text" placeholder="Search..." /> */}
+                            <input type="text" placeholder="Search..." />
                         </li>
 
                         <ul className="menu-links">
                             <li className="nav-link">
-                                <a href="#">
+                                <a href="/dashboard">
                                     <i className="bx bx-home-alt icon"></i>
                                     <span className="text nav-text">Dashboard</span>
                                 </a>
@@ -110,14 +109,14 @@ export default function Home() {
 
                     <div className="bottom-content">
                         <li className="nav-link">
-                            <a href="#">
+                            <a href="/settings">
                                 <i className="bx bx-wallet icon"></i>
                                 <span className="text nav-text">Settings</span>
                             </a>
                         </li>
 
                         <li className="">
-                            <a href="#" >
+                            <a href="/logout" >
                                 <i className="bx bx-log-out icon"></i>
                                 <span className="text nav-text">Logout</span>
                             </a>
@@ -137,6 +136,8 @@ export default function Home() {
                     </div>
                 </div>
             </nav>
+
+            <Outlet />
             {/* 
             <section className="home">
                 <div className="text">Dashboard Sidebar</div>
@@ -158,7 +159,7 @@ function modeSwitchClick() {
     const body = document.querySelector("body"),
         modeText = body.getElementsByClassName(".mode-text text");
 
-    localStorage.setItem("dark", body.classList.contains("dark"));
+    localStorage.setItem("dark", !body.classList.contains("dark"));
 
     body.classList.toggle("dark");
 
