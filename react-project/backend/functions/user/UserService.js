@@ -24,17 +24,19 @@ const users = [
 ];
 const config = {
     user: "sa",
-    password: "0000",
-    server: "localhost",
-    database: "Test",
+    password: "hgFalvHt28w)(i3f/AjP",
+    server: "144.91.100.193",
+    database: "securethepassDB",
     options: {
         encrypt: false,
         enableArithAbort: true,
+        trustedConnection: true,
     },
+    parseJSON: true,
 };
 const TestSqlConnect = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let pool = yield mssql_1.default.connect("Server=localhost;Database=master;Trusted_Connection=True;");
+        let pool = yield mssql_1.default.connect(config);
         let result = yield pool.request().query("select * from [dbo].[User]");
         console.log(result);
     }

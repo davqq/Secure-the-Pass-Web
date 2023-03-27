@@ -1,7 +1,8 @@
 import { generateAccessToken } from "../authentication/AuthenticationService";
-import sql from "mssql";
+import sql, { config } from "mssql";
 
 export interface User {
+  Guid: string;
   email: string;
   username: string;
   password: string;
@@ -12,26 +13,27 @@ const users: User[] = [
     email: "test@test.com",
     username: "test",
     password: "123",
+    Guid: "452b7495-b661-4990-9b7b-df42c7a4ba56",
   },
 ];
 
-const config = {
+const config:config = {
   user: "sa",
-  password: "0000",
-  server: "localhost",
-  database: "Test",
+  password: "hgFalvHt28w)(i3f/AjP",
+  server: "144.91.100.193",
+  database: "securethepassDB",
   options: {
     encrypt: false,
     enableArithAbort: true,
+    trustedConnection: true,
   },
+  parseJSON: true,
 };
 
 export const TestSqlConnect = async () => {
   try {
-    let pool = await sql.connect(
-      "Server=localhost;Database=master;Trusted_Connection=True;"
-    );
-    let result = await pool.request().query("select * from [dbo].[User]");
+    let pool = await sql.connect(config);
+    let result = await pool.request().query<User>("select * from [dbo].[User]");
     console.log(result);
   } catch (err) {
     console.log(err);

@@ -1,6 +1,11 @@
 import express from "express";
 import { GetAccounts } from "./functions/accounts/AccountService";
-import { CheckUser, User, RegisterUser, TestSqlConnect } from "./functions/user/UserService";
+import {
+  CheckUser,
+  User,
+  RegisterUser,
+  TestSqlConnect,
+} from "./functions/user/UserService";
 import { authenticateToken } from "./functions/authentication/AuthenticationService";
 
 const app = express();
