@@ -1,18 +1,36 @@
-export default function Dashboard() {
-    return (
-        <>
-            <section className="home">
-                <div className="text">Dashboard Sidebar</div>
-                <div className="wrapper">
-                    <div id="formContent">
-                        <form>
-                            <input type="text" id="email" name="login" placeholder="Email" />
-                            <input type="text" id="email" name="login" placeholder="asdf" />
-                        </form>
-                    </div>
-                </div>
-            </section>
-            
-        </>
-    )
+import React, { useState, useEffect } from "react";
+
+function Dashboard() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/getaccounts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setItems(result);
+      });
+  }, []);
+
+  return (
+    <section className="home">
+      <div className="text">Dashboard Sidebar</div>
+      <div className="wrapper">
+        <ul>
+          {items.map((item) => (
+            <li key={item.Guid}>
+              {item.name} {item.email} {item.password}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
 }
+
+export default Dashboard;
