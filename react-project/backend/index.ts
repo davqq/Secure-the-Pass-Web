@@ -7,6 +7,23 @@ import {
   TestSqlConnect,
 } from "./functions/user/UserService";
 import { authenticateToken } from "./functions/authentication/AuthenticationService";
+import env from "dotenv";
+import { config } from "mssql";
+
+env.config();
+
+const config: config = {
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_HOST as string,
+  database: process.env.DB_DATABASE,
+  options: {
+    encrypt: false,
+    enableArithAbort: true,
+    trustedConnection: true,
+  },
+  parseJSON: true,
+};
 
 const app = express();
 const port = 3001;
@@ -34,6 +51,6 @@ app.post("/api/checktoken", authenticateToken, (req, res) => {
 });
 
 app.get("/api/testsql", (req, res) => {
-  TestSqlConnect();
+  TestSqlConnect(config);
   res.send("Test");
 });

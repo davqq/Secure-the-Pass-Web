@@ -17,23 +17,10 @@ const users: User[] = [
   },
 ];
 
-const config:config = {
-  user: "sa",
-  password: "hgFalvHt28w)(i3f/AjP",
-  server: "144.91.100.193",
-  database: "securethepassDB",
-  options: {
-    encrypt: false,
-    enableArithAbort: true,
-    trustedConnection: true,
-  },
-  parseJSON: true,
-};
-
-export const TestSqlConnect = async () => {
+export const TestSqlConnect = async (config:config) => {
   try {
     let pool = await sql.connect(config);
-    let result = await pool.request().query<User>("select * from [dbo].[User]");
+    let result = await pool.request().query("Select * from [dbo].[User]");
     console.log(result);
   } catch (err) {
     console.log(err);

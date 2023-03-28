@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 
+interface User {
+  Guid: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
 function Dashboard() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<User[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3001/api/getaccounts", {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
+      headers: [
+        ["Content-Type", "application/json"],
+        ["Authorization", `${localStorage.getItem("token")}`],
+      ],
     })
       .then((res) => res.json())
       .then((result) => {

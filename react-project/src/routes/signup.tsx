@@ -1,3 +1,4 @@
+import React from "react";
 import "./signin.css";
 
 export default function SignUp() {
@@ -60,10 +61,10 @@ export default function SignUp() {
 }
 
 function Register() {
-  const email = document.getElementById("email").value;
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  const passwordConfirm = document.getElementById("passwordConfirm").value;
+  const email:string = (document.getElementById("email") as HTMLInputElement).value;
+  const username:string = (document.getElementById("username") as HTMLInputElement).value;
+  const password:string = (document.getElementById("password") as HTMLInputElement).value;
+  const passwordConfirm:string = (document.getElementById("passwordConfirm") as HTMLInputElement).value;
 
   if (password !== passwordConfirm) {
     alert("Passwords do not match");

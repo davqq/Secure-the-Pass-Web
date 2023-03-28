@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./signin.css";
+import React from "react";
 
 export default function SignIn() {
   return (
@@ -50,8 +51,8 @@ export default function SignIn() {
 }
 
 function LogIn() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email: string = (document.getElementById("email") as HTMLInputElement).value;
+  const password: string = (document.getElementById("password") as HTMLInputElement).value;
   fetch("http://localhost:3001/api/login", {
     method: "POST",
     headers: {
