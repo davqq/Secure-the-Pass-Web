@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-interface User {
+export interface Account {
   Guid: string;
-  name: string;
-  email: string;
-  password: string;
+  Username: string;
+  Email: string;
+  Password: string;
+  Website: string;
+  UserGuid: string;
 }
 
 function Dashboard() {
-  const [items, setItems] = useState<User[]>([]);
+  const [items, setItems] = useState<Account[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3001/api/getaccounts", {
@@ -31,7 +33,7 @@ function Dashboard() {
         <ul>
           {items.map((item) => (
             <li key={item.Guid}>
-              {item.name} {item.email} {item.password}
+              {item.Username} 
             </li>
           ))}
         </ul>

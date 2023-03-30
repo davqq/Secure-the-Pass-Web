@@ -1,5 +1,8 @@
 import { generateAccessToken } from "../authentication/AuthenticationService";
+import { Account } from "../accounts/AccountService";
 import sql, { config } from "mssql";
+
+export let CurrentUserGuid:string;
 
 export interface User {
   Guid: string;
@@ -8,42 +11,54 @@ export interface User {
   password: string;
 }
 
-const users: User[] = [
-  {
-    email: "test@test.com",
-    username: "test",
-    password: "123",
-    Guid: "452b7495-b661-4990-9b7b-df42c7a4ba56",
-  },
-];
-
-export const TestSqlConnect = async (config: config) => {
+export const CheckUser = async (user: User, config: config) => {
   try {
     let pool = await sql.connect(config);
-    let result = await pool.request().query("Select * from [dbo].[User]");
-    console.log(result);
+    let result = await pool
+      .request()
+      .query<User>(
+        `Select * from [dbo].[User] WHERE Email = '${user.email}' AND Password = '${user.password}'`
+      );
+
+    if (!result || !result.recordset) {
+      throw new Response("", { status: 404, statusText: "User Not found" });
+    }
+
+    let userFound = result.recordset[0];
+
+    if (!userFound) {
+      throw new Response("", { status: 404, statusText: "User Not found" });
+    }
+
+    CurrentUserGuid = userFound.Guid;
+
+    return { token: generateAccessToken(userFound) };
   } catch (err) {
     console.log(err);
   }
 };
 
-export function CheckUser(user: User) {
-  const userFound = users.find(
-    (u) => u.email === user.email && u.password === user.password
-  );
+export const RegisterUser = async (user: User, config: config) => {
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool
+      .request()
+      .query<Account>(
+        `Select * from [dbo].[User] WHERE Email = ${user.email} AND Password = ${user.password}`
+      );
 
-  if (!userFound) {
-    return new Response("User not found", { status: 404 });
+    if (result && result.recordset) {
+      throw new Response("", { status: 403, statusText: "User exist" });
+    }
+
+    pool
+      .request()
+      .query(
+        `INSERT INTO [dbo].[User] (Guid, Email, Username, Password) VALUES (${user.Guid}, ${user.email}, ${user.username}, ${user.password})`
+      );
+  } catch (err) {
+    console.log(err);
   }
 
-  return { token: generateAccessToken(userFound) };
-}
-
-export function RegisterUser(user: User) {
-  if (users.find((u) => u.email === user.email)) {
-    return new Response("User exists", { status: 403 } );
-  }
-
-  users.push(user);
-  return generateAccessToken(user);
-}
+  return { token: generateAccessToken(user) };
+};

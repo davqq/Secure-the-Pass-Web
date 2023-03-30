@@ -10,7 +10,7 @@ export function generateAccessToken(user: object) {
 }
 
 export function authenticateToken(req: any, res: any, next: any) {
-  const token = req.headers["authorization"];
+  const token:string = req.headers["authorization"];
 
   if (token == null) return res.sendStatus(401);
 

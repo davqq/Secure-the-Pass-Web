@@ -1,28 +1,26 @@
-interface Account {
+import sql, { config } from "mssql";
+import { CurrentUserGuid } from "../user/UserService";
+
+export interface Account {
   Guid: string;
-  name: string;
-  email: string;
-  password: string;
-  url: string;
+  Username: string;
+  Email: string;
+  Password: string;
+  Website: string;
+  UserGuid: string;
 }
 
-export function GetAccounts(): Account[] {
-  const account: Account[] = [
-    {
-      Guid: "452b7495-b661-4990-9b7b-df42c7a4ba56",
-      name: "test",
-      email: "test@test.de",
-      password: "123456789",
-      url: "www.google.de",
-    },
-    {
-      Guid: "452b7495-b661-4990-9b7b-df42c7a4ba51",
-      name: "test 2",
-      email: "test2@test.de",
-      password: "987654321",
-      url: "www.securethepass.com",
-    },
-  ];
+export const GetAccounts = async (config: config) => {
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool
+      .request()
+      .query<Account>(
+        `Select * from [dbo].[Account] WHERE UserGuid = '${CurrentUserGuid}'`
+      );
 
-  return account;
-}
+    return result.recordset;
+  } catch (err) {
+    console.log(err);
+  }
+};

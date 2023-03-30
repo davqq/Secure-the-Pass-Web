@@ -1,11 +1,6 @@
 import express from "express";
 import { GetAccounts } from "./functions/accounts/AccountService";
-import {
-  CheckUser,
-  User,
-  RegisterUser,
-  TestSqlConnect,
-} from "./functions/user/UserService";
+import { CheckUser, User, RegisterUser } from "./functions/user/UserService";
 import { authenticateToken } from "./functions/authentication/AuthenticationService";
 import env from "dotenv";
 import { config } from "mssql";
@@ -34,23 +29,18 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-app.get("/api/getaccounts", authenticateToken, (req, res) => {
-  res.send(GetAccounts());
+app.get("/api/getaccounts", authenticateToken, async (req, res) => {
+  res.send(await GetAccounts(config));
 });
 
-app.post("/api/login", (req, res) => {
-  res.send(CheckUser(req.body as User));
+app.post("/api/login", async (req, res) => {
+  res.send(await CheckUser(req.body as User, config));
 });
 
-app.post("/api/register", (req, res) => {
-  res.send(JSON.stringify({ token: RegisterUser(req.body as User) }));
+app.post("/api/register", async (req, res) => {
+  res.send(await RegisterUser(req.body as User, config));
 });
 
 app.post("/api/checktoken", authenticateToken, (req, res) => {
   res.send("Token is valid");
-});
-
-app.get("/api/testsql", (req, res) => {
-  TestSqlConnect(config);
-  res.send("Test");
 });
