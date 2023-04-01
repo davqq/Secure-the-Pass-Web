@@ -2,7 +2,7 @@ import { generateAccessToken } from "../authentication/AuthenticationService";
 import { Account } from "../accounts/AccountService";
 import sql, { config } from "mssql";
 
-export let CurrentUserGuid:string;
+export let CurrentUserGuid: string;
 
 export interface User {
   Guid: string;
@@ -14,21 +14,18 @@ export interface User {
 export const CheckUser = async (user: User, config: config) => {
   try {
     let pool = await sql.connect(config);
-    let result = await pool
-      .request()
-      .query<User>(
-        `Select * from [dbo].[User] WHERE Email = '${user.email}' AND Password = '${user.password}'`
-      );
+    let request = pool.request();
+    request.input("Email", sql.VarChar, user.email);
+    request.input("Password", sql.VarChar, user.password);
+    let result = await request.query<User>(
+      `Select * from [dbo].[User] WHERE Email = @Email AND Password = @Password`
+    );
 
-    if (!result || !result.recordset) {
+    if (!result || !result.recordset || result.recordset.length > 0) {
       throw new Response("", { status: 404, statusText: "User Not found" });
     }
 
     let userFound = result.recordset[0];
-
-    if (!userFound) {
-      throw new Response("", { status: 404, statusText: "User Not found" });
-    }
 
     CurrentUserGuid = userFound.Guid;
 
@@ -41,24 +38,27 @@ export const CheckUser = async (user: User, config: config) => {
 export const RegisterUser = async (user: User, config: config) => {
   try {
     let pool = await sql.connect(config);
-    let result = await pool
-      .request()
-      .query<Account>(
-        `Select * from [dbo].[User] WHERE Email = ${user.email} AND Password = ${user.password}`
-      );
+    let request = pool.request();
+    request.input("Email", sql.VarChar, user.email);
+    request.input("Password", sql.VarChar, user.password);
+    let result = await request.query<Account>(
+      `Select * from [dbo].[User] WHERE Email = @Email AND Password = @Password`
+    );
 
-    if (result && result.recordset) {
+    if (result && result.recordset && result.recordset.length > 0) {
       throw new Response("", { status: 403, statusText: "User exist" });
     }
 
-    pool
-      .request()
-      .query(
-        `INSERT INTO [dbo].[User] (Guid, Email, Username, Password) VALUES (${user.Guid}, ${user.email}, ${user.username}, ${user.password})`
-      );
+    request = pool.request();
+    request.input("Email", sql.VarChar, user.email);
+    request.input("Password", sql.VarChar, user.password);
+    request.input("Username", sql.VarChar, user.username);
+
+    request.query(
+      `INSERT INTO [dbo].[User] (Guid, Email, Username, Password) VALUES (NEWID(), @Email, @Username, @Password)`
+    );
+    return { token: generateAccessToken(user) };
   } catch (err) {
     console.log(err);
   }
-
-  return { token: generateAccessToken(user) };
 };

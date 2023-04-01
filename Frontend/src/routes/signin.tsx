@@ -3,6 +3,12 @@ import "./signin.css";
 import React from "react";
 
 export default function SignIn() {
+  addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      LogIn();
+    }
+  });
+
   return (
     <>
       <div className="wrapper fadeInDown">
