@@ -1,16 +1,17 @@
 import express from "express";
-import getaccounts, { Account } from "./functions/account/getaccounts";
 import register from "./functions/login/register";
 import env from "dotenv";
 import { config } from "mssql";
 import jwt from "jsonwebtoken";
 import login from "./functions/login/login";
-import { User } from "./functions/user/adduser";
-import getaccount from "./functions/account/getaccount";
-import deleteuser from "./functions/user/deleteuser";
-import updateuser from "./functions/user/updateuser";
-import deleteaccount from "./functions/account/deleteaccounts";
-import updateaccount from "./functions/account/updateaccount";
+import { User } from "./functions/user/createUser";
+import deleteUser from "./functions/user/deleteuser";
+import updateUser from "./functions/user/updateuser";
+import getAccounts, { Account } from "./functions/account/getAccounts";
+import getAccount from "./functions/account/getaccount";
+import deleteAccount from "./functions/account/deleteaccounts";
+import updateAccount from "./functions/account/updateaccount";
+import createAccount from "./functions/account/createAccount";
 
 env.config();
 
@@ -67,20 +68,20 @@ app.get("/api/getuser", authMiddleware, async (req: any, res) => {
 });
 
 app.delete("/api/deleteuser", authMiddleware, async (req: any, res) => {
-  await deleteuser({ config, user: req.user as User });
+  await deleteUser({ config, user: req.user as User });
 });
 
 app.put("/api/updateuser", authMiddleware, async (req: any, res) => {
-  await updateuser({ config, user: req.user as User });
+  await updateUser({ config, user: req.user as User });
 });
 
 app.get("/api/getaccounts", authMiddleware, async (req: any, res) => {
-  res.send(await getaccounts({ config, currentUser: req.user as User }));
+  res.send(await getAccounts({ config, currentUser: req.user as User }));
 });
 
 app.get("/api/getaccounts/:id", authMiddleware, async (req: any, res) => {
   res.send(
-    await getaccount({
+    await getAccount({
       config,
       user: req.user as User,
       accountGuid: req.params.id,
@@ -89,7 +90,7 @@ app.get("/api/getaccounts/:id", authMiddleware, async (req: any, res) => {
 });
 
 app.delete("api/deleteaccount/:id", authMiddleware, async (req: any, res) => {
-  await deleteaccount({
+  await deleteAccount({
     config,
     user: req.user as User,
     accountGuid: req.params.id,
@@ -97,7 +98,15 @@ app.delete("api/deleteaccount/:id", authMiddleware, async (req: any, res) => {
 });
 
 app.put("api/updateaccount/:id", authMiddleware, async (req: any, res) => {
-  await updateaccount({
+  await updateAccount({
+    config,
+    user: req.user as User,
+    account: req.body as Account,
+  });
+});
+
+app.post("/api/createaccount", authMiddleware, async (req: any, res) => {
+  await createAccount({
     config,
     user: req.user as User,
     account: req.body as Account,

@@ -7,7 +7,7 @@ export interface User {
   password: string;
 }
 
-const adduser = async ({ config, user }: { config: config; user: User }) => {
+const createUser = async ({ config, user }: { config: config; user: User }) => {
   try {
     let pool = await sql.connect(config);
     let request = pool.request();
@@ -23,4 +23,4 @@ const adduser = async ({ config, user }: { config: config; user: User }) => {
   }
 };
 
-export default adduser;
+export default createUser;

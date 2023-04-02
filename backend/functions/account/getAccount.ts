@@ -1,8 +1,8 @@
 import sql, { config } from "mssql";
-import { User } from "../user/adduser";
-import { Account } from "./getaccounts";
+import { User } from "../user/createUser";
+import { Account } from "./getAccounts";
 
-const getaccount = async ({
+const getAccount = async ({
   config,
   user,
   accountGuid,
@@ -26,4 +26,4 @@ const getaccount = async ({
   }
 };
 
-export default getaccount;
+export default getAccount;

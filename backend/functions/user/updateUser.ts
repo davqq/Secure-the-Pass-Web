@@ -1,7 +1,7 @@
 import sql, { config } from "mssql";
-import { User } from "../user/adduser";
+import { User } from "./createUser";
 
-const updateuser = async ({ config, user }: { config: config; user: User }) => {
+const updateUser = async ({ config, user }: { config: config; user: User }) => {
   try {
     let pool = await sql.connect(config);
     let request = pool.request();
@@ -17,4 +17,4 @@ const updateuser = async ({ config, user }: { config: config; user: User }) => {
   }
 };
 
-export default updateuser;
+export default updateUser;

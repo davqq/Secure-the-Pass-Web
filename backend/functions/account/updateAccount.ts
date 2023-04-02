@@ -1,11 +1,14 @@
 import sql, { config } from "mssql";
-import { Account } from "./getaccounts";
+import { User } from "../user/createUser";
+import { Account } from "./getAccounts";
 
-const addaccount = async ({
+const updateAccount = async ({
   config,
+  user,
   account,
 }: {
   config: config;
+  user: User;
   account: Account;
 }) => {
   try {
@@ -16,13 +19,13 @@ const addaccount = async ({
     request.input("Email", sql.VarChar, account.Email);
     request.input("Password", sql.VarChar, account.Password);
     request.input("Website", sql.VarChar, account.Website);
-    request.input("UserGuid", sql.VarChar, account.UserGuid);
+    request.input("UserGuid", sql.VarChar, user.Guid);
     request.query(
-      `INSERT INTO [dbo].[Account] (Guid, Username, Email, Password, Website, UserGuid) VALUES (@Guid, @Username, @Email, @Password, @Website, @UserGuid)`
+      `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, Website = @Website, UserGuid = @UserGuid WHERE Guid = @Guid`
     );
   } catch (err) {
     console.log(err);
   }
 };
 
-export default addaccount;
+export default updateAccount;

@@ -1,7 +1,7 @@
 import sql, { config } from "mssql";
-import { User } from "../user/adduser";
+import { User } from "../user/createUser";
 
-const deleteaccount = async ({
+const deleteAccount = async ({
   config,
   user,
   accountGuid,
@@ -23,4 +23,4 @@ const deleteaccount = async ({
   }
 };
 
-export default deleteaccount;
+export default deleteAccount;

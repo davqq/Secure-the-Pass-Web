@@ -1,5 +1,5 @@
 import sql, { config } from "mssql";
-import { User } from "../user/adduser";
+import { User } from "../user/createUser";
 
 export interface Account {
   Guid: string;
@@ -10,7 +10,7 @@ export interface Account {
   UserGuid: string;
 }
 
-const GetAccounts = async ({
+const getAccounts = async ({
   config,
   currentUser,
 }: {
@@ -31,4 +31,4 @@ const GetAccounts = async ({
   }
 };
 
-export default GetAccounts;
+export default getAccounts;

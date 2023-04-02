@@ -1,6 +1,6 @@
 import { config } from "mssql";
-import adduser, { User } from "../user/adduser";
-import getuser from "../user/getuser";
+import adduser, { User } from "../user/createUser";
+import getuser from "../user/getUser";
 import { BadRequest } from "http-errors";
 import jwt from "jsonwebtoken";
 

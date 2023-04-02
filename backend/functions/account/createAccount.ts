@@ -1,8 +1,8 @@
 import sql, { config } from "mssql";
-import { User } from "../user/adduser";
-import { Account } from "./getaccounts";
+import { Account } from "./getAccounts";
+import { User } from "../user/createUser";
 
-const updateaccount = async ({
+const createAccount = async ({
   config,
   user,
   account,
@@ -21,11 +21,11 @@ const updateaccount = async ({
     request.input("Website", sql.VarChar, account.Website);
     request.input("UserGuid", sql.VarChar, user.Guid);
     request.query(
-      `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, Website = @Website, UserGuid = @UserGuid WHERE Guid = @Guid`
+      `INSERT INTO [dbo].[Account] (Guid, Username, Email, Password, Website, UserGuid) VALUES (@Guid, @Username, @Email, @Password, @Website, @UserGuid)`
     );
   } catch (err) {
     console.log(err);
   }
 };
 
-export default updateaccount;
+export default createAccount;
