@@ -51,35 +51,41 @@ const authMiddleware = (req: any, res: any, next: any) => {
   });
 };
 
-app.post("/api/login", async (req, res) => {
-  res.send(await login({ user: req.body as User, config }));
+app.get("/test", (req, res) => {
+  res.send(new Response("Test", { status: 403 }));
 });
 
-app.post("/api/register", async (req, res) => {
+app.post("/login", async (req, res) => {
+  let response = await login({ user: req.body as User, config });
+  res.sendStatus(response?.status ?? 500);
+  res.send(response?.body ?? "Error");
+});
+
+app.post("/register", async (req, res) => {
   res.send(await register({ user: req.body as User, config }));
 });
 
-app.post("/api/checktoken", authMiddleware, (req, res) => {
+app.post("/checktoken", authMiddleware, (req, res) => {
   res.send("Token is valid");
 });
 
-app.get("/api/getuser", authMiddleware, async (req: any, res) => {
+app.get("/getuser", authMiddleware, async (req: any, res) => {
   res.send(req.user as User);
 });
 
-app.delete("/api/deleteuser", authMiddleware, async (req: any, res) => {
+app.delete("/deleteuser", authMiddleware, async (req: any, res) => {
   await deleteUser({ config, user: req.user as User });
 });
 
-app.put("/api/updateuser", authMiddleware, async (req: any, res) => {
+app.put("/updateuser", authMiddleware, async (req: any, res) => {
   await updateUser({ config, user: req.user as User });
 });
 
-app.get("/api/getaccounts", authMiddleware, async (req: any, res) => {
+app.get("/getaccounts", authMiddleware, async (req: any, res) => {
   res.send(await getAccounts({ config, currentUser: req.user as User }));
 });
 
-app.get("/api/getaccounts/:id", authMiddleware, async (req: any, res) => {
+app.get("/getaccount/:id", authMiddleware, async (req: any, res) => {
   res.send(
     await getAccount({
       config,
@@ -89,7 +95,7 @@ app.get("/api/getaccounts/:id", authMiddleware, async (req: any, res) => {
   );
 });
 
-app.delete("api/deleteaccount/:id", authMiddleware, async (req: any, res) => {
+app.delete("/deleteaccount/:id", authMiddleware, async (req: any, res) => {
   await deleteAccount({
     config,
     user: req.user as User,
@@ -97,7 +103,7 @@ app.delete("api/deleteaccount/:id", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.put("api/updateaccount/:id", authMiddleware, async (req: any, res) => {
+app.put("/updateaccount/:id", authMiddleware, async (req: any, res) => {
   await updateAccount({
     config,
     user: req.user as User,
@@ -105,7 +111,7 @@ app.put("api/updateaccount/:id", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.post("/api/createaccount", authMiddleware, async (req: any, res) => {
+app.post("/createaccount", authMiddleware, async (req: any, res) => {
   await createAccount({
     config,
     user: req.user as User,

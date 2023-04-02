@@ -13,11 +13,7 @@ const createUser = async ({ config, user }: { config: config; user: User }) => {
     let pool = await sql.connect(config);
     let request = pool.request();
     request.input("Email", sql.VarChar, user.email);
-    request.input(
-      "Password",
-      sql.VarChar,
-      bcrypt.hashSync(user.password, bcrypt.genSaltSync())
-    );
+    request.input("Password", sql.VarChar, user.password);
     request.input("Username", sql.VarChar, user.username);
 
     await request.query(
