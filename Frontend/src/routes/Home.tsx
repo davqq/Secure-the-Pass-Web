@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { Outlet } from "react-router-dom";
 
@@ -22,7 +22,28 @@ export async function loader() {
   return null;
 }
 
+export interface User {
+  Guid: string;
+  Username: string;
+  Email: string;
+}
+
 export default function Home() {
+  const [user, setUser] = useState<User>();
+  useEffect(() => {
+    fetch("http://localhost:3001/api/getuser", {
+      method: "GET",
+      headers: [
+        ["Content-Type", "application/json"],
+        ["Authorization", `${localStorage.getItem("token")}`],
+      ],
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setUser(result);
+      });
+  }, []);
+
   // const searching =
   //   navigation.location &&
   //   new URLSearchParams(navigation.location.search).has("q");
@@ -40,16 +61,20 @@ export default function Home() {
             </span>
 
             <div className="text logo-text">
-              <span className="name">David</span>
-              <span className="profession">Web developer</span>
+              <span className="name">{user?.Username}</span>
+              <span className="profession">{user?.Email}</span>
             </div>
           </div>
 
           <i
             className="bx bx-chevron-right toggle"
             onClick={() => {
-              const body: HTMLBodyElement = document.querySelector("body") as HTMLBodyElement,
-                sidebar: HTMLBodyElement = body.querySelector("nav") as HTMLBodyElement;
+              const body: HTMLBodyElement = document.querySelector(
+                  "body"
+                ) as HTMLBodyElement,
+                sidebar: HTMLBodyElement = body.querySelector(
+                  "nav"
+                ) as HTMLBodyElement;
               sidebar.classList.toggle("close");
             }}
           ></i>
@@ -79,7 +104,9 @@ export default function Home() {
               <i
                 className="bx bx-search icon"
                 onClick={() => {
-                  const body = document.querySelector("body") as HTMLBodyElement,
+                  const body = document.querySelector(
+                      "body"
+                    ) as HTMLBodyElement,
                     sidebar = body.querySelector("nav") as HTMLBodyElement;
                   sidebar.classList.toggle("close");
                 }}
@@ -117,7 +144,9 @@ export default function Home() {
                 <i className="bx bx-sun icon sun"></i>
                 <i className="bx bx-moon icon moon"></i>
               </div>
-              <span id="switchtext" className="mode-text text">Light mode</span>
+              <span id="switchtext" className="mode-text text">
+                Light mode
+              </span>
 
               <div className="toggle-switch">
                 <span className="switch" onClick={modeSwitchClick}></span>

@@ -1,5 +1,5 @@
 import sql, { config } from "mssql";
-import { CurrentUserGuid } from "../user/UserService";
+import { User } from "../user/adduser";
 
 export interface Account {
   Guid: string;
@@ -10,11 +10,17 @@ export interface Account {
   UserGuid: string;
 }
 
-export const GetAccounts = async (config: config) => {
+const GetAccounts = async ({
+  config,
+  currentUser,
+}: {
+  config: config;
+  currentUser: User;
+}) => {
   try {
     let pool = await sql.connect(config);
     let request = pool.request();
-    request.input("UserGuid", sql.VarChar, CurrentUserGuid);
+    request.input("UserGuid", sql.VarChar, currentUser.Guid);
     let result = await request.query<Account>(
       `Select * from [dbo].[Account] WHERE UserGuid = @UserGuid`
     );
@@ -24,3 +30,5 @@ export const GetAccounts = async (config: config) => {
     console.log(err);
   }
 };
+
+export default GetAccounts;
