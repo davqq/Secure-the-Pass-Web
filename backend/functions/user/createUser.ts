@@ -1,4 +1,5 @@
 import sql, { config } from "mssql";
+import bcrypt from "bcryptjs";
 
 export interface User {
   Guid: string;
@@ -12,10 +13,14 @@ const createUser = async ({ config, user }: { config: config; user: User }) => {
     let pool = await sql.connect(config);
     let request = pool.request();
     request.input("Email", sql.VarChar, user.email);
-    request.input("Password", sql.VarChar, user.password);
+    request.input(
+      "Password",
+      sql.VarChar,
+      bcrypt.hashSync(user.password, bcrypt.genSaltSync())
+    );
     request.input("Username", sql.VarChar, user.username);
 
-    request.query(
+    await request.query(
       `INSERT INTO [dbo].[User] (Guid, Email, Username, Password) VALUES (NEWID(), @Email, @Username, @Password)`
     );
   } catch (err) {

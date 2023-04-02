@@ -6,13 +6,13 @@ import jwt from "jsonwebtoken";
 
 const register = async ({ user, config }: { user: User; config: config }) => {
   try {
-    let result = getuser({ config, user });
+    const result = await getuser({ config, user });
 
-    if (!!result) {
+    if (result) {
       throw new BadRequest("User already exists");
     }
 
-    adduser({ config, user });
+    await adduser({ config, user });
 
     let token = jwt.sign(user, process.env.SECRET as string, {
       expiresIn: "15m",

@@ -5,12 +5,12 @@ import { config } from "mssql";
 import jwt from "jsonwebtoken";
 import login from "./functions/login/login";
 import { User } from "./functions/user/createUser";
-import deleteUser from "./functions/user/deleteuser";
-import updateUser from "./functions/user/updateuser";
+import deleteUser from "./functions/user/deleteUser";
+import updateUser from "./functions/user/updateUser";
 import getAccounts, { Account } from "./functions/account/getAccounts";
-import getAccount from "./functions/account/getaccount";
-import deleteAccount from "./functions/account/deleteaccounts";
-import updateAccount from "./functions/account/updateaccount";
+import getAccount from "./functions/account/getAccount";
+import deleteAccount from "./functions/account/deleteAccounts";
+import updateAccount from "./functions/account/updateAccount";
 import createAccount from "./functions/account/createAccount";
 
 env.config();

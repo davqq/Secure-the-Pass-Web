@@ -20,7 +20,7 @@ const updateAccount = async ({
     request.input("Password", sql.VarChar, account.Password);
     request.input("Website", sql.VarChar, account.Website);
     request.input("UserGuid", sql.VarChar, user.Guid);
-    request.query(
+    await request.query(
       `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, Website = @Website, UserGuid = @UserGuid WHERE Guid = @Guid`
     );
   } catch (err) {

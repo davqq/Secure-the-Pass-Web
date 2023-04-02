@@ -6,7 +6,7 @@ import { config } from "mssql";
 
 const login = async ({ user, config }: { user: User; config: config }) => {
   try {
-    let result = await getuser({ config, user });
+    const result = await getuser({ config, user });
 
     if (!result) {
       throw new BadRequest("User Not found");

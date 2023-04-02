@@ -7,7 +7,7 @@ const deleteUser = async ({ config, user }: { config: config; user: User }) => {
     let request = pool.request();
     request.input("Email", sql.VarChar, user.email);
     request.input("Password", sql.VarChar, user.password);
-    request.query(
+    await request.query(
       `DELETE FROM [dbo].[User] WHERE Email = @Email AND Password = @Password`
     );
   } catch (err) {

@@ -15,7 +15,7 @@ const deleteAccount = async ({
     let request = pool.request();
     request.input("Guid", sql.VarChar, accountGuid);
     request.input("UserGuid", sql.VarChar, user.Guid);
-    request.query(
+    await request.query(
       `DELETE FROM [dbo].[Account] WHERE Guid = @Guid AND UserGuid = @UserGuid`
     );
   } catch (err) {
