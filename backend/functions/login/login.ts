@@ -3,6 +3,8 @@ import { BadRequest } from "http-errors";
 import { User } from "../user/createUser";
 import jwt from "jsonwebtoken";
 import { config } from "mssql";
+import { handleSuccess } from "../handleSuccess";
+import { handleError } from "../handleError";
 
 const login = async ({ user, config }: { user: User; config: config }) => {
   try {
@@ -12,13 +14,20 @@ const login = async ({ user, config }: { user: User; config: config }) => {
       throw new BadRequest("User Not found");
     }
 
-    let token = jwt.sign(user, process.env.SECRET as string, {
+    let token = jwt.sign(result, process.env.SECRET as string, {
       expiresIn: "15m",
     });
 
-    return `Bearer ${token}`;
+    const bearerHeader = { Authorization: `Bearer ${token}` };
+
+    return handleSuccess(
+      { success: "Login successful", result },
+      200,
+      bearerHeader
+    );
   } catch (err) {
     console.log(err);
+    handleError(err);
   }
 };
 
