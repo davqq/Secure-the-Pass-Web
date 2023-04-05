@@ -1,6 +1,9 @@
-export const handleSuccess = (
+import { Response } from "express";
+
+const handleSuccess = (
   message: object,
   status: number,
+  res: Response,
   headers?: object
 ) => {
   const defaultHeaders = {
@@ -11,8 +14,11 @@ export const handleSuccess = (
     ? { ...defaultHeaders, ...headers }
     : defaultHeaders;
 
-  return new Response(JSON.stringify(message), {
-    status,
-    headers: mergedHeaders,
-  });
+  for (const [key, value] of Object.entries({ ...mergedHeaders })) {
+    res.header(key, value);
+  }
+  res.status(status);
+  res.send(message);
 };
+
+export default handleSuccess;

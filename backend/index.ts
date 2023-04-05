@@ -1,7 +1,7 @@
 import express from "express";
 import register from "./functions/login/register";
 import env from "dotenv";
-import { config } from "mssql";
+import sql, { config } from "mssql";
 import jwt from "jsonwebtoken";
 import login from "./functions/login/login";
 import { User } from "./functions/user/createUser";
@@ -11,7 +11,6 @@ import getAccounts, { Account } from "./functions/account/getAccounts";
 import getAccount from "./functions/account/getAccount";
 import deleteAccount from "./functions/account/deleteAccounts";
 import updateAccount from "./functions/account/updateAccount";
-import createAccount from "./functions/account/createAccount";
 
 env.config();
 
@@ -51,18 +50,12 @@ const authMiddleware = (req: any, res: any, next: any) => {
   });
 };
 
-app.get("/test", (req, res) => {
-  res.send(new Response("Test", { status: 403 }));
-});
-
 app.post("/login", async (req, res) => {
-  let response = await login({ user: req.body as User, config });
-  res.sendStatus(response?.status ?? 500);
-  res.send(response?.body ?? "Error");
+  await login({ user: req.body as User, config, res });
 });
 
 app.post("/register", async (req, res) => {
-  res.send(await register({ user: req.body as User, config }));
+  await register({ user: req.body as User, config, res });
 });
 
 app.post("/checktoken", authMiddleware, (req, res) => {
@@ -70,19 +63,21 @@ app.post("/checktoken", authMiddleware, (req, res) => {
 });
 
 app.get("/getuser", authMiddleware, async (req: any, res) => {
-  res.send(req.user as User);
+  console.log(req.user);
+  let user = req.user as User;
+  res.send({ email: user.Email, username: user.Username });
 });
 
 app.delete("/deleteuser", authMiddleware, async (req: any, res) => {
-  await deleteUser({ config, user: req.user as User });
+  await deleteUser({ config, user: req.user as User, res });
 });
 
 app.put("/updateuser", authMiddleware, async (req: any, res) => {
-  await updateUser({ config, user: req.user as User });
+  await updateUser({ config, user: req.user as User, res });
 });
 
 app.get("/getaccounts", authMiddleware, async (req: any, res) => {
-  res.send(await getAccounts({ config, currentUser: req.user as User }));
+  res.send(await getAccounts({ config, currentUser: req.user as User, res }));
 });
 
 app.get("/getaccount/:id", authMiddleware, async (req: any, res) => {
@@ -91,6 +86,7 @@ app.get("/getaccount/:id", authMiddleware, async (req: any, res) => {
       config,
       user: req.user as User,
       accountGuid: req.params.id,
+      res,
     })
   );
 });
@@ -100,6 +96,7 @@ app.delete("/deleteaccount/:id", authMiddleware, async (req: any, res) => {
     config,
     user: req.user as User,
     accountGuid: req.params.id,
+    res,
   });
 });
 
@@ -108,13 +105,6 @@ app.put("/updateaccount/:id", authMiddleware, async (req: any, res) => {
     config,
     user: req.user as User,
     account: req.body as Account,
-  });
-});
-
-app.post("/createaccount", authMiddleware, async (req: any, res) => {
-  await createAccount({
-    config,
-    user: req.user as User,
-    account: req.body as Account,
+    res,
   });
 });

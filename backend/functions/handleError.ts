@@ -1,6 +1,7 @@
 import createError, { HttpError } from "http-errors";
+import { Response } from "express";
 
-export const handleError = (error: unknown) => {
+export const handleError = (error: unknown, res: Response): void => {
   let httpError: HttpError;
 
   if (error instanceof HttpError) {
@@ -9,10 +10,10 @@ export const handleError = (error: unknown) => {
     httpError = createError(500, "Internal server error");
   }
 
-  return new Response(JSON.stringify({ error: httpError.message }), {
-    status: httpError.statusCode,
-    headers: {
-      "content-type": "application/json;charset=UTF-8",
-    },
-  });
+  for (const [key, value] of Object.entries({ ...httpError.headers })) {
+    res.header(key, value);
+  }
+
+  res.status(httpError.statusCode);
+  res.send(httpError.message);
 };

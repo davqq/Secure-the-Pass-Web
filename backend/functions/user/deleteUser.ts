@@ -1,17 +1,26 @@
 import sql, { config } from "mssql";
 import { User } from "./createUser";
+import handleSuccess from "../handleSuccess";
+import { Response } from "express";
+import { handleError } from "../handleError";
 
-const deleteUser = async ({ config, user }: { config: config; user: User }) => {
+const deleteUser = async ({
+  config,
+  user,
+  res,
+}: {
+  config: config;
+  user: User;
+  res: Response;
+}) => {
   try {
     let pool = await sql.connect(config);
     let request = pool.request();
-    request.input("Email", sql.VarChar, user.email);
-    request.input("Password", sql.VarChar, user.password);
-    await request.query(
-      `DELETE FROM [dbo].[User] WHERE Email = @Email AND Password = @Password`
-    );
+    request.input("Guid", sql.VarChar, user.Guid);
+    await request.query(`DELETE FROM [dbo].[User] WHERE Guid = @Guid`);
+    handleSuccess({ success: "User deleted successfully" }, 200, res);
   } catch (err) {
-    console.log(err);
+    handleError(err, res);
   }
 };
 
