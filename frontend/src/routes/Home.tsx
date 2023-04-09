@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { Outlet } from "react-router-dom";
+import env from "react-dotenv";
 
 export async function loader() {
-  fetch("http://localhost:3001/api/checktoken", {
+  fetch(`${env.API_URL}/checktoken`, {
     method: "POST",
     headers: [
       ["Content-Type", "application/json"],
-      ["Authorization", `${localStorage.getItem("token")}`],
+      ["Authorization", `${document.cookie}`],
     ],
   }).then((result) => {
     if (result.status === 403 || result.status === 401) {
@@ -31,11 +32,11 @@ export interface User {
 export default function Home() {
   const [user, setUser] = useState<User>();
   useEffect(() => {
-    fetch("http://localhost:3001/api/getuser", {
+    fetch(`${env.API_URL}/getuser`, {
       method: "GET",
       headers: [
         ["Content-Type", "application/json"],
-        ["Authorization", `${localStorage.getItem("token")}`],
+        ["Authorization", `${document.cookie}`],
       ],
     })
       .then((res) => res.json())
@@ -116,7 +117,7 @@ export default function Home() {
 
             <ul className="menu-links">
               <li className="nav-link">
-                <a href="/dashboard">
+                <a href="/">
                   <i className="bx bx-home-alt icon"></i>
                   <span className="text nav-text">Dashboard</span>
                 </a>

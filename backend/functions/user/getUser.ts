@@ -9,7 +9,8 @@ const getUser = async ({ config, user }: { config: config; user: User }) => {
   let result = await request.query<User>(
     `SELECT * FROM [dbo].[User] WHERE Email = @Email`
   );
-  let userfromDatabase = result.recordset.length > 0 && result.recordset[0];
+  let userfromDatabase =
+    result.recordset.length > 0 && result.recordset && result.recordset[0];
   let passwordMatch =
     userfromDatabase &&
     (await bcrypt.compare(user.Password, userfromDatabase.Password));

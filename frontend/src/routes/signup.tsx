@@ -1,5 +1,5 @@
-import React from "react";
 import "./signin.css";
+import env from "react-dotenv";
 
 export default function SignUp() {
   return (
@@ -61,32 +61,39 @@ export default function SignUp() {
 }
 
 function Register() {
-  const email:string = (document.getElementById("email") as HTMLInputElement).value;
-  const username:string = (document.getElementById("username") as HTMLInputElement).value;
-  const password:string = (document.getElementById("password") as HTMLInputElement).value;
-  const passwordConfirm:string = (document.getElementById("passwordConfirm") as HTMLInputElement).value;
+  const email: string = (document.getElementById("email") as HTMLInputElement)
+    .value;
+  const username: string = (
+    document.getElementById("username") as HTMLInputElement
+  ).value;
+  const password: string = (
+    document.getElementById("password") as HTMLInputElement
+  ).value;
+  const passwordConfirm: string = (
+    document.getElementById("passwordConfirm") as HTMLInputElement
+  ).value;
 
   if (password !== passwordConfirm) {
     alert("Passwords do not match");
     return;
   }
 
-  fetch("http://localhost:3001/api/register", {
+  fetch(`${env.API_URL}/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: email,
-      username: username,
-      password: password,
+      Email: email,
+      Username: username,
+      Password: password,
     }),
   })
     .then((res) => res.json())
     .then((result) => {
       if (result.token) {
-        localStorage.setItem("token", result.token);
-        window.location.replace("/dashboard");
+        document.cookie = result.token;
+        window.location.replace("/");
       }
     });
 }

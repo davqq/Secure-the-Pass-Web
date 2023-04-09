@@ -27,7 +27,10 @@ const login = async ({
       expiresIn: "15m",
     });
 
-    const bearerHeader = { Authorization: `Bearer ${token}` };
+    const bearerHeader = {
+      "Access-Control-Expose-Headers": "Authorization",
+      Authorization: `Bearer ${token}`,
+    };
 
     handleSuccess({ success: "Login successful" }, 200, res, bearerHeader);
   } catch (err) {

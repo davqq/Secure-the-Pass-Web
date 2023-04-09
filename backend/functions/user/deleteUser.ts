@@ -17,7 +17,7 @@ const deleteUser = async ({
     let pool = await sql.connect(config);
     let request = pool.request();
     request.input("Guid", sql.VarChar, user.Guid);
-    await request.query(`DELETE FROM [dbo].[User] WHERE Guid = @Guid`);
+    await request.query<User>(`DELETE [dbo].[User] WHERE Guid = @Guid`);
     handleSuccess({ success: "User deleted successfully" }, 200, res);
   } catch (err) {
     handleError(err, res);

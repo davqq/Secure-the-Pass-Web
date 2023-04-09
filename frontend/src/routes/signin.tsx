@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import "./signin.css";
-import React from "react";
+import env from "react-dotenv";
 
 export default function SignIn() {
   addEventListener("keydown", (e) => {
@@ -57,20 +56,22 @@ export default function SignIn() {
 }
 
 function LogIn() {
-  const email: string = (document.getElementById("email") as HTMLInputElement).value;
-  const password: string = (document.getElementById("password") as HTMLInputElement).value;
-  fetch("http://localhost:3001/api/login", {
+  const email: string = (document.getElementById("email") as HTMLInputElement)
+    .value;
+  const password: string = (
+    document.getElementById("password") as HTMLInputElement
+  ).value;
+  fetch(`${env.API_URL}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email: email, password: password }),
-  })
-    .then((res) => res.json())
-    .then((result) => {
-      if (result.token) {
-        localStorage.setItem("token", result.token);
-        window.location.replace("/dashboard");
-      }
-    });
+    body: JSON.stringify({ Email: email, Password: password }),
+  }).then((res) => {
+    const token = res.headers.get("Authorization");
+    if (token) {
+      document.cookie = token;
+      window.location.replace("/");
+    }
+  });
 }

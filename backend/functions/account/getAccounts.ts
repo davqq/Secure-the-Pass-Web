@@ -3,6 +3,7 @@ import { User } from "../user/createUser";
 import { Response } from "express";
 import { handleError } from "../handleError";
 import handleSuccess from "../handleSuccess";
+import encrypt from "cryptr";
 
 export interface Account {
   Guid: string;
@@ -23,12 +24,17 @@ const getAccounts = async ({
   res: Response;
 }) => {
   try {
+    let cryptor = new encrypt(process.env.SECRET as string);
     let pool = await sql.connect(config);
     let request = pool.request();
     request.input("UserGuid", sql.VarChar, currentUser.Guid);
     let result = await request.query<Account>(
       `SELECT * FROM [dbo].[Account] WHERE UserGuid = @UserGuid`
     );
+
+    // result.recordset.forEach((account) => {
+    //   account.Password = cryptor.decrypt(account.Password);
+    // });
     handleSuccess(result.recordset, 200, res);
   } catch (err) {
     handleError(err, res);

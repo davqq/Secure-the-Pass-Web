@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import env from "react-dotenv";
 
 export interface Account {
   Guid: string;
@@ -13,11 +14,11 @@ function Dashboard() {
   const [items, setItems] = useState<Account[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/getaccounts", {
+    fetch(`${env.API_URL}/getaccounts`, {
       method: "GET",
       headers: [
         ["Content-Type", "application/json"],
-        ["Authorization", `${localStorage.getItem("token")}`],
+        ["Authorization", `${document.cookie}`],
       ],
     })
       .then((res) => res.json())
@@ -27,18 +28,18 @@ function Dashboard() {
   }, []);
 
   return (
-    <section className="home">
-      <div className="text">Dashboard Sidebar</div>
-      <div className="wrapper">
-        <ul>
-          {items.map((item) => (
-            <li key={item.Guid}>
-              {item.Username} 
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+    <div className="home">
+      <section className="home">
+        <div className="text">Dashboard Sidebar</div>
+        <div className="wrapper">
+          <ul>
+            {items.map((item) => (
+              <li key={item.Guid}>{item.Username}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </div>
   );
 }
 

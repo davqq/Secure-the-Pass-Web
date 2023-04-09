@@ -31,7 +31,7 @@ const router = createBrowserRouter([
   {
     path: "/logout",
     loader: () => {
-      localStorage.removeItem("token");
+      document.cookie = "";
       window.location.replace("/login");
     },
   },
