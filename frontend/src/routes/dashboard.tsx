@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import env from "react-dotenv";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
 
 export interface Account {
   Guid: string;
@@ -11,7 +15,7 @@ export interface Account {
 }
 
 function Dashboard() {
-  const [items, setItems] = useState<Account[]>([]);
+  const [accounts, setAccounts] = useState<Account[]>([]);
 
   useEffect(() => {
     fetch(`${env.API_URL}/getaccounts`, {
@@ -23,23 +27,63 @@ function Dashboard() {
     })
       .then((res) => res.json())
       .then((result) => {
-        setItems(result);
+        setAccounts(result);
       });
   }, []);
 
   return (
-    <div className="home">
-      <section className="home">
-        <div className="text">Dashboard Sidebar</div>
-        <div className="wrapper">
-          <ul>
-            {items.map((item) => (
-              <li key={item.Guid}>{item.Username}</li>
-            ))}
-          </ul>
+    <section className="home">
+      <div className="text">Dashboard Sidebar</div>
+      <div className="wrapper">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignContent: "center",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {accounts.map((account) => {
+            return (
+              <Card
+                sx={{ maxWidth: 345 }}
+                key={account.Guid}
+                style={{ margin: 10 }}
+              >
+                <CardActionArea>
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="div"
+                      style={{ wordBreak: "break-word" }}
+                    >
+                      {account.Website}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      style={{ wordBreak: "break-word" }}
+                    >
+                      {account.Username}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      style={{ wordBreak: "break-word" }}
+                    >
+                      {account.Password}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            );
+          })}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
 
