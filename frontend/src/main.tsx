@@ -34,6 +34,7 @@ const router = createBrowserRouter([
       document.cookie = "";
       window.location.replace("/login");
     },
+    element: <div />,
   },
 ]);
 

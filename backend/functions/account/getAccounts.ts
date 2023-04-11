@@ -29,7 +29,7 @@ const getAccounts = async ({
     let request = pool.request();
     request.input("UserGuid", sql.VarChar, currentUser.Guid);
     let result = await request.query<Account>(
-      `SELECT * FROM [dbo].[Account] WHERE UserGuid = @UserGuid`
+      `SELECT * FROM [dbo].[Account] WHERE UserGuid = @UserGuid Order By Website`
     );
 
     // result.recordset.forEach((account) => {

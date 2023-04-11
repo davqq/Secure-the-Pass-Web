@@ -3,7 +3,8 @@ import env from "react-dotenv";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, IconButton } from "@mui/material";
+import "./home.css";
 
 export interface Account {
   Guid: string;
@@ -51,6 +52,7 @@ function Dashboard() {
                 sx={{ maxWidth: 345 }}
                 key={account.Guid}
                 style={{ margin: 10 }}
+                className="card"
               >
                 <CardActionArea>
                   <CardContent>
@@ -66,6 +68,7 @@ function Dashboard() {
                       variant="body2"
                       color="text.secondary"
                       style={{ wordBreak: "break-word" }}
+                      className="subtitle"
                     >
                       {account.Username}
                     </Typography>
@@ -73,6 +76,15 @@ function Dashboard() {
                       variant="body2"
                       color="text.secondary"
                       style={{ wordBreak: "break-word" }}
+                      className="subtitle"
+                    >
+                      {account.Email}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      style={{ wordBreak: "break-word" }}
+                      className="subtitle"
                     >
                       {account.Password}
                     </Typography>
@@ -82,6 +94,7 @@ function Dashboard() {
             );
           })}
         </div>
+        <IconButton id="addButton">+</IconButton>
       </div>
     </section>
   );

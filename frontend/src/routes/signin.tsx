@@ -9,49 +9,47 @@ export default function SignIn() {
   });
 
   return (
-    <>
-      <div className="wrapper fadeInDown">
-        <div id="formContent">
-          <div className="tabs">
-            <h2 className="active" id="SignIn">
-              <a href="/login">Log In</a>
-            </h2>
-            <h2 className="inactive underlineHover" id="SignUp">
-              <a href="/register">Register</a>
-            </h2>
-          </div>
+    <div className="wrapper fadeInDown">
+      <div id="formContent">
+        <div className="tabs">
+          <h2 className="active" id="SignIn">
+            <a href="/login">Log In</a>
+          </h2>
+          <h2 className="inactive underlineHover" id="SignUp">
+            <a href="/register">Register</a>
+          </h2>
+        </div>
 
-          <form>
-            <input
-              type="text"
-              id="email"
-              className="fadeIn second"
-              name="login"
-              placeholder="Email"
-            />
-            <input
-              type="password"
-              id="password"
-              className="fadeIn third"
-              name="login"
-              placeholder="Password"
-            />
-            <input
-              type="button"
-              className="fadeIn fourth"
-              value="Log In"
-              onClick={LogIn}
-            />
-          </form>
+        <form>
+          <input
+            type="text"
+            id="email"
+            className="fadeIn second"
+            name="login"
+            placeholder="Email"
+          />
+          <input
+            type="password"
+            id="password"
+            className="fadeIn third"
+            name="login"
+            placeholder="Password"
+          />
+          <input
+            type="button"
+            className="fadeIn fourth"
+            value="Log In"
+            onClick={LogIn}
+          />
+        </form>
 
-          <div id="formFooter">
-            <a className="underlineHover" href="/forgotpassword">
-              Forgot Password?
-            </a>
-          </div>
+        <div id="formFooter">
+          <a className="underlineHover" href="/forgotpassword">
+            Forgot Password?
+          </a>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

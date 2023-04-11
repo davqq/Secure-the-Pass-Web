@@ -191,7 +191,6 @@ body.dark .sidebar header .toggle {
 
 .sidebar li a {
   list-style: none;
-  height: 100%;
   background-color: transparent;
   display: flex;
   align-items: center;
@@ -332,7 +331,6 @@ body.dark .switch::before {
   top: 0;
   top: 0;
   left: 250px;
-  height: 100vh;
   width: calc(100% - 250px);
   transition: var(--tran-05);
 }
@@ -346,11 +344,19 @@ body.dark .switch::before {
 
 .sidebar.close ~ .home {
   left: 78px;
-  height: 100vh;
   width: calc(100% - 78px);
 }
 
 body.dark .home .text {
+  color: var(--text-color);
+}
+
+body.dark .card {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+body.dark .card .subtitle {
   color: var(--text-color);
 }
 
@@ -360,6 +366,15 @@ body.dark .home .text {
   flex-direction: column;
   justify-content: left;
   width: 100%;
-  min-height: 100%;
   padding: 20px;
+}
+
+#addButton {
+  height: 75px;
+  width: 75px;
+  background: var(--primary-color);
+  color: var(--toggle-color);
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
 }
