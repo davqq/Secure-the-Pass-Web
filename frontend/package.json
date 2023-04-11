@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "react-dotenv && vite",
+    "dev": "vite",
     "build": "react-dotenv && tsc && vite build",
     "preview": "vite preview"
   },
@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.16",
     "express": "^4.18.2",
+    "i": "^0.3.7",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "mui": "^0.0.1",
@@ -31,5 +32,10 @@
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
     "vite": "^4.1.0"
+  },
+  "react-dotenv": {
+    "whitelist": [
+      "API_URL"
+    ]
   }
 }
