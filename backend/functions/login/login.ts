@@ -23,9 +23,13 @@ const login = async ({
       throw new BadRequest("User Not found");
     }
 
-    let token = jwt.sign(result, process.env.SECRET as string, {
-      expiresIn: "15m",
-    });
+    let token = jwt.sign(
+      { Email: result.Email, Username: result.Username },
+      process.env.SECRET as string,
+      {
+        expiresIn: "15m",
+      }
+    );
 
     const bearerHeader = {
       "Access-Control-Expose-Headers": "Authorization",
