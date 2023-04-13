@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "react-dotenv && vite",
     "build": "react-dotenv && tsc && vite build",
     "preview": "vite preview"
   },
