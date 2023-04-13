@@ -12,6 +12,8 @@ import getAccount from "./functions/account/getAccount";
 import deleteAccount from "./functions/account/deleteAccounts";
 import updateAccount from "./functions/account/updateAccount";
 import createAccount from "./functions/account/createAccount";
+import getUser from "./functions/user/getUser";
+import encrypt from "cryptr";
 
 env.config();
 

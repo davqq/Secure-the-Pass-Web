@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, IconButton } from "@mui/material";
 import "./home.css";
+import AccountDetails from "./accountDetails";
 
 export interface Account {
   Guid: string;
@@ -17,7 +18,7 @@ export interface Account {
 
 function Dashboard() {
   const [accounts, setAccounts] = useState<Account[]>([]);
-
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     fetch(`${env.API_URL}/getaccounts`, {
       method: "GET",
@@ -48,13 +49,8 @@ function Dashboard() {
         >
           {accounts.map((account) => {
             return (
-              <Card
-                sx={{ maxWidth: 345 }}
-                key={account.Guid}
-                style={{ margin: 10 }}
-                className="card"
-              >
-                <CardActionArea>
+              <Card key={account.Guid} style={{ margin: 10 }} className="card">
+                <CardActionArea style={{ width: 337, height: 150 }}>
                   <CardContent>
                     <Typography
                       gutterBottom
@@ -94,8 +90,25 @@ function Dashboard() {
             );
           })}
         </div>
-        <IconButton id="addButton">+</IconButton>
+        <IconButton
+          id="addButton"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
+          +
+        </IconButton>
       </div>
+      <AccountDetails
+        account={{
+          email: "123",
+          name: "asd",
+          username: "432",
+          password: "sdfsdf",
+        }}
+        open={open}
+        setOpen={setOpen}
+      />
     </section>
   );
 }

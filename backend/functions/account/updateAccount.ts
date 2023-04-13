@@ -27,7 +27,7 @@ const updateAccount = async ({
     await request.query(
       `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, Website = @Website WHERE Guid = @Guid`
     );
-    handleSuccess({ success: "Account updated successfully" }, 200, res);
+    // handleSuccess({ success: "Account updated successfully" }, 200, res);
   } catch (err) {
     handleError(err, res);
   }
