@@ -25,9 +25,13 @@ const register = async ({
 
     await createUser({ config, user });
 
-    let token = jwt.sign(user, process.env.SECRET as string, {
-      expiresIn: "15m",
-    });
+    let token = jwt.sign(
+      { Guid: user.Guid, Email: user.Email, Username: user.Username },
+      process.env.SECRET as string,
+      {
+        expiresIn: "15m",
+      }
+    );
     const bearerHeader = { Authorization: `Bearer ${token}` };
 
     handleSuccess({ success: "Register successful" }, 200, res, bearerHeader);

@@ -32,11 +32,13 @@ const getAccounts = async ({
       `SELECT * FROM [dbo].[Account] WHERE UserGuid = @UserGuid Order By Website`
     );
 
-    result.recordset.forEach((account) => {
-      account.Password = cryptor.decrypt(account.Password);
-    });
+    // result.recordset.forEach((account) => {
+    //   console.log(account);
+    //   account.Password = cryptor.decrypt(account.Password);
+    // });
     handleSuccess(result.recordset, 200, res);
   } catch (err) {
+    console.log(err);
     handleError(err, res);
   }
 };

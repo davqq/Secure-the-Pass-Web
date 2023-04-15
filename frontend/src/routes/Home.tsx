@@ -126,12 +126,12 @@ export default function Home() {
           </div>
 
           <div className="bottom-content">
-            <li className="nav-link">
+            {/* <li className="nav-link">
               <a href="/settings">
                 <i className="bx bx-wallet icon"></i>
                 <span className="text nav-text">Settings</span>
               </a>
-            </li>
+            </li> */}
 
             <li className="">
               <a href="/logout">

@@ -7,24 +7,40 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Account } from "./dashboard";
+import env from "react-dotenv";
 
 interface accountDetailsProps {
-  account: {
-    email: string;
-    name: string;
-    username: string;
-    password: string;
-  };
   open: boolean;
   setOpen: (open: boolean) => void;
+  account: Account;
+  setaccount: (account: Account) => void;
 }
 
-const AccountDetails = (props: accountDetailsProps) => {
-  const { account, open, setOpen } = props;
-
+const accountDetails = (props: accountDetailsProps) => {
+  const { open, setOpen, account, setaccount } = props;
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAdd = () => {
+    fetch(env.API_URL + "/updateaccount", {
+      method: "POST",
+      headers: [
+        ["Content-Type", "application/json"],
+        ["Authorization", `${document.cookie}`],
+      ],
+      body: JSON.stringify({
+        Guid: account.Guid,
+        Username: account.Username,
+        Email: account.Email,
+        Website: account.Website,
+        Password: account.Password,
+      }),
+    });
+    setOpen(false);
+    location.reload();
   };
 
   return (
@@ -34,32 +50,67 @@ const AccountDetails = (props: accountDetailsProps) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        {"Account Details for " + account.name}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title">Account Details</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          To subscribe to this website, please enter your email address here. We
-          will send updates occasionally.
-        </DialogContentText>
         <TextField
           autoFocus
           margin="dense"
           id="name"
           label="Email Address"
+          onChange={(e) => {
+            setaccount({ ...account, Email: e.target.value });
+          }}
           type="email"
           fullWidth
-          variant="standard"
+          variant="outlined"
+          value={account.Email}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Website"
+          type="Website"
+          fullWidth
+          onChange={(e) => {
+            setaccount({ ...account, Website: e.target.value });
+          }}
+          variant="outlined"
+          value={account.Website}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Username"
+          type="username"
+          fullWidth
+          onChange={(e) => {
+            setaccount({ ...account, Username: e.target.value });
+          }}
+          variant="outlined"
+          value={account.Username}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Password"
+          type="name"
+          fullWidth
+          onChange={(e) => {
+            setaccount({ ...account, Password: e.target.value });
+          }}
+          variant="outlined"
+          value={account.Password}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Disagree</Button>
-        <Button onClick={handleClose} autoFocus>
-          Agree
-        </Button>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleAdd}>Save</Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default AccountDetails;
+export default accountDetails;

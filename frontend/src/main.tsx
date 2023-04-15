@@ -6,6 +6,7 @@ import SignUp from "./routes/signup";
 import Dashboard from "./routes/dashboard";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./routes/errorpage";
+import AccountDetails from "./routes/accountDetails";
 
 const router = createBrowserRouter([
   {

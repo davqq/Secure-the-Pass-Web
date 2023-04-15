@@ -5,20 +5,23 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, IconButton } from "@mui/material";
 import "./home.css";
+import CreateAccount from "./createAccount";
 import AccountDetails from "./accountDetails";
 
 export interface Account {
-  Guid: string;
-  Username: string;
-  Email: string;
-  Password: string;
-  Website: string;
-  UserGuid: string;
+  Guid?: string;
+  Username?: string;
+  Email?: string;
+  Password?: string;
+  Website?: string;
+  UserGuid?: string;
 }
 
 function Dashboard() {
   const [accounts, setAccounts] = useState<Account[]>([]);
-  const [open, setOpen] = useState(false);
+  const [account, setAccount] = useState<Account>({});
+  const [openNew, setOpenNew] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
   useEffect(() => {
     fetch(`${env.API_URL}/getaccounts`, {
       method: "GET",
@@ -50,7 +53,13 @@ function Dashboard() {
           {accounts.map((account) => {
             return (
               <Card key={account.Guid} style={{ margin: 10 }} className="card">
-                <CardActionArea style={{ width: 337, height: 150 }}>
+                <CardActionArea
+                  style={{ width: 337, height: 150 }}
+                  onClick={() => {
+                    setAccount(account);
+                    setOpenDetails(true);
+                  }}
+                >
                   <CardContent>
                     <Typography
                       gutterBottom
@@ -93,21 +102,18 @@ function Dashboard() {
         <IconButton
           id="addButton"
           onClick={() => {
-            setOpen(true);
+            setOpenNew(true);
           }}
         >
           +
         </IconButton>
       </div>
+      <CreateAccount open={openNew} setOpen={setOpenNew} />
       <AccountDetails
-        account={{
-          email: "123",
-          name: "asd",
-          username: "432",
-          password: "sdfsdf",
-        }}
-        open={open}
-        setOpen={setOpen}
+        open={openDetails}
+        setOpen={setOpenDetails}
+        account={account}
+        setaccount={setAccount}
       />
     </section>
   );

@@ -1,10 +1,13 @@
+import { useState } from "react";
 import "./signin.css";
 import env from "react-dotenv";
 
 export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      LogIn();
+      LogIn(email, password);
     }
   });
 
@@ -27,6 +30,10 @@ export default function SignIn() {
             className="fadeIn second"
             name="login"
             placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
           <input
             type="password"
@@ -34,12 +41,16 @@ export default function SignIn() {
             className="fadeIn third"
             name="login"
             placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
           <input
             type="button"
             className="fadeIn fourth"
             value="Log In"
-            onClick={LogIn}
+            onClick={() => LogIn(email, password)}
           />
         </form>
 
@@ -53,12 +64,7 @@ export default function SignIn() {
   );
 }
 
-function LogIn() {
-  const email: string = (document.getElementById("email") as HTMLInputElement)
-    .value;
-  const password: string = (
-    document.getElementById("password") as HTMLInputElement
-  ).value;
+function LogIn(email: string, password: string) {
   fetch(`${env.API_URL}/login`, {
     method: "POST",
     headers: {

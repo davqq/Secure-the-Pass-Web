@@ -14,6 +14,8 @@ import updateAccount from "./functions/account/updateAccount";
 import createAccount from "./functions/account/createAccount";
 import getUser from "./functions/user/getUser";
 import encrypt from "cryptr";
+import cors from "cors";
+import generator from "generate-password-ts";
 
 env.config();
 
@@ -32,6 +34,15 @@ const config: config = {
 
 const app = express();
 const port = process.env.PORT;
+
+const corsOptions: cors.CorsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionsSuccessStatus: 200,
+  preflightContinue: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -109,12 +120,20 @@ app.delete("/deleteaccount/:id", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.put("/updateaccount/:id", authMiddleware, async (req, res) => {
+app.put("/updateaccount", authMiddleware, async (req: any, res) => {
   const account = req.body as Account;
-  account.Guid = req.params.id;
+  account.UserGuid = (req.user as User).Guid;
   await updateAccount({
     config,
     account: account,
     res,
   });
+});
+app.get("/generatepassword", (req, res) => {
+  const password = generator.generate({
+    length: 10,
+    numbers: true,
+  });
+
+  res.send({ password: password });
 });
