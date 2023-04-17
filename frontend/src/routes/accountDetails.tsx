@@ -68,7 +68,7 @@ const accountDetails = (props: accountDetailsProps) => {
         <TextField
           autoFocus
           margin="dense"
-          id="name"
+          id="accountDetailsTextBox"
           label="Website"
           type="Website"
           fullWidth
@@ -81,7 +81,7 @@ const accountDetails = (props: accountDetailsProps) => {
         <TextField
           autoFocus
           margin="dense"
-          id="name"
+          id="accountDetailsTextBox"
           label="Username"
           type="username"
           fullWidth
@@ -94,7 +94,7 @@ const accountDetails = (props: accountDetailsProps) => {
         <TextField
           autoFocus
           margin="dense"
-          id="name"
+          id="accountDetailsTextBox"
           label="Password"
           type="name"
           fullWidth

@@ -16,6 +16,7 @@ import getUser from "./functions/user/getUser";
 import encrypt from "cryptr";
 import cors from "cors";
 import generator from "generate-password-ts";
+import cryptr from "cryptr";
 
 env.config();
 
@@ -77,8 +78,7 @@ app.post("/checktoken", authMiddleware, (req, res) => {
 });
 
 app.get("/getuser", authMiddleware, async (req: any, res) => {
-  let user = req.user as User;
-  res.send({ Email: user.Email, Username: user.Username });
+  res.send(req.user as User);
 });
 
 app.delete("/deleteuser", authMiddleware, async (req: any, res) => {

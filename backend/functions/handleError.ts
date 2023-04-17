@@ -2,6 +2,7 @@ import createError, { HttpError } from "http-errors";
 import { Response } from "express";
 
 export const handleError = (error: unknown, res: Response): void => {
+  console.log(error);
   let httpError: HttpError;
 
   if (error instanceof HttpError) {

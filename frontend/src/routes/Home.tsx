@@ -55,10 +55,7 @@ export default function Home() {
         <header>
           <div className="image-text">
             <span className="image">
-              <img
-                src="https://avatars.githubusercontent.com/u/68165812?v=4"
-                alt=""
-              />
+              <img alt="logo" />
             </span>
 
             <div className="text logo-text">
@@ -112,7 +109,7 @@ export default function Home() {
                   sidebar.classList.toggle("close");
                 }}
               ></i>
-              <input type="text" placeholder="Search..." />
+              <input type="name" placeholder="Search..." />
             </li>
 
             <ul className="menu-links">

@@ -3,7 +3,7 @@ import env from "react-dotenv";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, IconButton } from "@mui/material";
+import { CardActionArea, Grid, IconButton } from "@mui/material";
 import "./home.css";
 import CreateAccount from "./createAccount";
 import AccountDetails from "./accountDetails";
@@ -42,54 +42,57 @@ function Dashboard() {
       <div className="wrapper">
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            alignContent: "center",
             justifyContent: "center",
-            alignItems: "center",
           }}
         >
-          {accounts.map((account) => {
-            return (
-              <Card key={account.Guid} style={{ margin: 10 }} className="card">
-                <CardActionArea
-                  style={{ width: 337, height: 150 }}
-                  onClick={() => {
-                    setAccount(account);
-                    setOpenDetails(true);
-                  }}
-                >
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="div"
-                      style={{ wordBreak: "break-word" }}
+          <Grid container alignItems="flex-start">
+            {accounts.map((account) => {
+              return (
+                <Grid item lg={3} md={4} sm={6} xs={12}>
+                  <Card
+                    key={account.Guid}
+                    style={{ margin: 10 }}
+                    className="card"
+                  >
+                    <CardActionArea
+                      style={{ maxWidth: 430, height: 150 }}
+                      onClick={() => {
+                        setAccount(account);
+                        setOpenDetails(true);
+                      }}
                     >
-                      {account.Website}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      style={{ wordBreak: "break-word" }}
-                      className="subtitle"
-                    >
-                      {account.Username}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      style={{ wordBreak: "break-word" }}
-                      className="subtitle"
-                    >
-                      {account.Email}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            );
-          })}
+                      <CardContent>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{ wordBreak: "break-word" }}
+                        >
+                          {account.Website}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          style={{ wordBreak: "break-word" }}
+                          className="subtitle"
+                        >
+                          {account.Username}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          style={{ wordBreak: "break-word" }}
+                          className="subtitle"
+                        >
+                          {account.Email}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              );
+            })}
+          </Grid>
         </div>
         <IconButton
           id="addButton"
