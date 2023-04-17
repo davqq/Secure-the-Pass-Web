@@ -360,6 +360,15 @@ body.dark .card .subtitle {
   color: var(--text-color);
 }
 
+body.dark #accountDetailsTextBox {
+  color: var(--text-color);
+  border-color: var(--text-color);
+}
+
+body.dark #accountDetails {
+  background-color: var(--primary-color);
+}
+
 .home .wrapper {
   display: flex;
   align-items: left;

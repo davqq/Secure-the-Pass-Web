@@ -85,14 +85,6 @@ function Dashboard() {
                     >
                       {account.Email}
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      style={{ wordBreak: "break-word" }}
-                      className="subtitle"
-                    >
-                      {account.Password}
-                    </Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>

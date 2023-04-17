@@ -50,12 +50,12 @@ const accountDetails = (props: accountDetailsProps) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Account Details</DialogTitle>
-      <DialogContent>
+      <DialogTitle id="accountDetails">Account Details</DialogTitle>
+      <DialogContent id="accountDetails">
         <TextField
           autoFocus
           margin="dense"
-          id="name"
+          id="accountDetailsTextBox"
           label="Email Address"
           onChange={(e) => {
             setaccount({ ...account, Email: e.target.value });
@@ -105,7 +105,7 @@ const accountDetails = (props: accountDetailsProps) => {
           value={account.Password}
         />
       </DialogContent>
-      <DialogActions>
+      <DialogActions id="accountDetails">
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleAdd}>Save</Button>
       </DialogActions>
