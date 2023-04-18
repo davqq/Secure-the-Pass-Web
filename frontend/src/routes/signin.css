@@ -1,14 +1,14 @@
-body {
-  font-family: "Poppins", sans-serif;
-  height: 100vh;
-  background-color: #56baed;
-}
-
 #formFooter a {
   color: #92badd;
   display: inline-block;
   text-decoration: none;
   font-weight: 400;
+}
+
+#root {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+  background-color: #5fbae9;
 }
 
 .tabs a {

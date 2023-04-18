@@ -18,7 +18,7 @@ const createAccount = async ({
   res: Response;
 }) => {
   try {
-    let cryptor = new cryptr(process.env.SECRET as string);
+    let cryptor = new cryptr(process.env.ENCYPTION as string);
     let pool = await sql.connect(config);
     let request = pool.request();
     request.input("Username", sql.VarChar, account.Username);

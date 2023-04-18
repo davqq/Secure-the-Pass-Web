@@ -1,53 +1,28 @@
-html {
-  box-sizing: border-box;
-}
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
+:root {
+  /* ===== Colors ===== */
+  --body-color: #d7e0f7;
+  --sidebar-color: #fff;
+  --primary-color: #56baed;
+  --primary-color-light: #f6f5ff;
+  --toggle-color: #ddd;
+  --text-color: #707070;
+
+  /* ====== Transition ====== */
+  --tran-03: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.3s ease;
+  --tran-05: all 0.3s ease;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body.dark {
+  --body-color: #18191a;
+  --sidebar-color: #242526;
+  --primary-color: #3a3b3c;
+  --primary-color-light: #3a3b3c;
+  --toggle-color: #fff;
+  --text-color: #ccc;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-  line-height: 1.5;
-  color: #121212;
-}
-textarea,
-input,
-button {
-  font-size: 1rem;
-  font-family: inherit;
-  border: none;
-  background-color: white;
-  line-height: 1.5;
-  margin: 0;
-}
-
-#root {
-  display: flex;
-  height: 100%;
-  width: 100%;
-}
-
-#error-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+#errorpage {
+  background-color: var(--body-color);
 }

@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Response, NextFunction } from "express";
 import register from "./functions/login/register";
 import env from "dotenv";
 import { config } from "mssql";
@@ -12,11 +12,8 @@ import getAccount from "./functions/account/getAccount";
 import deleteAccount from "./functions/account/deleteAccounts";
 import updateAccount from "./functions/account/updateAccount";
 import createAccount from "./functions/account/createAccount";
-import getUser from "./functions/user/getUser";
-import encrypt from "cryptr";
 import cors from "cors";
 import generator from "generate-password-ts";
-import cryptr from "cryptr";
 
 env.config();
 
@@ -56,7 +53,7 @@ const authMiddleware = (req: any, res: Response, next: NextFunction) => {
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) return res.sendStatus(401);
 
-  jwt.verify(token, process.env.SECRET as string, (err: any, user: any) => {
+  jwt.verify(token, process.env.JWT as string, (err: any, user: any) => {
     if (err) return res.sendStatus(403);
 
     req.user = user;

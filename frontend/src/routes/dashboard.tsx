@@ -55,7 +55,7 @@ function Dashboard() {
                     className="card"
                   >
                     <CardActionArea
-                      style={{ maxWidth: 430, height: 150 }}
+                      style={{ height: 150 }}
                       onClick={() => {
                         setAccount(account);
                         setOpenDetails(true);

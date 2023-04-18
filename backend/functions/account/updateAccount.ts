@@ -1,6 +1,5 @@
 import sql, { config } from "mssql";
 import { Account } from "./getAccounts";
-import bcrypt from "bcryptjs";
 import handleSuccess from "../handleSuccess";
 import { handleError } from "../handleError";
 import { Response } from "express";
@@ -16,7 +15,7 @@ const updateAccount = async ({
   res: Response;
 }) => {
   try {
-    let cryptor = new cryptr(process.env.SECRET as string);
+    let cryptor = new cryptr(process.env.ENCYPTION as string);
     let pool = await sql.connect(config);
     let request = pool.request();
     request.input("Guid", sql.VarChar, account.Guid);

@@ -21,12 +21,6 @@
   --tran-05: all 0.3s ease;
 }
 
-body {
-  min-height: 100vh;
-  background-color: var(--body-color);
-  transition: var(--tran-05);
-}
-
 body.dark {
   --body-color: #18191a;
   --sidebar-color: #242526;
@@ -334,6 +328,9 @@ body.dark .switch::before {
   top: 0;
   left: 250px;
   width: calc(100% - 250px);
+  transition: var(--tran-05);
+  min-height: 100vh;
+  background-color: var(--body-color);
   transition: var(--tran-05);
 }
 

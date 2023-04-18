@@ -25,7 +25,7 @@ const login = async ({
 
     let token = jwt.sign(
       { Email: result.Email, Username: result.Username, Guid: result.Guid },
-      process.env.SECRET as string,
+      process.env.JWT as string,
       {
         expiresIn: "15m",
       }

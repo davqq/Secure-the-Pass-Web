@@ -24,7 +24,7 @@ const getAccounts = async ({
   res: Response;
 }) => {
   try {
-    let cryptor = new encrypt(process.env.SECRET as string);
+    let cryptor = new encrypt(process.env.ENCYPTION as string);
     let pool = await sql.connect(config);
     let request = pool.request();
     request.input("UserGuid", sql.VarChar, currentUser.Guid);
