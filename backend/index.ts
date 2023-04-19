@@ -87,15 +87,19 @@ app.put("/updateuser", authMiddleware, async (req, res) => {
 });
 
 app.get("/getaccounts", authMiddleware, async (req: any, res) => {
-  await getAccounts({ config, currentUser: req.user as User, res });
+  await getAccounts({
+    config,
+    currentUser: req.user as User,
+    res,
+  });
 });
 
-app.get("/getaccount/:id", authMiddleware, async (req: any, res) => {
-  await getAccount({
+app.get("/getaccounts/:q", authMiddleware, async (req: any, res) => {
+  await getAccounts({
     config,
-    user: req.user as User,
-    accountGuid: req.params.id,
+    currentUser: req.user as User,
     res,
+    search: req.params.q,
   });
 });
 

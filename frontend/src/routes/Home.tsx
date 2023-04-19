@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Home.css";
 import { Outlet } from "react-router-dom";
 import env from "react-dotenv";
+import { useSearchParams } from "react-router-dom";
 
 export async function loader() {
   fetch(`${env.API_URL}/checktoken`, {
@@ -31,6 +32,7 @@ export interface User {
 
 export default function Home() {
   const [user, setUser] = useState<User>();
+  const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     fetch(`${env.API_URL}/getuser`, {
       method: "GET",
@@ -44,10 +46,6 @@ export default function Home() {
         setUser(result);
       });
   }, []);
-
-  // const searching =
-  //   navigation.location &&
-  //   new URLSearchParams(navigation.location.search).has("q");
 
   return (
     <>
@@ -81,24 +79,6 @@ export default function Home() {
         <div className="menu-bar">
           <div className="menu">
             <li className="search-box" role="search">
-              {/* <input
-                                id="q"
-                                aria-label="Search contacts"
-                                placeholder="Search"
-                                type="search"
-                                name="q"
-                                className={searching ? "loading" : ""}
-                            />
-                            <div
-                                id="search-spinner"
-                                aria-hidden
-                                hidden={!searching}
-                            />
-                            <div
-                                className="sr-only"
-                                aria-live="polite"
-                            ></div> */}
-
               <i
                 className="bx bx-search icon"
                 onClick={() => {
@@ -109,7 +89,22 @@ export default function Home() {
                   sidebar.classList.toggle("close");
                 }}
               ></i>
-              <input type="name" placeholder="Search..." />
+              <input
+                type="name"
+                id="q"
+                name="q"
+                aria-label="Search contacts"
+                placeholder="Search..."
+                value={searchParams.get("q") || ""}
+                onChange={(e) => {
+                  setSearchParams(
+                    { q: e.target.value },
+                    {
+                      replace: searchParams.has("q"),
+                    }
+                  );
+                }}
+              />
             </li>
 
             <ul className="menu-links">

@@ -3,10 +3,16 @@ import env from "react-dotenv";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, Grid, IconButton } from "@mui/material";
+import {
+  CardActionArea,
+  CircularProgress,
+  Grid,
+  IconButton,
+} from "@mui/material";
 import "./home.css";
 import CreateAccount from "./createAccount";
 import AccountDetails from "./accountDetails";
+import { useSearchParams } from "react-router-dom";
 
 export interface Account {
   Guid?: string;
@@ -17,13 +23,21 @@ export interface Account {
   UserGuid?: string;
 }
 
+export function loader({ params }: { params: string }) {
+  console.log(params);
+  return null;
+}
+
 function Dashboard() {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [account, setAccount] = useState<Account>({});
   const [openNew, setOpenNew] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+
   useEffect(() => {
-    fetch(`${env.API_URL}/getaccounts`, {
+    fetch(`${env.API_URL}/getaccounts/${searchParams.get("q") || ""}`, {
       method: "GET",
       headers: [
         ["Content-Type", "application/json"],
@@ -33,6 +47,7 @@ function Dashboard() {
       .then((res) => res.json())
       .then((result) => {
         setAccounts(result);
+        setLoading(false);
       });
   }, []);
 
@@ -40,68 +55,85 @@ function Dashboard() {
     <section className="home">
       <div className="text">Dashboard Sidebar</div>
       <div className="wrapper">
-        <div
-          style={{
-            justifyContent: "center",
-          }}
-        >
-          <Grid container alignItems="flex-start">
-            {accounts.map((account) => {
-              return (
-                <Grid item lg={3} md={4} sm={6} xs={12}>
-                  <Card
-                    key={account.Guid}
-                    style={{ margin: 10 }}
-                    className="card"
-                  >
-                    <CardActionArea
-                      style={{ height: 150 }}
-                      onClick={() => {
-                        setAccount(account);
-                        setOpenDetails(true);
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <Grid container alignItems="flex-start">
+              {accounts.map((account) => {
+                return (
+                  <Grid item xl={2} lg={3} md={4} sm={6} xs={12}>
+                    <Card
+                      key={account.Guid}
+                      style={{
+                        margin: 10,
                       }}
+                      className="card"
                     >
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="h5"
-                          component="div"
-                          style={{ wordBreak: "break-word" }}
-                        >
-                          {account.Website}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          style={{ wordBreak: "break-word" }}
-                          className="subtitle"
-                        >
-                          {account.Username}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          style={{ wordBreak: "break-word" }}
-                          className="subtitle"
-                        >
-                          {account.Email}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </div>
-        <IconButton
-          id="addButton"
-          onClick={() => {
-            setOpenNew(true);
-          }}
-        >
-          +
-        </IconButton>
+                      <CardActionArea
+                        style={{ height: 150 }}
+                        onClick={() => {
+                          setAccount(account);
+                          setOpenDetails(true);
+                        }}
+                      >
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            style={{
+                              wordBreak: "break-word",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {account.Website}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            style={{
+                              wordBreak: "break-word",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                            }}
+                            className="subtitle"
+                          >
+                            {account.Username}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            style={{
+                              wordBreak: "break-word",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                            }}
+                            className="subtitle"
+                          >
+                            {account.Email}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
+            <IconButton
+              id="addButton"
+              onClick={() => {
+                setOpenNew(true);
+              }}
+            >
+              +
+            </IconButton>
+          </>
+        )}
       </div>
       <CreateAccount open={openNew} setOpen={setOpenNew} />
       <AccountDetails

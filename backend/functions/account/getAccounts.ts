@@ -18,10 +18,12 @@ const getAccounts = async ({
   config,
   currentUser,
   res,
+  search,
 }: {
   config: config;
   currentUser: User;
   res: Response;
+  search?: string;
 }) => {
   try {
     let cryptor = new encrypt(process.env.ENCYPTION as string);
@@ -32,11 +34,23 @@ const getAccounts = async ({
       `SELECT * FROM [dbo].[Account] WHERE UserGuid = @UserGuid Order By Website`
     );
 
-    result.recordset.forEach((account) => {
+    let accounts = result.recordset.filter((account) => {
+      if (search) {
+        return (
+          account.Website.toLowerCase().includes(search.toLowerCase()) ||
+          account.Username.toLowerCase().includes(search.toLowerCase()) ||
+          account.Email.toLowerCase().includes(search.toLowerCase())
+        );
+      } else {
+        return true;
+      }
+    });
+
+    accounts.forEach((account) => {
       account.Password = cryptor.decrypt(account.Password);
     });
 
-    handleSuccess(result.recordset, 200, res);
+    handleSuccess(accounts, 200, res);
   } catch (err) {
     handleError(err, res);
   }

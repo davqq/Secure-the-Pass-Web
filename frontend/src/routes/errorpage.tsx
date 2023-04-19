@@ -7,15 +7,11 @@ export default function ErrorPage() {
 
   return (
     <section className="errorpage">
-      <div className="text">Error Page</div>
       <div className="wrapper">
-        <div id="error-page">
-          <h1>Oops!</h1>
-          <p>Sorry, an unexpected error has occurred.</p>
-          <p>
-            <i>{error.statusText || error.message}</i>
-          </p>
-        </div>
+        <h1>{error.status || error.statusText}</h1>
+        <a className="underlineHover" href="/">
+          TAKE ME HOME
+        </a>
       </div>
     </section>
   );

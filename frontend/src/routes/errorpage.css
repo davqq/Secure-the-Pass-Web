@@ -23,6 +23,53 @@ body.dark {
   --text-color: #ccc;
 }
 
-#errorpage {
-  background-color: var(--body-color);
+.errorpage .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  background: var(--body-color);
+  transition: var(--tran-05);
+}
+
+.errorpage .underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #000;
+  content: "";
+  transition: width 0.2s;
+}
+
+.errorpage .underlineHover:hover {
+  color: #000;
+}
+
+.errorpage .underlineHover:hover:after {
+  width: 100%;
+}
+
+.errorpage h1 {
+  text-align: center;
+  font-size: 6em;
+  text-transform: uppercase;
+  display: inline-block;
+  color: #000;
+}
+
+.errorpage p {
+  font-size: 4em;
+  color: #000;
+  display: inline-block;
+}
+
+.errorpage a {
+  color: #000;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1.5em;
+  text-transform: uppercase;
 }

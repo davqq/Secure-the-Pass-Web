@@ -64,12 +64,12 @@ const createAccount = (props: createAccountProps) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">New Account</DialogTitle>
-      <DialogContent>
+      <DialogTitle id="accountDetails">New Account</DialogTitle>
+      <DialogContent id="accountDetails">
         <TextField
           autoFocus
           margin="dense"
-          id="name"
+          id="accountDetailsTextBox"
           label="Email Address"
           onChange={(e) => {
             setEmail(e.target.value);
@@ -82,7 +82,7 @@ const createAccount = (props: createAccountProps) => {
         <TextField
           autoFocus
           margin="dense"
-          id="name"
+          id="accountDetailsTextBox"
           label="Website"
           type="Website"
           fullWidth
@@ -95,7 +95,7 @@ const createAccount = (props: createAccountProps) => {
         <TextField
           autoFocus
           margin="dense"
-          id="name"
+          id="accountDetailsTextBox"
           label="Username"
           type="username"
           fullWidth
@@ -108,7 +108,7 @@ const createAccount = (props: createAccountProps) => {
         <TextField
           autoFocus
           margin="dense"
-          id="text"
+          id="accountDetailsTextBox"
           label="Password"
           type="name"
           fullWidth
@@ -145,7 +145,7 @@ const createAccount = (props: createAccountProps) => {
           }}
         />
       </DialogContent>
-      <DialogActions>
+      <DialogActions id="accountDetails">
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleAdd}>Add</Button>
       </DialogActions>
