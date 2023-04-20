@@ -13,7 +13,7 @@ export async function loader() {
     ],
   }).then((result) => {
     if (result.status === 403 || result.status === 401) {
-      return window.location.replace("/login");
+      return window.location.replace("/logout");
     }
   });
 
@@ -33,6 +33,7 @@ export interface User {
 export default function Home() {
   const [user, setUser] = useState<User>();
   const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     fetch(`${env.API_URL}/getuser`, {
       method: "GET",
@@ -62,18 +63,7 @@ export default function Home() {
             </div>
           </div>
 
-          <i
-            className="bx bx-chevron-right toggle"
-            onClick={() => {
-              const body: HTMLBodyElement = document.querySelector(
-                  "body"
-                ) as HTMLBodyElement,
-                sidebar: HTMLBodyElement = body.querySelector(
-                  "nav"
-                ) as HTMLBodyElement;
-              sidebar.classList.toggle("close");
-            }}
-          ></i>
+          <i className="bx bx-chevron-right toggle" onClick={expandSidebar}></i>
         </header>
 
         <div className="menu-bar">
@@ -167,4 +157,12 @@ function modeSwitchClick() {
   } else {
     modeText.innerText = "Light mode";
   }
+}
+
+function expandSidebar() {
+  const body: HTMLBodyElement = document.querySelector(
+      "body"
+    ) as HTMLBodyElement,
+    sidebar: HTMLBodyElement = body.querySelector("nav") as HTMLBodyElement;
+  sidebar.classList.toggle("close");
 }

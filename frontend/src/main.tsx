@@ -3,9 +3,10 @@ import ReactDOM from "react-dom/client";
 import Home, { loader as homeLoader } from "./routes/Home";
 import SignIn from "./routes/signin";
 import SignUp from "./routes/signup";
-import Dashboard, { loader as dashboardLoader } from "./routes/dashboard";
+import Dashboard from "./routes/dashboard";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./routes/errorpage";
+import Logout from "./routes/logout";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: dashboardLoader,
         element: <Dashboard />,
       },
     ],
@@ -33,11 +33,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/logout",
-    loader: () => {
-      document.cookie = "";
-      window.location.replace("/login");
-    },
-    element: <div />,
+    errorElement: <ErrorPage />,
+    loader: Logout,
   },
 ]);
 
