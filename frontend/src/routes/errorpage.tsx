@@ -8,7 +8,9 @@ export default function ErrorPage() {
   return (
     <section className="errorpage">
       <div className="wrapper">
-        <h1>{error.status || error.statusText}</h1>
+        <h1>
+          {error.status} - {error.statusText}
+        </h1>
         <a className="underlineHover" href="/">
           TAKE ME HOME
         </a>

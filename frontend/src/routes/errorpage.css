@@ -54,22 +54,17 @@ body.dark {
 
 .errorpage h1 {
   text-align: center;
-  font-size: 6em;
+  font-size: 4em;
   text-transform: uppercase;
   display: inline-block;
   color: #000;
-}
-
-.errorpage p {
-  font-size: 4em;
-  color: #000;
-  display: inline-block;
 }
 
 .errorpage a {
   color: #000;
   display: inline-block;
   text-decoration: none;
-  font-size: 1.5em;
+  font-size: 3em;
   text-transform: uppercase;
+  margin-top: 1%;
 }
