@@ -23,7 +23,7 @@ const register = async ({
       throw new BadRequest("User already exists");
     }
 
-    await createUser({ config, user });
+    user = await createUser({ config, user });
 
     let token = jwt.sign(
       { Guid: user.Guid, Email: user.Email, Username: user.Username },

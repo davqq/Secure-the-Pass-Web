@@ -8,6 +8,7 @@ const handleSuccess = (
 ) => {
   const defaultHeaders = {
     "content-type": "application/json;charset=UTF-8",
+    "Access-Control-Expose-Headers": "Authorization",
   };
 
   const mergedHeaders = headers

@@ -24,7 +24,7 @@ const login = async ({
     }
 
     let token = jwt.sign(
-      { Email: result.Email, Username: result.Username, Guid: result.Guid },
+      { Guid: result.Guid, Email: result.Email, Username: result.Username },
       process.env.JWT as string,
       {
         expiresIn: "15m",
@@ -32,7 +32,6 @@ const login = async ({
     );
 
     const bearerHeader = {
-      "Access-Control-Expose-Headers": "Authorization",
       Authorization: `Bearer ${token}`,
     };
 
