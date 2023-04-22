@@ -88,12 +88,11 @@ function Register() {
       Username: username,
       Password: password,
     }),
-  })
-    .then((res) => res.json())
-    .then((result) => {
-      if (result.token) {
-        document.cookie = result.token;
-        window.location.replace("/");
-      }
-    });
+  }).then((res) => {
+    const token = res.headers.get("Authorization");
+    if (token) {
+      document.cookie = `jwt=${token};`;
+      window.location.replace("/");
+    }
+  });
 }

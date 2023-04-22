@@ -1,4 +1,4 @@
-import getuser from "../user/getUser";
+import getuser from "../user/checkEmail";
 import { BadRequest } from "http-errors";
 import { User } from "../user/createUser";
 import jwt from "jsonwebtoken";

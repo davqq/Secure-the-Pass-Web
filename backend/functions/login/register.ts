@@ -1,6 +1,6 @@
 import { config } from "mssql";
 import createUser, { User } from "../user/createUser";
-import getuser from "../user/getUser";
+import getuser from "../user/checkEmail";
 import { BadRequest } from "http-errors";
 import jwt from "jsonwebtoken";
 import { Response } from "express";

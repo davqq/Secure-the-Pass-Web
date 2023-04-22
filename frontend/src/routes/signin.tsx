@@ -74,7 +74,7 @@ function LogIn(email: string, password: string) {
   }).then((res) => {
     const token = res.headers.get("Authorization");
     if (token) {
-      document.cookie = token;
+      document.cookie = `jwt=${token};`;
       window.location.replace("/");
     }
   });
