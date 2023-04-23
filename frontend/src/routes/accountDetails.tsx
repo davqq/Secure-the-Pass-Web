@@ -53,7 +53,6 @@ const accountDetails = (props: accountDetailsProps) => {
       <DialogTitle id="accountDetails">Account Details</DialogTitle>
       <DialogContent id="accountDetails">
         <TextField
-          autoFocus
           margin="dense"
           id="accountDetailsTextBox"
           label="Email Address"
@@ -66,7 +65,6 @@ const accountDetails = (props: accountDetailsProps) => {
           value={account.Email}
         />
         <TextField
-          autoFocus
           margin="dense"
           id="accountDetailsTextBox"
           label="Website"
@@ -79,7 +77,6 @@ const accountDetails = (props: accountDetailsProps) => {
           value={account.Website}
         />
         <TextField
-          autoFocus
           margin="dense"
           id="accountDetailsTextBox"
           label="Username"
@@ -92,7 +89,6 @@ const accountDetails = (props: accountDetailsProps) => {
           value={account.Username}
         />
         <TextField
-          autoFocus
           margin="dense"
           id="accountDetailsTextBox"
           label="Password"
