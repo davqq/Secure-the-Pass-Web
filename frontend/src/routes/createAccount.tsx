@@ -67,7 +67,6 @@ const createAccount = (props: createAccountProps) => {
       <DialogTitle id="accountDetails">New Account</DialogTitle>
       <DialogContent id="accountDetails">
         <TextField
-          autoFocus
           margin="dense"
           label="Email Address"
           id="accountDetailsTextBox"
@@ -80,7 +79,6 @@ const createAccount = (props: createAccountProps) => {
           value={email}
         />
         <TextField
-          autoFocus
           margin="dense"
           id="accountDetailsTextBox"
           label="Website"
@@ -93,7 +91,6 @@ const createAccount = (props: createAccountProps) => {
           value={website}
         />
         <TextField
-          autoFocus
           margin="dense"
           id="accountDetailsTextBox"
           label="Username"
@@ -106,7 +103,6 @@ const createAccount = (props: createAccountProps) => {
           value={username}
         />
         <TextField
-          autoFocus
           margin="dense"
           id="accountDetailsTextBox"
           label="Password"
