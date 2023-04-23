@@ -16,5 +16,5 @@ export const handleError = (error: unknown, res: Response): void => {
   }
 
   res.status(httpError.statusCode);
-  res.send(httpError.message);
+  res.send({ error: httpError.message });
 };

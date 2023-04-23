@@ -415,3 +415,7 @@ body.dark #accountDetails {
   right: 10px;
   bottom: 10px;
 }
+
+.dark #Syncicon {
+  color: var(--toggle-color);
+}

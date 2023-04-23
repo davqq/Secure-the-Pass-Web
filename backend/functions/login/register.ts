@@ -1,6 +1,6 @@
 import { config } from "mssql";
 import createUser, { User } from "../user/createUser";
-import getuser from "../user/checkEmail";
+import checkEmail from "../user/checkEmail";
 import { BadRequest } from "http-errors";
 import jwt from "jsonwebtoken";
 import { Response } from "express";
@@ -17,10 +17,10 @@ const register = async ({
   res: Response;
 }) => {
   try {
-    const result = await getuser({ config, user });
+    const result = await checkEmail({ config, user });
 
     if (result) {
-      throw new BadRequest("User already exists");
+      throw new BadRequest("Email already exists");
     }
 
     user = await createUser({ config, user });
@@ -36,7 +36,6 @@ const register = async ({
 
     handleSuccess({ success: "Register successful" }, 200, res, bearerHeader);
   } catch (err) {
-    console.log(err);
     handleError(err, res);
   }
 };

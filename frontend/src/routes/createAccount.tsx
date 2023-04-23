@@ -69,8 +69,8 @@ const createAccount = (props: createAccountProps) => {
         <TextField
           autoFocus
           margin="dense"
-          id="accountDetailsTextBox"
           label="Email Address"
+          id="accountDetailsTextBox"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
@@ -137,7 +137,7 @@ const createAccount = (props: createAccountProps) => {
                         });
                     }}
                   >
-                    <SyncIcon />
+                    <SyncIcon id="Syncicon" />
                   </IconButton>
                 </Tooltip>
               </InputAdornment>

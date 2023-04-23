@@ -1,15 +1,33 @@
 import { useEffect, useState } from "react";
 import "./signin.css";
 import env from "react-dotenv";
+import { TextField } from "@mui/material";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [helpTextEmail, setHelpTextEmail] = useState("");
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [helpTextPassword, setHelpTextPassword] = useState("");
+  const [errorPassword, setErrorPassword] = useState(false);
+  const [helpTextPasswordConfirm, setHelpTextPasswordConfirm] = useState("");
+  const [errorPasswordConfirm, setErrorPasswordConfirm] = useState(false);
   addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      Register(email, username, password, passwordConfirm);
+      Register(
+        email,
+        username,
+        password,
+        passwordConfirm,
+        setErrorEmail,
+        setHelpTextEmail,
+        setErrorPassword,
+        setHelpTextPassword,
+        setErrorPasswordConfirm,
+        setHelpTextPasswordConfirm
+      );
     }
   });
   return (
@@ -25,58 +43,87 @@ export default function SignUp() {
         </div>
 
         <form>
-          <input
-            type="text"
+          <TextField
+            type="Email"
             id="email"
             className="fadeIn second"
             name="login"
-            placeholder="Email"
+            label="Email"
+            error={errorEmail}
+            helperText={helpTextEmail}
+            style={{ width: "80%" }}
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
+              setErrorEmail(false);
+              setHelpTextEmail("");
             }}
           />
 
-          <input
-            type="text"
+          <TextField
+            type="Username"
             id="username"
             className="fadeIn second"
+            style={{ width: "80%", marginTop: "10px" }}
             name="login"
-            placeholder="Username"
+            label="Username"
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
             }}
           />
 
-          <input
+          <TextField
             type="password"
             id="password"
             className="fadeIn third"
             name="login"
-            placeholder="Password"
+            error={errorPassword}
+            helperText={helpTextPassword}
+            style={{ width: "80%", marginTop: "10px" }}
+            label="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
+              setErrorPassword(false);
+              setHelpTextPassword("");
             }}
           />
 
-          <input
+          <TextField
             type="password"
             id="passwordConfirm"
             className="fadeIn third"
+            error={errorPasswordConfirm}
+            helperText={helpTextPasswordConfirm}
+            style={{ width: "80%", marginTop: "10px", marginBottom: "10px" }}
             name="login"
-            placeholder="Password Confirm"
+            label="Password Confirm"
             value={passwordConfirm}
             onChange={(e) => {
               setPasswordConfirm(e.target.value);
+              setErrorPasswordConfirm(false);
+              setHelpTextPasswordConfirm("");
             }}
           />
           <input
             type="button"
             className="fadeIn fourth"
             value="Register"
-            onClick={() => Register(email, username, password, passwordConfirm)}
+            onClick={() =>
+              Register(
+                email,
+                username,
+                password,
+                passwordConfirm,
+                setErrorEmail,
+                setHelpTextEmail,
+                setErrorPassword,
+                setHelpTextPassword,
+                setErrorPasswordConfirm,
+                setHelpTextPasswordConfirm
+              )
+            }
           />
         </form>
       </div>
@@ -88,10 +135,19 @@ function Register(
   email: string,
   username: string,
   password: string,
-  passwordConfirm: string
+  passwordConfirm: string,
+  setErrorEmail: React.Dispatch<React.SetStateAction<boolean>>,
+  setHelpTextEmail: React.Dispatch<React.SetStateAction<string>>,
+  setErrorPassword: React.Dispatch<React.SetStateAction<boolean>>,
+  setHelpTextPassword: React.Dispatch<React.SetStateAction<string>>,
+  setErrorPasswordConfirm: React.Dispatch<React.SetStateAction<boolean>>,
+  setHelpTextPasswordConfirm: React.Dispatch<React.SetStateAction<string>>
 ) {
   if (password !== passwordConfirm) {
-    alert("Passwords do not match");
+    setErrorPassword(true);
+    setHelpTextPassword("Passwords do not match");
+    setErrorPasswordConfirm(true);
+    setHelpTextPasswordConfirm("Passwords do not match");
     return;
   }
 
@@ -105,12 +161,20 @@ function Register(
       Username: username,
       Password: password,
     }),
-  }).then((res) => {
-    const token = res.headers.get("Authorization");
-    console.log(token);
-    if (token) {
-      document.cookie = `jwt=${token};`;
-      window.location.replace("/");
-    }
-  });
+  })
+    .then((res) => {
+      const token = res.headers.get("Authorization");
+      if (token) {
+        document.cookie = `jwt=${token};`;
+        window.location.replace("/");
+      } else if (res.status === 400) {
+        res.json().then((data) => {
+          setErrorEmail(true);
+          setHelpTextEmail(data.error);
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }

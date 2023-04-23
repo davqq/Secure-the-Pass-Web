@@ -1,13 +1,16 @@
 import { useState } from "react";
 import "./signin.css";
 import env from "react-dotenv";
+import { TextField } from "@mui/material";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [helpText, setHelpText] = useState("");
+  const [error, setError] = useState(false);
   addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      LogIn(email, password);
+      LogIn(email, password, setError, setHelpText);
     }
   });
 
@@ -24,23 +27,32 @@ export default function SignIn() {
         </div>
 
         <form>
-          <input
-            type="text"
+          <TextField
+            autoFocus
             id="email"
             className="fadeIn second"
             name="login"
-            placeholder="Email"
+            type="Email"
+            style={{ width: "80%" }}
+            label="Email"
+            error={error}
+            helperText={helpText}
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
-          <input
-            type="password"
+          <TextField
+            autoFocus
             id="password"
             className="fadeIn third"
+            style={{ width: "80%", marginTop: "10px", marginBottom: "10px" }}
             name="login"
-            placeholder="Password"
+            type="Password"
+            label="Password"
+            error={error}
+            helperText={helpText}
+            fullWidth
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -50,7 +62,7 @@ export default function SignIn() {
             type="button"
             className="fadeIn fourth"
             value="Log In"
-            onClick={() => LogIn(email, password)}
+            onClick={() => LogIn(email, password, setError, setHelpText)}
           />
         </form>
 
@@ -64,7 +76,12 @@ export default function SignIn() {
   );
 }
 
-function LogIn(email: string, password: string) {
+function LogIn(
+  email: string,
+  password: string,
+  setError: any,
+  setHelpText: any
+) {
   fetch(`${env.API_URL}/login`, {
     method: "POST",
     headers: {
@@ -76,6 +93,9 @@ function LogIn(email: string, password: string) {
     if (token) {
       document.cookie = `jwt=${token};`;
       window.location.replace("/");
+    } else {
+      setError(true);
+      setHelpText("Invalid email or password");
     }
   });
 }
