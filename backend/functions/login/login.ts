@@ -1,4 +1,3 @@
-import getuser from "../user/checkEmail";
 import { BadRequest } from "http-errors";
 import { User } from "../user/createUser";
 import jwt from "jsonwebtoken";
@@ -6,6 +5,7 @@ import { config } from "mssql";
 import handleSuccess from "../handleSuccess";
 import { handleError } from "../handleError";
 import { Response } from "express";
+import checkUser from "../user/checkUser";
 
 const login = async ({
   user,
@@ -17,7 +17,7 @@ const login = async ({
   res: Response;
 }) => {
   try {
-    const result = await getuser({ config, user });
+    const result = await checkUser({ config, user });
 
     if (!result) {
       throw new BadRequest("User Not found");
