@@ -223,7 +223,6 @@ body.dark .sidebar li a:hover .text {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow-y: scroll;
 }
 
 .menu-bar::-webkit-scrollbar {
