@@ -40,6 +40,8 @@ export default function SignIn() {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
+              setError(false);
+              setHelpText("");
             }}
           />
           <TextField
@@ -56,6 +58,8 @@ export default function SignIn() {
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
+              setError(false);
+              setHelpText("");
             }}
           />
           <input
@@ -79,8 +83,8 @@ export default function SignIn() {
 function LogIn(
   email: string,
   password: string,
-  setError: any,
-  setHelpText: any
+  setError: React.Dispatch<React.SetStateAction<boolean>>,
+  setHelpText: React.Dispatch<React.SetStateAction<string>>
 ) {
   fetch(`${env.API_URL}/login`, {
     method: "POST",
