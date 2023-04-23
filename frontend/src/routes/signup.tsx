@@ -10,6 +10,8 @@ export default function SignUp() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [helpTextEmail, setHelpTextEmail] = useState("");
   const [errorEmail, setErrorEmail] = useState(false);
+  const [helpTextUsername, setHelpTextUsername] = useState("");
+  const [errorUsername, setErrorUsername] = useState(false);
   const [helpTextPassword, setHelpTextPassword] = useState("");
   const [errorPassword, setErrorPassword] = useState(false);
   const [helpTextPasswordConfirm, setHelpTextPasswordConfirm] = useState("");
@@ -23,6 +25,8 @@ export default function SignUp() {
         passwordConfirm,
         setErrorEmail,
         setHelpTextEmail,
+        setErrorUsername,
+        setHelpTextUsername,
         setErrorPassword,
         setHelpTextPassword,
         setErrorPasswordConfirm,
@@ -64,12 +68,16 @@ export default function SignUp() {
             type="Username"
             id="username"
             className="fadeIn second"
+            error={errorUsername}
+            helperText={helpTextUsername}
             style={{ width: "80%", marginTop: "10px" }}
             name="login"
             label="Username"
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
+              setErrorUsername(false);
+              setHelpTextUsername("");
             }}
           />
 
@@ -118,6 +126,8 @@ export default function SignUp() {
                 passwordConfirm,
                 setErrorEmail,
                 setHelpTextEmail,
+                setErrorUsername,
+                setHelpTextUsername,
                 setErrorPassword,
                 setHelpTextPassword,
                 setErrorPasswordConfirm,
@@ -138,11 +148,38 @@ function Register(
   passwordConfirm: string,
   setErrorEmail: React.Dispatch<React.SetStateAction<boolean>>,
   setHelpTextEmail: React.Dispatch<React.SetStateAction<string>>,
+  setErrorUsername: React.Dispatch<React.SetStateAction<boolean>>,
+  setHelpTextUsername: React.Dispatch<React.SetStateAction<string>>,
   setErrorPassword: React.Dispatch<React.SetStateAction<boolean>>,
   setHelpTextPassword: React.Dispatch<React.SetStateAction<string>>,
   setErrorPasswordConfirm: React.Dispatch<React.SetStateAction<boolean>>,
   setHelpTextPasswordConfirm: React.Dispatch<React.SetStateAction<string>>
 ) {
+  if (
+    email === "" ||
+    username === "" ||
+    password === "" ||
+    passwordConfirm === ""
+  ) {
+    if (email === "") {
+      setErrorEmail(true);
+      setHelpTextEmail("Email cannot be empty");
+    }
+    if (username === "") {
+      setErrorUsername(true);
+      setHelpTextUsername("Username cannot be empty");
+    }
+    if (password === "") {
+      setErrorPassword(true);
+      setHelpTextPassword("Password cannot be empty");
+    }
+    if (passwordConfirm === "") {
+      setErrorPasswordConfirm(true);
+      setHelpTextPasswordConfirm("Password cannot be empty");
+    }
+    return;
+  }
+
   if (password !== passwordConfirm) {
     setErrorPassword(true);
     setHelpTextPassword("Passwords do not match");

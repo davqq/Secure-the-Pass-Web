@@ -17,6 +17,10 @@ const register = async ({
   res: Response;
 }) => {
   try {
+    if (!user.Email || !user.Password || !user.Username) {
+      throw new BadRequest("Missing fields");
+    }
+
     const result = await checkEmail({ config, user });
 
     if (result) {
