@@ -28,7 +28,6 @@ export default function SignIn() {
 
         <form>
           <TextField
-            autoFocus
             id="email"
             className="fadeIn second"
             name="login"
@@ -45,7 +44,6 @@ export default function SignIn() {
             }}
           />
           <TextField
-            autoFocus
             id="password"
             className="fadeIn third"
             style={{ width: "80%", marginTop: "10px", marginBottom: "10px" }}
