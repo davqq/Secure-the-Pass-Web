@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Button,
   Dialog,
   DialogActions,
@@ -10,7 +11,7 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Account } from "./dashboard";
 import env from "react-dotenv";
 import SyncIcon from "@mui/icons-material/Sync";
@@ -20,12 +21,32 @@ interface createAccountProps {
   setOpen: (open: boolean) => void;
 }
 
+interface Company {
+  url: string;
+  name: string;
+}
+
 const createAccount = (props: createAccountProps) => {
   const { open, setOpen } = props;
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [website, setWebsite] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [companies, setCompanies] = useState<Company[]>([]);
+
+  useEffect(() => {
+    fetch(env.API_URL + "/getcompanies", {
+      method: "GET",
+      headers: [
+        ["Content-Type", "application/json"],
+        ["Authorization", `${document.cookie}`],
+      ],
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCompanies(data);
+      });
+  }, []);
 
   const clearStates = () => {
     setUsername("");
@@ -66,23 +87,30 @@ const createAccount = (props: createAccountProps) => {
     >
       <DialogTitle id="accountDetails">New Account</DialogTitle>
       <DialogContent id="accountDetails">
-        <TextField
-          margin="dense"
-          label="Email Address"
-          id="accountDetailsTextBox"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          type="email"
-          fullWidth
-          variant="outlined"
-          value={email}
+        <Autocomplete
+          freeSolo
+          options={companies.map((option) => option.name)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              margin="dense"
+              label="Website"
+              id="accountDetailsTextBox"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              type="email"
+              fullWidth
+              variant="outlined"
+              value={email}
+            />
+          )}
         />
+
         <TextField
           margin="dense"
           id="accountDetailsTextBox"
-          label="Website"
-          type="Website"
+          label="Email Address"
           fullWidth
           onChange={(e) => {
             setWebsite(e.target.value);

@@ -83,6 +83,7 @@ body.dark {
   font-weight: 500;
   white-space: nowrap;
   opacity: 1;
+  overflow: hidden;
 }
 
 .sidebar.close .text {

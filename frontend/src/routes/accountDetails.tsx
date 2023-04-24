@@ -55,18 +55,6 @@ const accountDetails = (props: accountDetailsProps) => {
         <TextField
           margin="dense"
           id="accountDetailsTextBox"
-          label="Email Address"
-          onChange={(e) => {
-            setaccount({ ...account, Email: e.target.value });
-          }}
-          type="email"
-          fullWidth
-          variant="outlined"
-          value={account.Email}
-        />
-        <TextField
-          margin="dense"
-          id="accountDetailsTextBox"
           label="Website"
           type="Website"
           fullWidth
@@ -75,6 +63,18 @@ const accountDetails = (props: accountDetailsProps) => {
           }}
           variant="outlined"
           value={account.Website}
+        />
+        <TextField
+          margin="dense"
+          id="accountDetailsTextBox"
+          label="Email Address"
+          onChange={(e) => {
+            setaccount({ ...account, Email: e.target.value });
+          }}
+          type="email"
+          fullWidth
+          variant="outlined"
+          value={account.Email}
         />
         <TextField
           margin="dense"
