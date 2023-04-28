@@ -18,7 +18,7 @@
   --tran-03: all 0.2s ease;
   --tran-03: all 0.3s ease;
   --tran-04: all 0.3s ease;
-  --tran-05: all 0.3s ease;
+  --tran-05: width 0.3s ease, background-color 0;
 }
 
 body.dark {
@@ -303,14 +303,14 @@ div input[type="search"].loading {
   top: 7.9em;
 } */
 
-@keyframes spin {
+/* @keyframes spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 .switch::before {
   content: "";
@@ -393,7 +393,7 @@ body.dark #accountDetails {
   justify-content: center;
   width: 100%;
   padding: 20px;
-  height: 100vh;
+  height: 93vh;
 }
 
 #addButton {

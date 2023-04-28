@@ -32,7 +32,6 @@ function Dashboard() {
   const [searchParams] = useSearchParams();
   const controllerRef = useRef<AbortController | null>();
 
-
   useEffect(() => {
     if (controllerRef.current) {
       controllerRef.current.abort();
