@@ -26,7 +26,7 @@ const accountDetails = (props: accountDetailsProps) => {
 
   const handleAdd = () => {
     fetch(env.API_URL + "/updateaccount", {
-      method: "POST",
+      method: "PUT",
       headers: [
         ["Content-Type", "application/json"],
         ["Authorization", `${document.cookie}`],
