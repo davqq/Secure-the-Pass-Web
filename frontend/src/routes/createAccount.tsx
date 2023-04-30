@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { Account } from "./dashboard";
 import env from "react-dotenv";
 import SyncIcon from "@mui/icons-material/Sync";
+import getCookie from "../helper/getCookie";
 
 interface createAccountProps {
   open: boolean;
@@ -28,10 +29,10 @@ interface Company {
 
 const createAccount = (props: createAccountProps) => {
   const { open, setOpen } = props;
-  const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [website, setWebsite] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [website, setWebsite] = useState<string>();
+  const [password, setPassword] = useState<string>();
   const [companies, setCompanies] = useState<Company[]>([]);
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const createAccount = (props: createAccountProps) => {
       method: "GET",
       headers: [
         ["Content-Type", "application/json"],
-        ["Authorization", `${document.cookie}`],
+        ["Authorization", `${getCookie("jwt")}`],
       ],
     })
       .then((response) => response.json())
@@ -65,7 +66,7 @@ const createAccount = (props: createAccountProps) => {
       method: "POST",
       headers: [
         ["Content-Type", "application/json"],
-        ["Authorization", `${document.cookie}`],
+        ["Authorization", `${getCookie("jwt")}`],
       ],
       body: JSON.stringify({
         Username: username,
@@ -76,6 +77,7 @@ const createAccount = (props: createAccountProps) => {
     });
     setOpen(false);
     clearStates();
+    location.reload();
   };
 
   return (
@@ -89,6 +91,9 @@ const createAccount = (props: createAccountProps) => {
       <DialogContent id="accountDetails">
         <Autocomplete
           freeSolo
+          onChange={(event, newValue) => {
+            setWebsite(newValue || "");
+          }}
           options={companies.map((option) => option.name)}
           renderInput={(params) => (
             <TextField
@@ -96,13 +101,10 @@ const createAccount = (props: createAccountProps) => {
               margin="dense"
               label="Website"
               id="accountDetailsTextBox"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
               type="email"
               fullWidth
               variant="outlined"
-              value={email}
+              value={website}
             />
           )}
         />
@@ -113,10 +115,10 @@ const createAccount = (props: createAccountProps) => {
           label="Email Address"
           fullWidth
           onChange={(e) => {
-            setWebsite(e.target.value);
+            setEmail(e.target.value);
           }}
           variant="outlined"
-          value={website}
+          value={email}
         />
         <TextField
           margin="dense"
@@ -152,7 +154,7 @@ const createAccount = (props: createAccountProps) => {
                         method: "GET",
                         headers: [
                           ["Content-Type", "application/json"],
-                          ["Authorization", `${document.cookie}`],
+                          ["Authorization", `${getCookie("jwt")}`],
                         ],
                       })
                         .then((res) => res.json())

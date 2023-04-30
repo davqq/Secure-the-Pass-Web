@@ -3,13 +3,14 @@ import "./Home.css";
 import { Outlet } from "react-router-dom";
 import env from "react-dotenv";
 import { useSearchParams } from "react-router-dom";
+import getCookie from "../helper/getCookie";
 
 export async function loader() {
   fetch(`${env.API_URL}/checktoken`, {
     method: "POST",
     headers: [
       ["Content-Type", "application/json"],
-      ["Authorization", `${document.cookie}`],
+      ["Authorization", `${getCookie("jwt")}`],
     ],
   }).then((result) => {
     if (result.status === 403 || result.status === 401) {
@@ -39,7 +40,7 @@ export default function Home() {
       method: "GET",
       headers: [
         ["Content-Type", "application/json"],
-        ["Authorization", `${document.cookie}`],
+        ["Authorization", `${getCookie("jwt")}`],
       ],
     })
       .then((res) => res.json())

@@ -3,13 +3,12 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Account } from "./dashboard";
 import env from "react-dotenv";
+import getCookie from "../helper/getCookie";
 
 interface accountDetailsProps {
   open: boolean;
@@ -20,6 +19,22 @@ interface accountDetailsProps {
 
 const accountDetails = (props: accountDetailsProps) => {
   const { open, setOpen, account, setaccount } = props;
+
+  const handleDelete = () => {
+    fetch(env.API_URL + "/deleteaccount", {
+      method: "DELETE",
+      headers: [
+        ["Content-Type", "application/json"],
+        ["Authorization", `${getCookie("jwt")}`],
+      ],
+      body: JSON.stringify({
+        Guid: account.Guid,
+      }),
+    });
+    handleClose();
+    location.reload();
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -29,7 +44,7 @@ const accountDetails = (props: accountDetailsProps) => {
       method: "PUT",
       headers: [
         ["Content-Type", "application/json"],
-        ["Authorization", `${document.cookie}`],
+        ["Authorization", `${getCookie("jwt")}`],
       ],
       body: JSON.stringify({
         Guid: account.Guid,
@@ -39,7 +54,7 @@ const accountDetails = (props: accountDetailsProps) => {
         Password: account.Password,
       }),
     });
-    setOpen(false);
+    handleClose();
     location.reload();
   };
 
@@ -102,6 +117,9 @@ const accountDetails = (props: accountDetailsProps) => {
         />
       </DialogContent>
       <DialogActions id="accountDetails">
+        <Button color="error" onClick={handleDelete}>
+          Delete
+        </Button>
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleAdd}>Save</Button>
       </DialogActions>

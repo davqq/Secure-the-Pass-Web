@@ -13,6 +13,7 @@ import "./home.css";
 import CreateAccount from "./createAccount";
 import AccountDetails from "./accountDetails";
 import { useSearchParams } from "react-router-dom";
+import getCookie from "../helper/getCookie";
 
 export interface Account {
   Guid?: string;
@@ -44,7 +45,7 @@ function Dashboard() {
       signal: controllerRef.current?.signal,
       headers: [
         ["Content-Type", "application/json"],
-        ["Authorization", `${document.cookie}`],
+        ["Authorization", `${getCookie("jwt")}`],
       ],
     })
       .then((res) => res.json())

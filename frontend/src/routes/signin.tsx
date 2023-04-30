@@ -8,9 +8,29 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [helpText, setHelpText] = useState("");
   const [error, setError] = useState(false);
+
+  const handleLogin = () => {
+    fetch(`${env.API_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ Email: email, Password: password }),
+    }).then((res) => {
+      const token = res.headers.get("Authorization");
+      if (token) {
+        document.cookie = `jwt=${token};`;
+        window.location.replace("/");
+      } else if (!document.cookie.includes("jwt")) {
+        setError(true);
+        setHelpText("Invalid email or password");
+      }
+    });
+  };
+
   addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      LogIn(email, password, setError, setHelpText);
+      handleLogin();
     }
   });
 
@@ -64,7 +84,7 @@ export default function SignIn() {
             type="button"
             className="fadeIn fourth"
             value="Log In"
-            onClick={() => LogIn(email, password, setError, setHelpText)}
+            onClick={() => handleLogin()}
           />
         </form>
 
@@ -76,28 +96,4 @@ export default function SignIn() {
       </div>
     </div>
   );
-}
-
-function LogIn(
-  email: string,
-  password: string,
-  setError: React.Dispatch<React.SetStateAction<boolean>>,
-  setHelpText: React.Dispatch<React.SetStateAction<string>>
-) {
-  fetch(`${env.API_URL}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ Email: email, Password: password }),
-  }).then((res) => {
-    const token = res.headers.get("Authorization");
-    if (token) {
-      document.cookie = `jwt=${token};`;
-      window.location.replace("/");
-    } else {
-      setError(true);
-      setHelpText("Invalid email or password");
-    }
-  });
 }

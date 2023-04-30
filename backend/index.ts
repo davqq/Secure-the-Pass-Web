@@ -113,11 +113,11 @@ app.post("/api/createaccount", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.delete("/api/deleteaccount/:id", authMiddleware, async (req: any, res) => {
+app.delete("/api/deleteaccount", authMiddleware, async (req: any, res) => {
+  const account = req.body as Account;
   await deleteAccount({
     config,
-    user: req.user as User,
-    accountGuid: req.params.id,
+    accountGuid: account.Guid,
     res,
   });
 });
