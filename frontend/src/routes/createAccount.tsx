@@ -94,14 +94,14 @@ const createAccount = (props: createAccountProps) => {
           onChange={(event, newValue) => {
             setWebsite(newValue || "");
           }}
-          options={companies.map((option) => option.name)}
+          options={companies.map((option) => `${option.name} | ${option.url}`)}
           renderInput={(params) => (
             <TextField
               {...params}
               margin="dense"
               label="Website"
               id="accountDetailsTextBox"
-              type="email"
+              type="Webiste"
               fullWidth
               variant="outlined"
               value={website}
