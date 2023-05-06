@@ -104,6 +104,14 @@ app.get("/api/getaccounts/:q", authMiddleware, async (req: any, res) => {
   });
 });
 
+app.get("/api/getaccount/:guid", authMiddleware, async (req, res) => {
+  await getAccount({
+    config,
+    accountGuid: req.params.guid,
+    res,
+  });
+});
+
 app.post("/api/createaccount", authMiddleware, async (req: any, res) => {
   await createAccount({
     config,

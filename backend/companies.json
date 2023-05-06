@@ -330,5 +330,61 @@
   {
     "name": "Shopify",
     "url": "https://www.shopify.com/"
+  },
+  {
+    "name": "Deutsche Bank",
+    "url": "https://www.deutsche-bank.de/pfb/content/pk-onlinebanking.html"
+  },
+  {
+    "name": "Commerzbank",
+    "url": "https://www.commerzbank.de/portal/de/privatkunden/popup-login.html"
+  },
+  { "name": "ING-DiBa", "url": "https://banking.ing.de/app/login" },
+  { "name": "Postbank", "url": "https://banking.postbank.de/rai/login" },
+  { "name": "Sparkasse", "url": "https://www.sparkasse.de" },
+  { "name": "Volksbank", "url": "https://www.vr.de" },
+  {
+    "name": "Nordea",
+    "url": "https://www.nordea.fi/en/personal-customers/online-services/nordea-netbank.html"
+  },
+  {
+    "name": "Santander Bank",
+    "url": "https://www.santanderbank.de/de/privatkunden.html"
+  },
+  {
+    "name": "Barclays",
+    "url": "https://www.barclays.co.uk/ways-to-bank/online-banking/"
+  },
+  {
+    "name": "HSBC",
+    "url": "https://www.hsbc.co.uk/ways-to-bank/online-banking/"
+  },
+  { "name": "NatWest", "url": "https://personal.natwest.com/personal.html" },
+  { "name": "Lloyds Bank", "url": "https://www.lloydsbank.com/" },
+  {
+    "name": "Bank of America",
+    "url": "https://www.bankofamerica.com/online-banking/sign-in/"
+  },
+  { "name": "Chase", "url": "https://www.chase.com/digital/online-banking" },
+  {
+    "name": "Wells Fargo",
+    "url": "https://www.wellsfargo.com/online-banking/"
+  },
+  {
+    "name": "Capital One",
+    "url": "https://www.capitalone.com/bank/online-banking/"
+  },
+  {
+    "name": "US Bank",
+    "url": "https://www.usbank.com/online-mobile-banking/online-banking.html"
+  },
+  {
+    "name": "Discover Bank",
+    "url": "https://www.discover.com/online-banking/"
+  },
+  { "name": "Ally Bank", "url": "https://www.ally.com/bank/online-banking/" },
+  {
+    "name": "Citizens Bank",
+    "url": "https://www.citizensbank.com/online-services/online-banking.aspx"
   }
 ]

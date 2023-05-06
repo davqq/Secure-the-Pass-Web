@@ -20,7 +20,7 @@ export interface Account {
   Username?: string;
   Email?: string;
   Password?: string;
-  Website?: string;
+  Url?: string;
   UserGuid?: string;
 }
 
@@ -101,7 +101,7 @@ function Dashboard() {
                           overflow: "hidden",
                         }}
                       >
-                        {account.Website}
+                        {account.Url}
                       </Typography>
                       <Typography
                         variant="body2"

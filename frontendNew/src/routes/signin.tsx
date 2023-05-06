@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./signin.css";
 import env from "react-dotenv";
-import { TextField } from "@mui/material";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -47,37 +46,26 @@ export default function SignIn() {
         </div>
 
         <form>
-          <TextField
+          <input
+            type="text"
             id="email"
             className="fadeIn second"
             name="login"
-            type="email"
-            style={{ width: "80%" }}
-            label="Email"
-            error={error}
-            helperText={helpText}
+            placeholder="Email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              setError(false);
-              setHelpText("");
             }}
           />
-          <TextField
+          <input
+            type="password"
             id="password"
             className="fadeIn third"
-            style={{ width: "80%", marginTop: "10px", marginBottom: "10px" }}
             name="login"
-            type="password"
-            label="Password"
-            error={error}
-            helperText={helpText}
-            fullWidth
+            placeholder="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
-              setError(false);
-              setHelpText("");
             }}
           />
           <input

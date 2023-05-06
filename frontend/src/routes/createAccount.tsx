@@ -113,6 +113,7 @@ const createAccount = (props: createAccountProps) => {
           margin="dense"
           id="accountDetailsTextBox"
           label="Email Address"
+          type="Email"
           fullWidth
           onChange={(e) => {
             setEmail(e.target.value);

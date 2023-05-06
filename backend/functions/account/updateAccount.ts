@@ -22,9 +22,14 @@ const updateAccount = async ({
     request.input("Username", sql.VarChar, account.Username);
     request.input("Email", sql.VarChar, account.Email);
     request.input("Password", sql.VarChar, cryptor.encrypt(account.Password));
-    request.input("Website", sql.VarChar, account.Website);
+    request.input("Url", sql.VarChar, account.Url);
+    request.input("UpdatedAt", sql.VarChar, new Date().toISOString());
+    request.input("Favorite", sql.Int, account.favorite);
+    request.input("Notes", sql.VarChar, account.Notes);
+    request.input("UrlName", sql.VarChar, account.urlName);
     await request.query(
-      `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, Website = @Website WHERE Guid = @Guid`
+      `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, UpdateAt = @UpdateAt, Favorite = @Favorite, Url = @Url, UrlName = @UrlName, Notes = @Notes` +
+        `WHERE Guid = @Guid`
     );
     handleSuccess({ success: "Account updated successfully" }, 200, res);
   } catch (err) {

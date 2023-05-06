@@ -27,7 +27,7 @@ const login = async ({
       { Guid: result.Guid, Email: result.Email, Username: result.Username },
       process.env.JWT as string,
       {
-        expiresIn: "15m",
+        expiresIn: "15000m",
       }
     );
 

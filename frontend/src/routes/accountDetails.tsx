@@ -117,7 +117,7 @@ const accountDetails = (props: accountDetailsProps) => {
         />
       </DialogContent>
       <DialogActions id="accountDetails">
-        <Button color="error" onClick={handleDelete}>
+        <Button color="error"  onClick={handleDelete}>
           Delete
         </Button>
         <Button onClick={handleClose}>Cancel</Button>

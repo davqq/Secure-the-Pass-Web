@@ -3,15 +3,27 @@ import { User } from "../user/createUser";
 import { Response } from "express";
 import { handleError } from "../handleError";
 import handleSuccess from "../handleSuccess";
-import encrypt from "cryptr";
 
 export interface Account {
   Guid: string;
   Username: string;
   Email: string;
   Password: string;
-  Website: string;
+  Url: string;
   UserGuid: string;
+  Notes: string;
+  CreatedAt: Date;
+  UpdatedAt: Date;
+  UrlName: string;
+  Favorite: boolean;
+}
+
+export interface AccountSmall {
+  Guid: string;
+  Username: string;
+  Url: string;
+  urlName: string;
+  favorite: boolean;
 }
 
 const getAccounts = async ({
@@ -26,28 +38,22 @@ const getAccounts = async ({
   search?: string;
 }) => {
   try {
-    let cryptor = new encrypt(process.env.ENCYPTION as string);
     let pool = await sql.connect(config);
     let request = pool.request();
     request.input("UserGuid", sql.VarChar, currentUser.Guid);
-    let result = await request.query<Account>(
-      `SELECT * FROM [dbo].[Account] WHERE UserGuid = @UserGuid Order By Website`
+    let result = await request.query<AccountSmall>(
+      `SELECT Guid, Username, Url, UrlName, Favorite FROM [dbo].[Account] WHERE UserGuid = @UserGuid ORDER BY UpdatedAt DESC`
     );
 
     let accounts = result.recordset.filter((account) => {
-      if (search) {
-        return (
-          account.Website.toLowerCase().includes(search.toLowerCase()) ||
-          account.Username.toLowerCase().includes(search.toLowerCase()) ||
-          account.Email.toLowerCase().includes(search.toLowerCase())
-        );
-      } else {
+      if (!search) {
         return true;
       }
-    });
 
-    accounts.forEach((account) => {
-      account.Password = cryptor.decrypt(account.Password);
+      return (
+        account.Url.toLowerCase().includes(search.toLowerCase()) ||
+        account.Username.toLowerCase().includes(search.toLowerCase())
+      );
     });
 
     handleSuccess(accounts, 200, res);
