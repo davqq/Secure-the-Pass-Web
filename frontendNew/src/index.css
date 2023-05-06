@@ -102,6 +102,19 @@ form[action$="destroy"] button {
   width: 100%;
 }
 
+.Accountdetails {
+  border: 0.1px solid;
+  border-radius: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.Accountdetails tr {
+  padding: 10px;
+}
+
 #sidebar {
   width: 22rem;
   background-color: #f7f7f7;
@@ -235,6 +248,7 @@ i {
   flex: 1;
   padding: 2rem 4rem;
   width: 100%;
+  background-color: #fff;
 }
 
 #detail.loading {
@@ -244,8 +258,12 @@ i {
 }
 
 #contact {
-  max-width: 40rem;
+  max-width: 100%;
   display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 #contact h1 {
@@ -276,6 +294,11 @@ i {
 }
 #contact a[href*="twitter"]:hover {
   text-decoration: underline;
+}
+
+#contact i {
+  color: #818181;
+  align-items: center;
 }
 
 #contact img {

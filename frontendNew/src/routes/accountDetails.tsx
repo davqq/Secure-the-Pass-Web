@@ -8,6 +8,9 @@ const accountDetails = () => {
   const { accountId } = useParams();
   const [account, setAccount] = useState<Account>();
 
+  console.log(account?.CreatedAt);
+  console.log(typeof account?.CreatedAt);
+
   useEffect(() => {
     fetch(`${env.API_URL}/getaccount/${accountId}`, {
       method: "GET",
@@ -27,12 +30,33 @@ const accountDetails = () => {
   }
 
   return (
-    <div id="AccountDetails">
-      <div id="AccountDetailsHeader">
-        <h1>{account?.urlName || account?.Url}</h1>
-        <Favorite {...account} />
-      </div>
-      {/* <div id="AccountDetailsBody"> */}
+    <div id="contact">
+      <h1>
+        {account?.UrlName || account?.Url} <Favorite {...account} />
+      </h1>
+
+      <br />
+      <br />
+
+      <table className="Accountdetails">
+        <tr>
+          <td>Username:</td>
+          <td>{account.Username}</td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td>{account.Email}</td>
+        </tr>
+        <tr>
+          <td>Password:</td>
+          <td>{account.Password}</td>
+        </tr>
+      </table>
+      <br />
+
+      {account?.Notes && <i>notes: {account.Notes}</i>}
+      {account?.UpdatedAt && <i>modified: {account.UpdatedAt.toString()}</i>}
+      {account?.CreatedAt && <i>created: {account.CreatedAt.toString()}</i>}
     </div>
   );
 };

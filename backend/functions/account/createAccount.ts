@@ -24,12 +24,12 @@ const createAccount = async ({
     request.input("Username", sql.VarChar, account.Username);
     request.input("Email", sql.VarChar, account.Email);
     request.input("Password", sql.VarChar, cryptor.encrypt(account.Password));
-    request.input("Website", sql.VarChar, account.urlName);
+    request.input("Website", sql.VarChar, account.UrlName);
     request.input("UserGuid", sql.VarChar, user.Guid);
     request.input("UpdatedAt", sql.VarChar, new Date().toISOString());
-    request.input("Favorite", sql.Int, account.favorite);
+    request.input("Favorite", sql.Int, account.Favorite);
     request.input("Notes", sql.VarChar, account.Notes);
-    request.input("UrlName", sql.VarChar, account.urlName);
+    request.input("UrlName", sql.VarChar, account.UrlName);
     request.input("CreatedAt", sql.VarChar, new Date().toISOString());
     await request.query<Account>(
       `INSERT INTO [dbo].[Account] (Guid, Username, Email, Password, Website, UserGuid, UpdatedAt, Favorite, Notes, UrlName, CreateAt) ` +

@@ -20,6 +20,12 @@ const router = createBrowserRouter([
         path: "/account/:accountId",
         element: <AccountDetails />,
       },
+      {
+        path: "/account/:accountId/edit",
+      },
+      {
+        path: "/account/:accountId/remove",
+      },
     ],
   },
   {

@@ -45,16 +45,15 @@ const getAccounts = async ({
       `SELECT Guid, Username, Url, UrlName, Favorite FROM [dbo].[Account] WHERE UserGuid = @UserGuid ORDER BY UpdatedAt DESC`
     );
 
-    let accounts = result.recordset.filter((account) => {
-      if (!search) {
-        return true;
-      }
-
-      return (
-        account.Url.toLowerCase().includes(search.toLowerCase()) ||
-        account.Username.toLowerCase().includes(search.toLowerCase())
-      );
-    });
+    let accounts =
+      (search &&
+        result.recordset.filter((account) => {
+          return (
+            account.Url.toLowerCase().includes(search.toLowerCase()) ||
+            account.Username.toLowerCase().includes(search.toLowerCase())
+          );
+        })) ||
+      result.recordset;
 
     handleSuccess(accounts, 200, res);
   } catch (err) {

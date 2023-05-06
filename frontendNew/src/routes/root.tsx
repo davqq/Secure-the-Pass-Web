@@ -10,9 +10,9 @@ export interface Account {
   Url: string;
   Password: string;
   Notes: string;
-  CreatedAt: string;
-  UpdatedAt: string;
-  urlName: string;
+  CreatedAt: Date;
+  UpdatedAt: Date;
+  UrlName: string;
   favorite: boolean;
 }
 
@@ -107,7 +107,7 @@ const root = () => {
                       isActive ? "active" : isPending ? "pending" : ""
                     }
                   >
-                    {account.urlName || account.Url || <i>No Name</i>}{" "}
+                    {account.UrlName || account.Url || <i>No Name</i>}{" "}
                     {account.favorite && <span>★</span>}
                   </NavLink>
                 </li>
