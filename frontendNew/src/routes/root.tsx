@@ -10,10 +10,10 @@ export interface Account {
   Url: string;
   Password: string;
   Notes: string;
-  CreatedAt: Date;
-  UpdatedAt: Date;
+  CreatedAt: string;
+  UpdatedAt: string;
   UrlName: string;
-  favorite: boolean;
+  Favorite: boolean;
 }
 
 export const loader = async () => {
@@ -108,7 +108,7 @@ const root = () => {
                     }
                   >
                     {account.UrlName || account.Url || <i>No Name</i>}{" "}
-                    {account.favorite && <span>★</span>}
+                    {account.Favorite && <span>★</span>}
                   </NavLink>
                 </li>
               ))}

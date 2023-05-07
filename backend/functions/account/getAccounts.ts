@@ -22,8 +22,8 @@ export interface AccountSmall {
   Guid: string;
   Username: string;
   Url: string;
-  urlName: string;
-  favorite: boolean;
+  UrlName: string;
+  Favorite: boolean;
 }
 
 const getAccounts = async ({

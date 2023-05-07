@@ -4,7 +4,10 @@ import "./index.css";
 import Root, { loader as rootLoader } from "./routes/root";
 import ErrorPage from "./error-page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AccountDetails from "./routes/accountDetails";
+import AccountDetails from "./routes/AccountDetails";
+import SignIn from "./signin";
+import SignUp from "./signup";
+import logout from "./logout";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +35,7 @@ const router = createBrowserRouter([
   {
     path: "/logout",
     errorElement: <ErrorPage />,
-    loader: Logout,
+    loader: logout,
   },
 ]);
 

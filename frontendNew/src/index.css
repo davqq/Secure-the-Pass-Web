@@ -61,22 +61,24 @@ button:active {
   align-items: flex-start;
   gap: 1rem;
 }
-#contact h1 form {
+
+.favorite {
   display: flex;
   align-items: center;
   margin-top: 0.25rem;
 }
-#contact h1 form button {
+
+.favorite button {
   box-shadow: none;
   font-size: 1.5rem;
   font-weight: 400;
   padding: 0;
 }
-#contact h1 form button[value="true"] {
+.favorite button[value="true"] {
   color: #a4a4a4;
 }
-#contact h1 form button[value="true"]:hover,
-#contact h1 form button[value="false"] {
+.favorite button[value="true"]:hover,
+.favorite button[value="false"] {
   color: #eeb004;
 }
 
@@ -103,16 +105,31 @@ form[action$="destroy"] button {
 }
 
 .Accountdetails {
-  border: 0.1px solid;
+  border: 0.1px solid #e3e3e3;
   border-radius: 0.8rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   flex-wrap: wrap;
+  width: 100%;
 }
 
-.Accountdetails tr {
+tr {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headline {
+  font-size: small;
+  color: #3992ff;
+}
+
+.borderBottom {
+  border-bottom: 1px solid #e3e3e3;
 }
 
 #sidebar {
@@ -202,6 +219,9 @@ form[action$="destroy"] button {
 
 i {
   color: #818181;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 #sidebar nav .active i {
   color: inherit;

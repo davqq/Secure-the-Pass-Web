@@ -8,9 +8,6 @@ const accountDetails = () => {
   const { accountId } = useParams();
   const [account, setAccount] = useState<Account>();
 
-  console.log(account?.CreatedAt);
-  console.log(typeof account?.CreatedAt);
-
   useEffect(() => {
     fetch(`${env.API_URL}/getaccount/${accountId}`, {
       method: "GET",
@@ -39,41 +36,72 @@ const accountDetails = () => {
       <br />
 
       <table className="Accountdetails">
-        <tr>
-          <td>Username:</td>
+        <tr className="borderBottom">
+          <td className="headline">username</td>
           <td>{account.Username}</td>
         </tr>
-        <tr>
-          <td>Email:</td>
+        <tr className="borderBottom">
+          <td className="headline">email</td>
           <td>{account.Email}</td>
         </tr>
         <tr>
-          <td>Password:</td>
+          <td className="headline">password</td>
           <td>{account.Password}</td>
         </tr>
       </table>
+
+      {account.Url && (
+        <tr>
+          <td className="headline">website</td>
+          <td>{account.Url}</td>
+        </tr>
+      )}
+
+      {account.Notes && (
+        <tr>
+          <td className="headline">notes</td>
+          <td>{account.Notes}</td>
+        </tr>
+      )}
+
       <br />
 
-      {account?.Notes && <i>notes: {account.Notes}</i>}
-      {account?.UpdatedAt && <i>modified: {account.UpdatedAt.toString()}</i>}
-      {account?.CreatedAt && <i>created: {account.CreatedAt.toString()}</i>}
+      {account?.UpdatedAt && (
+        <i>modified: {new Date(account.UpdatedAt).toLocaleString()}</i>
+      )}
+      {account?.CreatedAt && (
+        <i>created: {new Date(account.CreatedAt).toLocaleString()}</i>
+      )}
     </div>
   );
 };
 
 function Favorite(account: Account) {
-  // yes, this is a `let` for later
-  let favorite = account.favorite;
+  let favorite = account.Favorite;
   return (
-    <Form method="post">
+    <div className="favorite">
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
+        onClick={() => {
+          fetch(env.API_URL + "/updateaccount", {
+            method: "PUT",
+            headers: [
+              ["Content-Type", "application/json"],
+              ["Authorization", `${getCookie("jwt")}`],
+            ],
+            body: JSON.stringify({
+              ...account,
+              Favorite: !favorite,
+            }),
+          });
+          document.location.reload();
+        }}
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </div>
   );
 }
 

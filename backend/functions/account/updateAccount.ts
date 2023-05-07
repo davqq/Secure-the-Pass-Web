@@ -28,8 +28,8 @@ const updateAccount = async ({
     request.input("Notes", sql.VarChar, account.Notes);
     request.input("UrlName", sql.VarChar, account.UrlName);
     await request.query(
-      `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, UpdateAt = @UpdateAt, Favorite = @Favorite, Url = @Url, UrlName = @UrlName, Notes = @Notes` +
-        `WHERE Guid = @Guid`
+      `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, UpdatedAt = @UpdatedAt, Favorite = @Favorite, Url = @Url, UrlName = @UrlName, Notes = @Notes` +
+        ` WHERE Guid = @Guid`
     );
     handleSuccess({ success: "Account updated successfully" }, 200, res);
   } catch (err) {
