@@ -53,7 +53,9 @@ const accountDetails = () => {
       {account.Url && (
         <tr>
           <td className="headline">website</td>
-          <td>{account.Url}</td>
+          <td>
+            <a href={account.Url}>{account.Url}</a>
+          </td>
         </tr>
       )}
 
