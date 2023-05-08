@@ -66,7 +66,10 @@ const root = () => {
 
   return (
     <>
-      <div id="sidebar">
+      <div
+        id="sidebar"
+        className="flex flex-col w-[22rem] border-solid border-r bg-[#f7f7f7]"
+      >
         <div>
           <form id="search-form" role="search">
             <input
@@ -94,21 +97,23 @@ const root = () => {
             <button type="submit">New</button>
           </Form>
         </div>
-        <nav>
+        <nav className="flex-1 overflow-auto pt-4">
           {!accounts?.length ? (
             <p>No accounts yet</p>
           ) : (
-            <ul>
+            <ul className="p-0 m-0 list-none">
               {accounts.map((account: Account) => (
-                <li key={account.Guid}>
+                <li className="m-[0.25rem 0]" key={account.Guid}>
                   <NavLink
                     to={`/account/${account.Guid}`}
-                    className={({ isActive, isPending }) =>
-                      isActive ? "active" : isPending ? "pending" : ""
-                    }
+                    className="flex items-center justify-between overflow-hidden whitespace-pre p-2 rounded-[8px] text-inherit no-underline gap-4 hover:bg-[#e3e3e3]"
                   >
-                    {account.UrlName || account.Url || <i>No Name</i>}{" "}
-                    {account.Favorite && <span>★</span>}
+                    {account.UrlName || account.Url || (
+                      <i className="text-inherit">No Name</i>
+                    )}{" "}
+                    {account.Favorite && (
+                      <span className="float-right text-[#eeb004]">★</span>
+                    )}
                   </NavLink>
                 </li>
               ))}
@@ -116,7 +121,10 @@ const root = () => {
           )}
         </nav>
       </div>
-      <div id="detail">
+      <div
+        id="detail"
+        className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-[#fff]"
+      >
         <Outlet />
       </div>
     </>

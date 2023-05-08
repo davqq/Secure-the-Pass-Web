@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import Root, { loader as rootLoader } from "./routes/root";
 import ErrorPage from "./error-page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AccountDetails from "./routes/accountDetails";
 import SignUp from "./routes/signup";
 import SignIn from "./routes/signin";
+import "./index.css";
 import Logout from "./routes/logout";
 
 const router = createBrowserRouter([

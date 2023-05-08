@@ -27,32 +27,35 @@ const accountDetails = () => {
   }
 
   return (
-    <div id="contact">
-      <h1>
+    <div
+      id="contact"
+      className="max-w-full flex flex-nowrap flex-col justify-start items-start"
+    >
+      <h1 className="text-[2rem] font-[700] m-0 leading-[1.2]">
         {account?.UrlName || account?.Url} <Favorite {...account} />
       </h1>
 
       <br />
       <br />
 
-      <table className="Accountdetails">
-        <tr className="borderBottom">
-          <td className="headline">username</td>
+      <table className="flex flex-col flex-wrap w-full justify-start border-solid border rounded-xl">
+        <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
+          <td className="text-sm text-headline">username</td>
           <td>{account.Username}</td>
         </tr>
-        <tr className="borderBottom">
-          <td className="headline">email</td>
+        <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
+          <td className="text-sm text-headline">email</td>
           <td>{account.Email}</td>
         </tr>
-        <tr>
-          <td className="headline">password</td>
-          <td>{account.Password}</td>
+        <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis">
+          <td className="text-sm text-headline">password</td>
+          <td className="overflow-auto">{account.Password}</td>
         </tr>
       </table>
 
       {account.Url && (
-        <tr>
-          <td className="headline">website</td>
+        <tr className="p-[10px] flex flex-col w-full overflow-hidden">
+          <td className="text-sm text-headline">website</td>
           <td>
             <a href={account.Url}>{account.Url}</a>
           </td>
@@ -60,8 +63,8 @@ const accountDetails = () => {
       )}
 
       {account.Notes && (
-        <tr>
-          <td className="headline">notes</td>
+        <tr className="p-[10px] flex flex-col w-full overflow-hidden">
+          <td className="text-sm text-headline">notes</td>
           <td>{account.Notes}</td>
         </tr>
       )}
@@ -69,10 +72,14 @@ const accountDetails = () => {
       <br />
 
       {account?.UpdatedAt && (
-        <i>modified: {new Date(account.UpdatedAt).toLocaleString()}</i>
+        <i className="flex text-[#818181] justify-center w-full">
+          modified: {new Date(account.UpdatedAt).toLocaleString()}
+        </i>
       )}
       {account?.CreatedAt && (
-        <i>created: {new Date(account.CreatedAt).toLocaleString()}</i>
+        <i className="flex text-[#818181] justify-center w-full">
+          created: {new Date(account.CreatedAt).toLocaleString()}
+        </i>
       )}
     </div>
   );
@@ -81,9 +88,10 @@ const accountDetails = () => {
 function Favorite(account: Account) {
   let favorite = account.Favorite;
   return (
-    <div className="favorite">
+    <div className="flex items-center mt-1">
       <button
         name="favorite"
+        className="text-base font-[inherit] border-none rounded-[8px] pt-[0.5rem] pb-[0.5rem] pl-[0.75rem] pr-[0.75rem] shadow-[] bg-white m-0 text-[#3992ff] font-[500]"
         value={favorite ? "false" : "true"}
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
         onClick={() => {

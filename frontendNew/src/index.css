@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html {
   box-sizing: border-box;
 }
@@ -35,7 +39,7 @@ button {
   border: none;
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
-  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2); /* muss noch überstetzt werden*/
   background-color: white;
   line-height: 1.5;
   margin: 0;
@@ -98,13 +102,13 @@ form[action$="destroy"] button {
   border-width: 0;
 }
 
-#root {
+/* #root {
   display: flex;
   height: 100%;
   width: 100%;
-}
+} */
 
-.Accountdetails {
+/* .Accountdetails {
   border: 0.1px solid #e3e3e3;
   border-radius: 0.8rem;
   display: flex;
@@ -112,40 +116,31 @@ form[action$="destroy"] button {
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-}
+} */
 
-tr {
+/* tr {
   padding: 10px;
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-}
+} */
 
-.headline {
-  font-size: small;
-  color: #3992ff;
-}
-
-.borderBottom {
-  border-bottom: 1px solid #e3e3e3;
-}
-
-#sidebar {
+/* #sidebar {
   width: 22rem;
   background-color: #f7f7f7;
   border-right: solid 1px #e3e3e3;
   display: flex;
   flex-direction: column;
-}
+} */
 
 #sidebar > * {
   padding-left: 2rem;
   padding-right: 2rem;
 }
 
-#sidebar h1 {
+/* #sidebar h1 {
   font-size: 1rem;
   font-weight: 500;
   display: flex;
@@ -155,7 +150,7 @@ tr {
   border-top: 1px solid #e3e3e3;
   order: 1;
   line-height: 1;
-}
+} */
 
 #sidebar > div {
   display: flex;
@@ -203,30 +198,30 @@ tr {
   }
 }
 
-#sidebar nav {
+/* #sidebar nav {
   flex: 1;
   overflow: auto;
   padding-top: 1rem;
-}
+} */
 
-#sidebar nav a span {
+/* #sidebar nav a span {
   float: right;
   color: #eeb004;
-}
+} */
 #sidebar nav a.active span {
   color: inherit;
 }
 
-i {
+/* i {
   color: #818181;
   display: flex;
   justify-content: center;
   width: 100%;
-}
+} */
 #sidebar nav .active i {
   color: inherit;
 }
-
+/* 
 #sidebar ul {
   padding: 0;
   margin: 0;
@@ -235,9 +230,9 @@ i {
 
 #sidebar li {
   margin: 0.25rem 0;
-}
+} */
 
-#sidebar nav a {
+/* #sidebar nav a {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -249,11 +244,11 @@ i {
   color: inherit;
   text-decoration: none;
   gap: 1rem;
-}
+} */
 
-#sidebar nav a:hover {
+/* #sidebar nav a:hover {
   background: #e3e3e3;
-}
+} */
 
 #sidebar nav a.active {
   background: hsl(224, 98%, 58%);
@@ -264,12 +259,12 @@ i {
   color: hsl(224, 98%, 58%);
 }
 
-#detail {
+/* #detail {
   flex: 1;
   padding: 2rem 4rem;
   width: 100%;
   background-color: #fff;
-}
+} */
 
 #detail.loading {
   opacity: 0.25;
@@ -277,50 +272,40 @@ i {
   transition-delay: 200ms;
 }
 
-#contact {
+/* #contact {
   max-width: 100%;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-}
+} */
 
-#contact h1 {
+/* #contact h1 {
   font-size: 2rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
-}
-
+} */
+/* 
 #contact h1 + p {
   margin: 0;
 }
 
 #contact h1 + p + p {
   white-space: break-spaces;
-}
+} */
 
 #contact h1:focus {
   outline: none;
   color: hsl(224, 98%, 58%);
 }
-
-#contact a[href*="twitter"] {
-  display: flex;
-  font-size: 1.5rem;
-  color: #3992ff;
-  text-decoration: none;
-}
-#contact a[href*="twitter"]:hover {
-  text-decoration: underline;
-}
-
+/* 
 #contact i {
   color: #818181;
   align-items: center;
-}
-
+} */
+/* 
 #contact img {
   width: 12rem;
   height: 12rem;
@@ -328,7 +313,7 @@ i {
   margin-right: 2rem;
   border-radius: 1.5rem;
   object-fit: cover;
-}
+} */
 
 #contact h1 ~ div {
   display: flex;
