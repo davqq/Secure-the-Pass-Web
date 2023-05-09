@@ -31,7 +31,7 @@ body {
   line-height: 1.5;
   color: #121212;
 }
-textarea,
+/* textarea,
 input,
 button {
   font-size: 1rem;
@@ -39,11 +39,12 @@ button {
   border: none;
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
-  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2); /* muss noch überstetzt werden*/
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2); 
   background-color: white;
   line-height: 1.5;
   margin: 0;
-}
+} 
+*/
 button {
   color: #3992ff;
   font-weight: 500;
@@ -60,24 +61,24 @@ button:active {
   transform: translateY(1px);
 }
 
-#contact h1 {
+/* #contact h1 {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-}
+} */
 
-.favorite {
+/* .favorite {
   display: flex;
   align-items: center;
   margin-top: 0.25rem;
-}
+} */
 
-.favorite button {
+/* .favorite button {
   box-shadow: none;
   font-size: 1.5rem;
   font-weight: 400;
   padding: 0;
-}
+} */
 .favorite button[value="true"] {
   color: #a4a4a4;
 }
@@ -90,7 +91,7 @@ form[action$="destroy"] button {
   color: #f44250;
 }
 
-.sr-only {
+/* .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -100,7 +101,7 @@ form[action$="destroy"] button {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-}
+} */
 
 /* #root {
   display: flex;
@@ -134,11 +135,11 @@ form[action$="destroy"] button {
   display: flex;
   flex-direction: column;
 } */
-
+/* 
 #sidebar > * {
   padding-left: 2rem;
   padding-right: 2rem;
-}
+} */
 
 /* #sidebar h1 {
   font-size: 1rem;

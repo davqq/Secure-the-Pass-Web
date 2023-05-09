@@ -31,7 +31,7 @@ const accountDetails = () => {
       id="contact"
       className="max-w-full flex flex-nowrap flex-col justify-start items-start"
     >
-      <h1 className="text-[2rem] font-[700] m-0 leading-[1.2]">
+      <h1 className="flex items-start gap-4 text-[2rem] font-[700] m-0 leading-[1.2]">
         {account?.UrlName || account?.Url} <Favorite {...account} />
       </h1>
 
@@ -91,7 +91,7 @@ function Favorite(account: Account) {
     <div className="flex items-center mt-1">
       <button
         name="favorite"
-        className="text-base font-[inherit] border-none rounded-[8px] pt-[0.5rem] pb-[0.5rem] pl-[0.75rem] pr-[0.75rem] shadow-[] bg-white m-0 text-[#3992ff] font-[500]"
+        className="text-[1.5rem] font-[400] p-0"
         value={favorite ? "false" : "true"}
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
         onClick={() => {

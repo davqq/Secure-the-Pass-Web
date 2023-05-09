@@ -70,7 +70,7 @@ const root = () => {
         id="sidebar"
         className="flex flex-col w-[22rem] border-solid border-r bg-[#f7f7f7]"
       >
-        <div>
+        <div className="pl-8 pr-8">
           <form id="search-form" role="search">
             <input
               id="q"
@@ -78,7 +78,7 @@ const root = () => {
               placeholder="Search"
               type="search"
               name="q"
-              className={loading ? "loading" : ""}
+              className={`font-[inherit] text-base border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white m-0 ${loading ? "bg-none" : "bg-"}`}
               value={searchParams.get("q") || ""}
               onChange={(e) => {
                 setSearchParams(
@@ -91,13 +91,16 @@ const root = () => {
               }}
             />
             <div id="search-spinner" aria-hidden hidden={!loading} />
-            <div className="sr-only" aria-live="polite"></div>
+            <div
+              className="absolute w-[1px] h-[1px] p-0 m-[-1px] overflow-hidden whitespace-nowrap border-[0]"
+              aria-live="polite"
+            ></div>
           </form>
           <Form method="post">
             <button type="submit">New</button>
           </Form>
         </div>
-        <nav className="flex-1 overflow-auto pt-4">
+        <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">
           {!accounts?.length ? (
             <p>No accounts yet</p>
           ) : (
