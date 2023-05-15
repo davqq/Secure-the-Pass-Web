@@ -78,7 +78,11 @@ const root = () => {
               placeholder="Search"
               type="search"
               name="q"
-              className={`font-[inherit] text-base border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white m-0 ${loading ? "bg-none" : "bg-"}`}
+              className={`font-[inherit] text-base border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white m-0 hover:shadow ${
+                loading
+                  ? "bg-none"
+                  : "bg-[url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='%23999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E)] bg-no-repeat bg-left relative"
+              }`}
               value={searchParams.get("q") || ""}
               onChange={(e) => {
                 setSearchParams(
@@ -97,7 +101,12 @@ const root = () => {
             ></div>
           </form>
           <Form method="post">
-            <button type="submit">New</button>
+            <button
+              type="submit"
+              className="text-base font-[inherit] text-[#3992ff] border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white hover:shadow active:shadow-md active:translate-y-px"
+            >
+              New
+            </button>
           </Form>
         </div>
         <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">

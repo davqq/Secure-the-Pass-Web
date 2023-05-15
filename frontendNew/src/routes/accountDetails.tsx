@@ -7,8 +7,10 @@ import env from "react-dotenv";
 const accountDetails = () => {
   const { accountId } = useParams();
   const [account, setAccount] = useState<Account>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`${env.API_URL}/getaccount/${accountId}`, {
       method: "GET",
       headers: [
@@ -19,11 +21,57 @@ const accountDetails = () => {
       .then((res) => res.json())
       .then((result) => {
         setAccount(result);
+        setLoading(false);
       });
   }, [accountId]);
 
-  if (!account) {
-    return <div>Loading...</div>;
+  if (!account || loading || true) {
+    return (
+      <div
+        id="contact"
+        className="max-w-full flex flex-nowrap flex-col justify-start items-start"
+      >
+        <h1 className="flex items-start gap-4 text-[2rem] font-[700] m-0 leading-[1.2]">
+          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2" />
+        </h1>
+
+        <br />
+        <br />
+        <table className="flex flex-col flex-wrap w-full justify-start border-solid border rounded-xl">
+          <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
+            <td className="text-sm text-headline">username</td>
+            <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
+          </tr>
+          <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
+            <td className="text-sm text-headline">email</td>
+            <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
+          </tr>
+          <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis">
+            <td className="text-sm text-headline">password</td>
+            <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
+          </tr>
+        </table>
+
+        <div className="p-[10px] flex flex-col w-full overflow-hidden">
+          <p className="text-sm text-headline">website</p>
+          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
+        </div>
+
+        <div className="p-[10px] flex flex-col w-full overflow-hidden">
+          <p className="text-sm text-headline">notes</p>
+          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
+        </div>
+
+        <br />
+
+        <div className="flex text-[#818181] justify-center w-full">
+          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
+        </div>
+        <div className="flex text-[#818181] justify-center w-full">
+          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -37,7 +85,6 @@ const accountDetails = () => {
 
       <br />
       <br />
-
       <table className="flex flex-col flex-wrap w-full justify-start border-solid border rounded-xl">
         <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
           <td className="text-sm text-headline">username</td>
@@ -54,19 +101,17 @@ const accountDetails = () => {
       </table>
 
       {account.Url && (
-        <tr className="p-[10px] flex flex-col w-full overflow-hidden">
-          <td className="text-sm text-headline">website</td>
-          <td>
-            <a href={account.Url}>{account.Url}</a>
-          </td>
-        </tr>
+        <div className="p-[10px] flex flex-col w-full overflow-hidden">
+          <p className="text-sm text-headline">website</p>
+          <a href={account.Url}>{account.Url}</a>
+        </div>
       )}
 
       {account.Notes && (
-        <tr className="p-[10px] flex flex-col w-full overflow-hidden">
-          <td className="text-sm text-headline">notes</td>
-          <td>{account.Notes}</td>
-        </tr>
+        <div className="p-[10px] flex flex-col w-full overflow-hidden">
+          <p className="text-sm text-headline">notes</p>
+          <p>{account.Notes}</p>
+        </div>
       )}
 
       <br />
@@ -91,7 +136,7 @@ function Favorite(account: Account) {
     <div className="flex items-center mt-1">
       <button
         name="favorite"
-        className="text-[1.5rem] font-[400] p-0"
+        className="text-[1.5rem] font-[400] p-0 hover:text-[#eeb004] border-none"
         value={favorite ? "false" : "true"}
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
         onClick={() => {
