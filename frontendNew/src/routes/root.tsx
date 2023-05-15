@@ -66,11 +66,8 @@ const root = () => {
 
   return (
     <>
-      <div
-        id="sidebar"
-        className="flex flex-col w-[22rem] border-solid border-r bg-[#f7f7f7]"
-      >
-        <div className="pl-8 pr-8">
+      <div className="flex flex-col w-[22rem] border-solid border-r bg-[#f7f7f7]">
+        <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b">
           <form id="search-form" role="search">
             <input
               id="q"
@@ -78,10 +75,8 @@ const root = () => {
               placeholder="Search"
               type="search"
               name="q"
-              className={`font-[inherit] text-base border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white m-0 hover:shadow ${
-                loading
-                  ? "bg-none"
-                  : "bg-[url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='%23999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E)] bg-no-repeat bg-left relative"
+              className={`font-[inherit] text-base border-none rounded-lg pt-2 pb-2 pr-3 shadow-sm bg-white m-0 hover:shadow w-full pl-8 bg-no-repeat bg-leftWithPadding relative bg-[length:1em] ${
+                loading ? "bg-none" : "bg-searchspinner"
               }`}
               value={searchParams.get("q") || ""}
               onChange={(e) => {
@@ -94,13 +89,17 @@ const root = () => {
                 setLoading(true);
               }}
             />
-            <div id="search-spinner" aria-hidden hidden={!loading} />
+            <div
+              className="w-4 h-4 animate-spin left-[2.6rem] top-7 absolute bg-searchspinner"
+              aria-hidden
+              hidden={!loading}
+            />
             <div
               className="absolute w-[1px] h-[1px] p-0 m-[-1px] overflow-hidden whitespace-nowrap border-[0]"
               aria-live="polite"
-            ></div>
+            />
           </form>
-          <Form method="post">
+          <Form method="post" className="relative">
             <button
               type="submit"
               className="text-base font-[inherit] text-[#3992ff] border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white hover:shadow active:shadow-md active:translate-y-px"

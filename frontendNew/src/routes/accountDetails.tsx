@@ -25,7 +25,7 @@ const accountDetails = () => {
       });
   }, [accountId]);
 
-  if (!account || loading || true) {
+  if (!account || loading) {
     return (
       <div
         id="contact"
@@ -75,30 +75,26 @@ const accountDetails = () => {
   }
 
   return (
-    <div
-      id="contact"
-      className="max-w-full flex flex-nowrap flex-col justify-start items-start"
-    >
-      <h1 className="flex items-start gap-4 text-[2rem] font-[700] m-0 leading-[1.2]">
+    <div className="max-w-full flex flex-nowrap flex-col justify-start items-start">
+      <h1 className="flex items-start gap-4 text-[2rem] font-[700] m-0 leading-[1.2] focus:outline-none focus:text-blue-700">
         {account?.UrlName || account?.Url} <Favorite {...account} />
       </h1>
 
       <br />
-      <br />
-      <table className="flex flex-col flex-wrap w-full justify-start border-solid border rounded-xl">
-        <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
-          <td className="text-sm text-headline">username</td>
-          <td>{account.Username}</td>
-        </tr>
-        <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
-          <td className="text-sm text-headline">email</td>
-          <td>{account.Email}</td>
-        </tr>
-        <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis">
-          <td className="text-sm text-headline">password</td>
-          <td className="overflow-auto">{account.Password}</td>
-        </tr>
-      </table>
+      <div className="grid grid-rows-3 grid-flow-col  auto-rows-max w-full border-solid border rounded-xl">
+        <div className="p-[10px] overflow-auto border-b">
+          <div className="text-sm text-headline">username</div>
+          <div>{account.Username}</div>
+        </div>
+        <div className="p-[10px] overflow-auto border-b">
+          <div className="text-sm text-headline">email</div>
+          <div>{account.Email}</div>
+        </div>
+        <div className="p-[10px] overflow-auto">
+          <div className="text-sm text-headline">password</div>
+          <div>{account.Password}</div>
+        </div>
+      </div>
 
       {account.Url && (
         <div className="p-[10px] flex flex-col w-full overflow-hidden">

@@ -6,7 +6,6 @@ export default function ErrorPage() {
 
   return (
     <div
-      id="error-page"
       className="flex flex-col items-center justify-center w-full"
     >
       <h1>Oops!</h1>
