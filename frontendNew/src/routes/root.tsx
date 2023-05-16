@@ -114,10 +114,10 @@ const root = () => {
           ) : (
             <ul className="p-0 m-0 list-none">
               {accounts.map((account: Account) => (
-                <li className="m-[0.25rem 0]" key={account.Guid}>
+                <li className="mt-1 mb-1" key={account.Guid}>
                   <NavLink
                     to={`/account/${account.Guid}`}
-                    className="flex items-center justify-between overflow-hidden whitespace-pre p-2 rounded-[8px] text-inherit no-underline gap-4 hover:bg-[#e3e3e3]"
+                    className="flex items-center justify-between overflow-hidden whitespace-pre p-2 rounded-lg text-inherit no-underline gap-4 hover:bg-[#e3e3e3] focus:bg-blue-600 focus:text-white"
                   >
                     {account.UrlName || account.Url || (
                       <i className="text-inherit">No Name</i>
@@ -134,7 +134,7 @@ const root = () => {
       </div>
       <div
         id="detail"
-        className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-[#fff]"
+        className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-[#fff] overflow-scroll"
       >
         <Outlet />
       </div>

@@ -132,8 +132,9 @@ function Favorite(account: Account) {
     <div className="flex items-center mt-1">
       <button
         name="favorite"
-        className="text-[1.5rem] font-[400] p-0 hover:text-[#eeb004] border-none"
-        value={favorite ? "false" : "true"}
+        className={`text-[1.5rem] font-[400] p-0 border-none ${
+          favorite ? "text-[#eeb004] " : "text-[#a4a4a4] hover:text-[#eeb004]"
+        }`}
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
         onClick={() => {
           fetch(env.API_URL + "/updateaccount", {
