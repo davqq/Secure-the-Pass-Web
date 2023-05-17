@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
 const logout = () => {
+  const navigate = useNavigate();
   document.cookie = "";
-  window.location.replace("/login");
+  navigate("/login");
   return null;
 };
 

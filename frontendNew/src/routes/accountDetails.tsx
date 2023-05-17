@@ -29,46 +29,24 @@ const accountDetails = () => {
     return (
       <div
         id="contact"
-        className="max-w-full flex flex-nowrap flex-col justify-start items-start"
+        className="max-w-full flex flex-nowrap flex-col justify-start items-start animate-pulse"
       >
-        <h1 className="flex items-start gap-4 text-[2rem] font-[700] m-0 leading-[1.2]">
-          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2" />
-        </h1>
+        <div className="h-2 bg-slate-700 rounded col-span-2 w-3/4"></div>
 
         <br />
-        <br />
-        <table className="flex flex-col flex-wrap w-full justify-start border-solid border rounded-xl">
-          <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
-            <td className="text-sm text-headline">username</td>
-            <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
-          </tr>
-          <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis border-bottom-solid border-b">
-            <td className="text-sm text-headline">email</td>
-            <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
-          </tr>
-          <tr className="p-[10px] flex flex-col w-full overflow-hidden text-ellipsis">
-            <td className="text-sm text-headline">password</td>
-            <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
-          </tr>
-        </table>
-
-        <div className="p-[10px] flex flex-col w-full overflow-hidden">
-          <p className="text-sm text-headline">website</p>
-          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
-        </div>
-
-        <div className="p-[10px] flex flex-col w-full overflow-hidden">
-          <p className="text-sm text-headline">notes</p>
-          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
-        </div>
-
-        <br />
-
-        <div className="flex text-[#818181] justify-center w-full">
-          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
-        </div>
-        <div className="flex text-[#818181] justify-center w-full">
-          <div className="h-2 animate-pulse bg-slate-700 rounded col-span-2"></div>
+        <div className="grid grid-rows-3 grid-flow-col auto-rows-max w-full border-solid border rounded-xl">
+          <div className="p-2.5 overflow-auto border-b">
+            <div className="h-2 bg-slate-400 rounded col-span-2 w-1/4 mb-2"></div>
+            <div className="h-2 bg-slate-700 rounded col-span-2 w-2/4"></div>
+          </div>
+          <div className="p-2.5 overflow-auto border-b">
+            <div className="h-2 bg-slate-400 rounded col-span-2 w-1/4 mb-2"></div>
+            <div className="h-2 bg-slate-700 rounded col-span-2 w-2/4"></div>
+          </div>
+          <div className="p-2.5 overflow-auto">
+            <div className="h-2 bg-slate-400 rounded col-span-2 w-1/4 mb-2"></div>
+            <div className="h-2 bg-slate-700 rounded col-span-2 w-2/4"></div>
+          </div>
         </div>
       </div>
     );
@@ -81,30 +59,30 @@ const accountDetails = () => {
       </h1>
 
       <br />
-      <div className="grid grid-rows-3 grid-flow-col  auto-rows-max w-full border-solid border rounded-xl">
-        <div className="p-[10px] overflow-auto border-b">
+      <div className="grid-rows-3 grid-flow-col w-full border-solid border rounded-xl">
+        <div className="p-2.5 overflow-auto border-b">
           <div className="text-sm text-headline">username</div>
           <div>{account.Username}</div>
         </div>
-        <div className="p-[10px] overflow-auto border-b">
+        <div className="p-2.5 overflow-auto border-b">
           <div className="text-sm text-headline">email</div>
           <div>{account.Email}</div>
         </div>
-        <div className="p-[10px] overflow-auto">
+        <div className="p-2.5 overflow-auto">
           <div className="text-sm text-headline">password</div>
           <div>{account.Password}</div>
         </div>
       </div>
 
       {account.Url && (
-        <div className="p-[10px] flex flex-col w-full overflow-hidden">
+        <div className="p-2.5 flex flex-col w-full overflow-hidden">
           <p className="text-sm text-headline">website</p>
           <a href={account.Url}>{account.Url}</a>
         </div>
       )}
 
       {account.Notes && (
-        <div className="p-[10px] flex flex-col w-full overflow-hidden">
+        <div className="p-2.5 flex flex-col w-full overflow-hidden">
           <p className="text-sm text-headline">notes</p>
           <p>{account.Notes}</p>
         </div>

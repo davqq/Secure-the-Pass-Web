@@ -1,4 +1,4 @@
-import { Form, NavLink, Outlet, useSearchParams } from "react-router-dom";
+import { Form, NavLink, Outlet, useNavigate, useSearchParams } from "react-router-dom";
 import env from "react-dotenv";
 import getCookie from "../helper/getCookie";
 import { useEffect, useRef, useState } from "react";
@@ -66,7 +66,7 @@ const root = () => {
 
   return (
     <>
-      <div className="flex flex-col w-[22rem] border-solid border-r bg-[#f7f7f7]">
+      <div className="flex flex-col w-72 border-solid border-r bg-[#f7f7f7]">
         <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b">
           <form id="search-form" role="search">
             <input
