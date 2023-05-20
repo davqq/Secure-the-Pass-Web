@@ -32,14 +32,6 @@ body {
   color: #121212;
 }
 
-.favorite button[value="true"] {
-  color: #a4a4a4;
-}
-.favorite button[value="true"]:hover,
-.favorite button[value="false"] {
-  color: #eeb004;
-}
-
-form[action$="destroy"] button {
-  color: #f44250;
+#accountList:active {
+  background-color: #006eff;
 }

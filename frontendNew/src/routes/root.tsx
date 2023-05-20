@@ -1,4 +1,10 @@
-import { Form, NavLink, Outlet, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Form,
+  NavLink,
+  Outlet,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import env from "react-dotenv";
 import getCookie from "../helper/getCookie";
 import { useEffect, useRef, useState } from "react";
@@ -117,7 +123,8 @@ const root = () => {
                 <li className="mt-1 mb-1" key={account.Guid}>
                   <NavLink
                     to={`/account/${account.Guid}`}
-                    className="flex items-center justify-between overflow-hidden whitespace-pre p-2 rounded-lg text-inherit no-underline gap-4 hover:bg-[#e3e3e3] focus:bg-blue-600 focus:text-white"
+                    id="accountList"
+                    className="flex items-center justify-between overflow-hidden whitespace-pre p-2 rounded-lg text-inherit no-underline gap-4 hover:bg-[#e3e3e3]"
                   >
                     {account.UrlName || account.Url || (
                       <i className="text-inherit">No Name</i>

@@ -27,10 +27,7 @@ const accountDetails = () => {
 
   if (!account || loading) {
     return (
-      <div
-        id="contact"
-        className="max-w-full flex flex-nowrap flex-col justify-start items-start animate-pulse"
-      >
+      <div className="max-w-full flex flex-nowrap flex-col justify-start items-start animate-pulse">
         <div className="h-2 bg-slate-700 rounded col-span-2 w-3/4"></div>
 
         <br />
@@ -54,7 +51,7 @@ const accountDetails = () => {
 
   return (
     <div className="max-w-full flex flex-nowrap flex-col justify-start items-start">
-      <h1 className="flex items-start gap-4 text-[2rem] font-[700] m-0 leading-[1.2] focus:outline-none focus:text-blue-700">
+      <h1 className="flex items-start gap-4 text-[2rem] font-[700] m-0 leading-[1.2] ">
         {account?.UrlName || account?.Url} <Favorite {...account} />
       </h1>
 
@@ -73,23 +70,19 @@ const accountDetails = () => {
           <div>{account.Password}</div>
         </div>
       </div>
-
       {account.Url && (
         <div className="p-2.5 flex flex-col w-full overflow-hidden">
           <p className="text-sm text-headline">website</p>
           <a href={account.Url}>{account.Url}</a>
         </div>
       )}
-
       {account.Notes && (
         <div className="p-2.5 flex flex-col w-full overflow-hidden">
           <p className="text-sm text-headline">notes</p>
           <p>{account.Notes}</p>
         </div>
       )}
-
       <br />
-
       {account?.UpdatedAt && (
         <i className="flex text-[#818181] justify-center w-full">
           modified: {new Date(account.UpdatedAt).toLocaleString()}
