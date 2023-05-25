@@ -71,9 +71,9 @@ const accountDetails = () => {
         </div>
       </div>
       {account.Url && (
-        <div className="p-2.5 flex flex-col w-full overflow-hidden">
+        <div className="p-2.5 flex flex-col overflow-hidden">
           <p className="text-sm text-headline">website</p>
-          <a href={account.Url}>{account.Url}</a>
+          <p>{account.Url}</p>
         </div>
       )}
       {account.Notes && (
