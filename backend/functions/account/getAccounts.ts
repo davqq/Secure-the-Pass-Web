@@ -24,6 +24,7 @@ export interface AccountSmall {
   Url: string;
   UrlName: string;
   Favorite: boolean;
+  Email: string;
   UpdatedAt: Date;
 }
 
@@ -43,7 +44,7 @@ const getAccounts = async ({
     let request = pool.request();
     request.input("UserGuid", sql.VarChar, currentUser.Guid);
     let result = await request.query<AccountSmall>(
-      `SELECT Guid, Username, Url, UrlName, Favorite, UpdatedAt FROM [dbo].[Account] WHERE UserGuid = @UserGuid ORDER BY UpdatedAt DESC`
+      `SELECT LOWER(Guid) as Guid, Username, Url, UrlName, Favorite, UpdatedAt, Email FROM [dbo].[Account] WHERE UserGuid = @UserGuid ORDER BY UpdatedAt DESC`
     );
 
     let accounts =

@@ -22,26 +22,6 @@ export interface Account {
   Favorite: boolean;
 }
 
-export const loader = async () => {
-  fetch(`${env.API_URL}/checktoken`, {
-    method: "POST",
-    headers: [
-      ["Content-Type", "application/json"],
-      ["Authorization", `${getCookie("jwt")}`],
-    ],
-  }).then((result) => {
-    if (result.status === 403 || result.status === 401) {
-      return window.location.replace("/logout");
-    }
-  });
-
-  if (localStorage.getItem("dark") === "true") {
-    (document.querySelector("body") as HTMLBodyElement).classList.add("dark");
-  }
-
-  return null;
-};
-
 const root = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [accounts, setAccounts] = useState<Account[]>([]);
@@ -135,7 +115,7 @@ const root = () => {
   }, [accounts]);
   return (
     <>
-      <div className="flex flex-col w-72 border-solid border-r bg-[#f7f7f7]">
+      <div className="flex flex-col w-80 border-solid border-r bg-[#f7f7f7]">
         <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b">
           <form id="search-form" role="search">
             <input
@@ -168,36 +148,49 @@ const root = () => {
               aria-live="polite"
             />
           </form>
-          <Form method="post" className="relative">
-            <button
-              type="submit"
-              className="text-base font-[inherit] text-[#3992ff] border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white hover:shadow active:shadow-md active:translate-y-px"
-            >
-              New
-            </button>
-          </Form>
+          <button
+            type="submit"
+            className="text-base font-[inherit] text-[#3992ff] border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white hover:shadow active:shadow-md active:translate-y-px"
+          >
+            New
+          </button>
         </div>
         <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">
           {!groupedAccounts || Object.entries(groupedAccounts).length === 0 ? (
             <p>No accounts yet</p>
           ) : (
             Object.entries(groupedAccounts).map(([groupLabel, accounts]) => (
-              <li className="group" key={groupLabel}>
-                <p className="font-bold">{groupLabel}</p>
-                <ul className="p-0 m-0 list-none">
+              <li className="list-none" key={groupLabel}>
+                <p className="font-bold text-xs text-gray-600">{groupLabel}</p>
+                <ul className="p-0 m-0">
                   {accounts.map((account: Account) => (
                     <li className="mt-1 mb-1" key={account.Guid}>
                       <NavLink
                         to={`/account/${account.Guid}`}
                         id="accountList"
-                        className="flex items-center justify-between overflow-hidden whitespace-pre p-2 rounded-lg text-inherit no-underline gap-4 hover:bg-[#e3e3e3]"
+                        className="flex items-center justify-between p-2 rounded-xl text-inherit no-underline gap-4 hover:bg-gray-300"
                       >
-                        {account.UrlName || account.Url || (
-                          <i className="text-inherit">No Name</i>
-                        )}{" "}
-                        {account.Favorite && (
-                          <span className="float-right text-[#eeb004]">★</span>
-                        )}
+                        <div className="flex items-center">
+                          <div className="relative">
+                            <img
+                              className="w-12 h-12 rounded bg-gray-300"
+                              src="https://avatars.githubusercontent.com/u/68165812?v=4"
+                            />
+                            {account.Favorite && (
+                              <span className="absolute right-0 bottom-0 text-[#eeb004] rounded-r text-xl">
+                                ★
+                              </span>
+                            )}
+                          </div>
+                          <div className="ml-2 flex flex-col text-ellipsis overflow-hidden">
+                            {account.UrlName || account.Url || (
+                              <i className="text-inherit">No Name</i>
+                            )}
+                            <span className="text-xs text-gray-400">
+                              {account.Email}
+                            </span>
+                          </div>
+                        </div>
                       </NavLink>
                     </li>
                   ))}

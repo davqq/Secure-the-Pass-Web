@@ -57,18 +57,24 @@ const accountDetails = () => {
 
       <br />
       <div className="grid-rows-3 grid-flow-col w-full border-solid border rounded-xl">
-        <div className="p-2.5 overflow-auto border-b">
-          <div className="text-sm text-headline">username</div>
-          <div>{account.Username}</div>
-        </div>
-        <div className="p-2.5 overflow-auto border-b">
-          <div className="text-sm text-headline">email</div>
-          <div>{account.Email}</div>
-        </div>
-        <div className="p-2.5 overflow-auto">
-          <div className="text-sm text-headline">password</div>
-          <div>{account.Password}</div>
-        </div>
+        {account?.Username && (
+          <div className="p-2.5 overflow-auto border-b">
+            <div className="text-sm text-headline">username</div>
+            <div>{account.Username}</div>
+          </div>
+        )}
+        {account?.Email && (
+          <div className="p-2.5 overflow-auto border-b">
+            <div className="text-sm text-headline">email</div>
+            <div>{account.Email}</div>
+          </div>
+        )}
+        {account?.Password && (
+          <div className="p-2.5 overflow-auto">
+            <div className="text-sm text-headline">password</div>
+            <div>{account.Password}</div>
+          </div>
+        )}
       </div>
       {account.Url && (
         <div className="p-2.5 flex flex-col overflow-hidden">
