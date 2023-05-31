@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const CompanyLogo = ({ companyName }: { companyName: string }) => {
   const [logoUrl, setLogoUrl] = useState("");
@@ -10,22 +10,18 @@ const CompanyLogo = ({ companyName }: { companyName: string }) => {
         `https://logo.clearbit.com/${companyName
           .toLowerCase()
           .replace(" ", "")}`
-      )
-        .then((res) => res.json())
-        .then((res) => setLogoUrl(res.url));
+      ).then((res) => setLogoUrl(res.url));
     } catch (error) {
       console.log(error);
     }
   }, [companyName]);
 
   return (
-    <div>
-      <img
-        className="w-12 h-12 rounded bg-gray-300"
-        src={logoUrl || "https://via.placeholder.com/150"}
-        alt={companyName}
-      />
-    </div>
+    <img
+      className="w-14 max-h-full my-auto rounded "
+      src={logoUrl || "https://via.placeholder.com/150"}
+      alt={companyName}
+    />
   );
 };
 

@@ -26,9 +26,8 @@ const updateAccount = async ({
     request.input("UpdatedAt", sql.VarChar, new Date().toISOString());
     request.input("Favorite", sql.Int, account.Favorite);
     request.input("Notes", sql.VarChar, account.Notes);
-    request.input("UrlName", sql.VarChar, account.UrlName);
     await request.query(
-      `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, UpdatedAt = @UpdatedAt, Favorite = @Favorite, Url = @Url, UrlName = @UrlName, Notes = @Notes` +
+      `UPDATE [dbo].[Account] SET Username = @Username, Email = @Email, Password = @Password, UpdatedAt = @UpdatedAt, Favorite = @Favorite, Url = @Url, Notes = @Notes` +
         ` WHERE Guid = @Guid`
     );
     handleSuccess({ success: "Account updated successfully" }, 200, res);

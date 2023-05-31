@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Form, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Account } from "./root";
 import getCookie from "../helper/getCookie";
 import env from "react-dotenv";
+import CompanyLogo from "./CompanyLogo";
 
 const accountDetails = () => {
   const { accountId } = useParams();
@@ -51,9 +52,13 @@ const accountDetails = () => {
 
   return (
     <div className="max-w-full flex flex-nowrap flex-col justify-start items-start">
-      <h1 className="flex items-start gap-4 text-[2rem] font-[700] m-0 leading-[1.2] ">
-        {account?.UrlName || account?.Url} <Favorite {...account} />
-      </h1>
+      <div className="flex">
+        <CompanyLogo companyName={account.Url} />
+        <h1 className="text-[2rem] font-[700] m-4 leading-[1.2] text-center items-center flex">
+          {account?.Url}
+        </h1>
+        <Favorite {...account} />
+      </div>
 
       <br />
       <div className="grid-rows-3 grid-flow-col w-full border-solid border rounded-xl">

@@ -19,7 +19,6 @@ export interface Account {
   Notes: string;
   CreatedAt: string;
   UpdatedAt: string;
-  UrlName: string;
   Favorite: boolean;
 }
 
@@ -173,18 +172,23 @@ const root = () => {
                       >
                         <div className="flex items-center">
                           <div className="relative">
-                            <CompanyLogo companyName={account.UrlName} />
+                            <CompanyLogo companyName={account.Url} />
                             {account.Favorite && (
                               <span className="absolute right-0 bottom-0 text-[#eeb004] rounded-r text-xl">
                                 ★
                               </span>
                             )}
                           </div>
-                          <div className="ml-2 flex flex-col text-ellipsis overflow-hidden">
-                            {account.UrlName || account.Url || (
+                          <div className="w-40 ml-2 flex flex-col">
+                            {account.Url ? (
+                              <span className=" text-ellipsis overflow-hidden  whitespace-nowrap ">
+                                {account.Url}
+                              </span>
+                            ) : (
                               <i className="text-inherit">No Name</i>
                             )}
-                            <span className="text-xs text-gray-400">
+
+                            <span className="text-xs text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden">
                               {account.Email}
                             </span>
                           </div>
