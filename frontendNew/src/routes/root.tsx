@@ -8,6 +8,7 @@ import {
 import env from "react-dotenv";
 import getCookie from "../helper/getCookie";
 import { useEffect, useRef, useState } from "react";
+import CompanyLogo from "./CompanyLogo";
 
 export interface Account {
   Guid: string;
@@ -172,10 +173,7 @@ const root = () => {
                       >
                         <div className="flex items-center">
                           <div className="relative">
-                            <img
-                              className="w-12 h-12 rounded bg-gray-300"
-                              src="https://avatars.githubusercontent.com/u/68165812?v=4"
-                            />
+                            <CompanyLogo companyName={account.UrlName} />
                             {account.Favorite && (
                               <span className="absolute right-0 bottom-0 text-[#eeb004] rounded-r text-xl">
                                 ★
