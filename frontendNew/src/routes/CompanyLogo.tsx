@@ -18,7 +18,7 @@ const CompanyLogo = ({ companyName }: { companyName: string }) => {
 
   return (
     <img
-      className="w-14 max-h-full my-auto rounded "
+      className="w-14 max-h-full my-auto rounded"
       src={logoUrl || "https://via.placeholder.com/150"}
       alt={companyName}
     />

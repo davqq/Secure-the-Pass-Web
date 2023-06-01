@@ -171,7 +171,7 @@ const root = () => {
                         className="flex items-center justify-between p-2 rounded-xl text-inherit no-underline gap-4 hover:bg-gray-300"
                       >
                         <div className="flex items-center">
-                          <div className="relative">
+                          <div className="relative min-h-[3em] flex items-center">
                             <CompanyLogo companyName={account.Url} />
                             {account.Favorite && (
                               <span className="absolute right-0 bottom-0 text-[#eeb004] rounded-r text-xl">
