@@ -148,12 +148,13 @@ const root = () => {
               aria-live="polite"
             />
           </form>
-          <button
+          <NavLink
+            to="/account/new"
             type="submit"
             className="text-base font-[inherit] text-[#3992ff] border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white hover:shadow active:shadow-md active:translate-y-px"
           >
             New
-          </button>
+          </NavLink>
         </div>
         <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">
           {!groupedAccounts || Object.entries(groupedAccounts).length === 0 ? (
@@ -181,7 +182,7 @@ const root = () => {
                           </div>
                           <div className="w-40 ml-2 flex flex-col">
                             {account.Url ? (
-                              <span className=" text-ellipsis overflow-hidden  whitespace-nowrap ">
+                              <span className="text-ellipsis overflow-hidden  whitespace-nowrap ">
                                 {account.Url}
                               </span>
                             ) : (

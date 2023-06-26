@@ -10,6 +10,8 @@ import "./index.css";
 import Logout from "./routes/logout";
 import getCookie from "./helper/getCookie";
 import env from "react-dotenv";
+import NewAccount from "./routes/newAccount";
+import Dashboard from "./routes/dashboard";
 
 export const checktoken = async () => {
   fetch(`${env.API_URL}/checktoken`, {
@@ -51,7 +53,16 @@ const router = createBrowserRouter([
         path: "/account/:accountId/remove",
         loader: checktoken,
       },
+      {
+        path: "/account/new",
+        loader: checktoken,
+        element: <NewAccount />,
+      },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
   {
     path: "/login",

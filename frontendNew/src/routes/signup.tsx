@@ -1,216 +1,169 @@
-import { useEffect, useState } from "react";
-import "./signin.css";
+import React, { useState } from "react";
 import env from "react-dotenv";
 
-export default function SignUp() {
+function RegisterPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [helpTextEmail, setHelpTextEmail] = useState("");
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [helpTextUsername, setHelpTextUsername] = useState("");
-  const [errorUsername, setErrorUsername] = useState(false);
-  const [helpTextPassword, setHelpTextPassword] = useState("");
-  const [errorPassword, setErrorPassword] = useState(false);
-  const [helpTextPasswordConfirm, setHelpTextPasswordConfirm] = useState("");
-  const [errorPasswordConfirm, setErrorPasswordConfirm] = useState(false);
-  addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      Register(
-        email,
-        username,
-        password,
-        passwordConfirm,
-        setErrorEmail,
-        setHelpTextEmail,
-        setErrorUsername,
-        setHelpTextUsername,
-        setErrorPassword,
-        setHelpTextPassword,
-        setErrorPasswordConfirm,
-        setHelpTextPasswordConfirm
-      );
-    }
-  });
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleRegister = () => {
+    fetch(`${env.API_URL}/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Email: email,
+        Username: username,
+        Password: password,
+      }),
+    })
+      .then((res) => {
+        const token = res.headers.get("Authorization");
+        if (token) {
+          document.cookie = `jwt=${token};`;
+          window.location.replace("/");
+        } else if (res.status === 400) {
+          res.json().then((data) => {
+            // setErrorEmail(true);
+            // setHelpTextEmail(data.error);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <div className="wrapper fadeInDown">
-      <div id="formContent">
-        <div className="tabs">
-          <h2 className="inactive underlineHover" id="SignIn">
-            <a href="/login">Log In</a>
-          </h2>
-          <h2 className="active" id="SignUp">
-            <a href="/register">Register</a>
+    <div className="flex justify-center items-center min-h-screen bg-gray-900 w-full">
+      <div className="max-w-md w-full mx-auto">
+        <div className="text-center">
+          <img
+            className="mx-auto h-12 w-auto"
+            src="../src/assets/logo.svg"
+            alt="Logo"
+          />
+          <h2 className="mt-6 text-center text-3xl font-bold text-white">
+            Create an account
           </h2>
         </div>
+        <div className="mt-8 py-8 px-4 sm:rounded-lg sm:px-10">
+          <form className="space-y-6" onSubmit={handleRegister}>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-white"
+              >
+                Email address
+              </label>
+              <div className="mt-1">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoFocus
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
+                  placeholder="Enter your email"
+                />
+              </div>
+            </div>
 
-        <form>
-          <input
-            type="Email"
-            id="email"
-            className="fadeIn second"
-            name="login"
-            // label="Email"
-            // error={errorEmail}
-            // helperText={helpTextEmail}
-            style={{ width: "80%" }}
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setErrorEmail(false);
-              setHelpTextEmail("");
-            }}
-          />
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-white"
+              >
+                Username
+              </label>
+              <div className="mt-1">
+                <input
+                  id="username"
+                  name="username"
+                  type="username"
+                  autoComplete="username"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
+                  placeholder="Enter your username"
+                />
+              </div>
+            </div>
 
-          <input
-            type="Username"
-            id="username"
-            className="fadeIn second"
-            // error={errorUsername}
-            // helperText={helpTextUsername}
-            style={{ width: "80%", marginTop: "10px" }}
-            name="login"
-            // label="Username"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setErrorUsername(false);
-              setHelpTextUsername("");
-            }}
-          />
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-white"
+              >
+                Password
+              </label>
+              <div className="mt-1">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
+                  placeholder="Enter your password"
+                />
+              </div>
+            </div>
 
-          <input
-            type="password"
-            id="password"
-            className="fadeIn third"
-            name="login"
-            // error={errorPassword}
-            // helperText={helpTextPassword}
-            style={{ width: "80%", marginTop: "10px" }}
-            // label="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setErrorPassword(false);
-              setHelpTextPassword("");
-            }}
-          />
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-white"
+              >
+                Confirm Password
+              </label>
+              <div className="mt-1">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
+                  placeholder="Confirm your password"
+                />
+              </div>
+            </div>
 
-          <input
-            type="password"
-            id="passwordConfirm"
-            className="fadeIn third"
-            // error={errorPasswordConfirm}
-            // helperText={helpTextPasswordConfirm}
-            style={{ width: "80%", marginTop: "10px", marginBottom: "10px" }}
-            name="login"
-            // label="Password Confirm"
-            value={passwordConfirm}
-            onChange={(e) => {
-              setPasswordConfirm(e.target.value);
-              setErrorPasswordConfirm(false);
-              setHelpTextPasswordConfirm("");
-            }}
-          />
-          <input
-            type="button"
-            className="fadeIn fourth"
-            value="Register"
-            onClick={() =>
-              Register(
-                email,
-                username,
-                password,
-                passwordConfirm,
-                setErrorEmail,
-                setHelpTextEmail,
-                setErrorUsername,
-                setHelpTextUsername,
-                setErrorPassword,
-                setHelpTextPassword,
-                setErrorPasswordConfirm,
-                setHelpTextPasswordConfirm
-              )
-            }
-          />
-        </form>
+            <div>
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="text-center text-white">
+          <p className="text-gray-400 text-sm">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="font-medium text-blue-600 hover:text-blue-500"
+            >
+              Sign in
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
 }
 
-function Register(
-  email: string,
-  username: string,
-  password: string,
-  passwordConfirm: string,
-  setErrorEmail: React.Dispatch<React.SetStateAction<boolean>>,
-  setHelpTextEmail: React.Dispatch<React.SetStateAction<string>>,
-  setErrorUsername: React.Dispatch<React.SetStateAction<boolean>>,
-  setHelpTextUsername: React.Dispatch<React.SetStateAction<string>>,
-  setErrorPassword: React.Dispatch<React.SetStateAction<boolean>>,
-  setHelpTextPassword: React.Dispatch<React.SetStateAction<string>>,
-  setErrorPasswordConfirm: React.Dispatch<React.SetStateAction<boolean>>,
-  setHelpTextPasswordConfirm: React.Dispatch<React.SetStateAction<string>>
-) {
-  if (
-    email === "" ||
-    username === "" ||
-    password === "" ||
-    passwordConfirm === ""
-  ) {
-    if (email === "") {
-      setErrorEmail(true);
-      setHelpTextEmail("Email cannot be empty");
-    }
-    if (username === "") {
-      setErrorUsername(true);
-      setHelpTextUsername("Username cannot be empty");
-    }
-    if (password === "") {
-      setErrorPassword(true);
-      setHelpTextPassword("Password cannot be empty");
-    }
-    if (passwordConfirm === "") {
-      setErrorPasswordConfirm(true);
-      setHelpTextPasswordConfirm("Password cannot be empty");
-    }
-    return;
-  }
-
-  if (password !== passwordConfirm) {
-    setErrorPassword(true);
-    setHelpTextPassword("Passwords do not match");
-    setErrorPasswordConfirm(true);
-    setHelpTextPasswordConfirm("Passwords do not match");
-    return;
-  }
-
-  fetch(`${env.API_URL}/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      Email: email,
-      Username: username,
-      Password: password,
-    }),
-  })
-    .then((res) => {
-      const token = res.headers.get("Authorization");
-      if (token) {
-        document.cookie = `jwt=${token};`;
-        window.location.replace("/");
-      } else if (res.status === 400) {
-        res.json().then((data) => {
-          setErrorEmail(true);
-          setHelpTextEmail(data.error);
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+export default RegisterPage;
