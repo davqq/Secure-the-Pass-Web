@@ -77,7 +77,7 @@ const router = createBrowserRouter([
   {
     path: "/logout",
     errorElement: <ErrorPage />,
-    loader: Logout,
+    element: <Logout />,
   },
 ]);
 
