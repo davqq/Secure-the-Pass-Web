@@ -64,6 +64,7 @@ function LoginPage() {
                   type="email"
                   autoComplete="email"
                   autoFocus
+                  tabIndex={1}
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -83,6 +84,7 @@ function LoginPage() {
                 </label>
                 <div className="text-sm">
                   <a
+                    tabIndex={4}
                     href="/forgot-password"
                     className="font-medium text-blue-600 hover:text-blue-500"
                   >
@@ -96,6 +98,7 @@ function LoginPage() {
                   name="password"
                   type="password"
                   autoComplete="current-password"
+                  tabIndex={2}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -113,6 +116,7 @@ function LoginPage() {
             <div>
               <button
                 onClick={handleLogin}
+                tabIndex={3}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 Sign in
