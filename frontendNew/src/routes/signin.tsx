@@ -6,7 +6,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [errorText, setErrorText] = useState("");
 
-  const handleLogin = (e: any) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(email, password);
     fetch(`${env.API_URL}/login`, {
@@ -62,8 +62,13 @@ function LoginPage() {
                   tabIndex={1}
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
+                  onChange={(e) => {
+                    setErrorText("");
+                    setEmail(e.target.value);
+                  }}
+                  className={`appearance-none block w-full px-3 py-2 border ${
+                    errorText ? "border-red-500" : "border-gray-700"
+                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 !important`}
                   placeholder="Enter your email"
                 />
               </div>
@@ -96,7 +101,10 @@ function LoginPage() {
                   tabIndex={2}
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setErrorText("");
+                    setPassword(e.target.value);
+                  }}
                   className={`appearance-none block w-full px-3 py-2 border ${
                     errorText ? "border-red-500" : "border-gray-700"
                   } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 !important`}

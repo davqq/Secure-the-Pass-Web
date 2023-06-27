@@ -12,6 +12,7 @@ import getCookie from "./helper/getCookie";
 import env from "react-dotenv";
 import NewAccount from "./routes/newAccount";
 import Dashboard from "./routes/dashboard";
+import ForgotPasswordPage from "./routes/forgotPassword";
 
 export const checktoken = async () => {
   fetch(`${env.API_URL}/checktoken`, {
@@ -73,6 +74,11 @@ const router = createBrowserRouter([
     path: "/register",
     errorElement: <ErrorPage />,
     element: <SignUp />,
+  },
+  {
+    path: "/forgot-password",
+    errorElement: <ErrorPage />,
+    element: <ForgotPasswordPage />,
   },
   {
     path: "/logout",

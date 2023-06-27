@@ -115,7 +115,7 @@ const root = () => {
   }, [accounts]);
   return (
     <>
-      <div className="flex flex-col w-80 border-solid border-r bg-[#f7f7f7]">
+      <div className="flex flex-col w-80 border-solid border-r">
         <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b">
           <form id="search-form" role="search">
             <input
@@ -151,7 +151,7 @@ const root = () => {
           <NavLink
             to="/account/new"
             type="submit"
-            className="text-base font-[inherit] text-[#3992ff] border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white hover:shadow active:shadow-md active:translate-y-px"
+            className="text-base font-[inherit] text-blue-500 border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white hover:shadow active:shadow-md active:translate-y-px"
           >
             New
           </NavLink>
@@ -175,7 +175,7 @@ const root = () => {
                           <div className="relative min-h-[3em] flex items-center">
                             <CompanyLogo companyName={account.Url} />
                             {account.Favorite && (
-                              <span className="absolute right-0 bottom-0 text-[#eeb004] rounded-r text-xl">
+                              <span className="absolute right-0 bottom-0 text-yellow-500 rounded-r text-xl">
                                 ★
                               </span>
                             )}
@@ -206,7 +206,7 @@ const root = () => {
 
       <div
         id="detail"
-        className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-[#fff] overflow-scroll"
+        className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-white overflow-scroll"
       >
         <Outlet />
       </div>
