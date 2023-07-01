@@ -37,20 +37,22 @@ const root = () => {
     }
     const controller = new AbortController();
     controllerRef.current = controller;
-    fetch(`${env.API_URL}/getaccounts/${searchParams.get("q") || ""}`, {
-      method: "GET",
-      signal: controllerRef.current?.signal,
-      headers: [
-        ["Content-Type", "application/json"],
-        ["Authorization", `${getCookie("jwt")}`],
-      ],
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setAccounts(result);
-        setLoading(false);
-        controllerRef.current = null;
-      });
+    setTimeout(() => {
+      fetch(`${env.API_URL}/getaccounts/${searchParams.get("q") || ""}`, {
+        method: "GET",
+        signal: controllerRef.current?.signal,
+        headers: [
+          ["Content-Type", "application/json"],
+          ["Authorization", `${getCookie("jwt")}`],
+        ],
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          setAccounts(result);
+          setLoading(false);
+          controllerRef.current = null;
+        });
+    }, 700);
   }, [searchParams]);
 
   const getGroupLabel = (updatedAt: string) => {
@@ -69,7 +71,7 @@ const root = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays <= 7) {
-      return "This week";
+      return "Past 7 days";
     }
 
     if (
@@ -98,7 +100,6 @@ const root = () => {
   };
 
   useEffect(() => {
-    // ...
     const updatedGroupedAccounts: { [key: string]: Account[] } = {};
     accounts.forEach((account: Account) => {
       const groupLabel: string = getGroupLabel(account.UpdatedAt);
@@ -111,12 +112,11 @@ const root = () => {
     });
 
     setGroupedAccounts(updatedGroupedAccounts);
-    // ...
   }, [accounts]);
   return (
     <>
-      <div className="flex flex-col w-80 border-solid border-r">
-        <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b">
+      <div className="flex flex-col w-80 border-solid border-gray-600 border-r bg-gray-900">
+        <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b border-gray-600 ">
           <form id="search-form" role="search">
             <input
               id="q"
@@ -124,7 +124,7 @@ const root = () => {
               placeholder="Search"
               type="search"
               name="q"
-              className={`font-[inherit] text-base border-none rounded-lg pt-2 pb-2 pr-3 shadow-sm bg-white m-0 hover:shadow w-full pl-8 bg-no-repeat bg-leftWithPadding relative bg-[length:1em] ${
+              className={`appearance-none block w-full px-3 py-2 pl-7 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 bg-no-repeat bg-[length:1em] bg-leftWithPadding focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 ${
                 loading ? "bg-none" : "bg-searchspinner"
               }`}
               value={searchParams.get("q") || ""}
@@ -144,17 +144,16 @@ const root = () => {
               hidden={!loading}
             />
             <div
-              className="absolute w-[1px] h-[1px] p-0 m-[-1px] overflow-hidden whitespace-nowrap border-[0]"
+              className="absolute w-[1px] h-[1px] p-0 m-[-1px] overflow-hidden whitespace-nowrap border-0"
               aria-live="polite"
             />
           </form>
-          <NavLink
-            to="/account/new"
+          <button
             type="submit"
-            className="text-base font-[inherit] text-blue-500 border-none rounded-lg pt-2 pb-2 pl-3 pr-3 shadow-sm bg-white hover:shadow active:shadow-md active:translate-y-px"
+            className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600"
           >
             New
-          </NavLink>
+          </button>
         </div>
         <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">
           {!groupedAccounts || Object.entries(groupedAccounts).length === 0 ? (
@@ -162,14 +161,14 @@ const root = () => {
           ) : (
             Object.entries(groupedAccounts).map(([groupLabel, accounts]) => (
               <li className="list-none" key={groupLabel}>
-                <p className="font-bold text-xs text-gray-600">{groupLabel}</p>
+                <p className="font-bold text-xs text-gray-400">{groupLabel}</p>
                 <ul className="p-0 m-0">
                   {accounts.map((account: Account) => (
                     <li className="mt-1 mb-1" key={account.Guid}>
                       <NavLink
                         to={`/account/${account.Guid}`}
                         id="accountList"
-                        className="flex items-center justify-between p-2 rounded-xl text-inherit no-underline gap-4 hover:bg-gray-300"
+                        className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
                       >
                         <div className="flex items-center">
                           <div className="relative min-h-[3em] flex items-center">
@@ -206,7 +205,7 @@ const root = () => {
 
       <div
         id="detail"
-        className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-white overflow-scroll"
+        className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-gray-900 overflow-auto"
       >
         <Outlet />
       </div>

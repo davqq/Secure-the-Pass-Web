@@ -41,11 +41,13 @@ function RegisterPage() {
     <div className="flex justify-center items-center min-h-screen bg-gray-900 w-full">
       <div className="max-w-md w-full mx-auto">
         <div className="text-center">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="../src/assets/logo.svg"
-            alt="Logo"
-          />
+          <a href="/">
+            <img
+              className="mx-auto h-12 w-auto"
+              src="../src/assets/logo.svg"
+              alt="Logo"
+            />
+          </a>
           <h2 className="mt-6 text-center text-3xl font-bold text-white">
             Create an account
           </h2>

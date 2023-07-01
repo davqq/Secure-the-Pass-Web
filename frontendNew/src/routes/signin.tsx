@@ -34,11 +34,13 @@ function LoginPage() {
     <div className="flex justify-center items-center min-h-screen bg-gray-900 w-full">
       <div className="max-w-md w-full mx-auto">
         <div className="text-center">
-          <img
-            className="mx-auto h-12 w-auto text-white"
-            src="../src/assets/logo.svg"
-            alt="Logo"
-          />
+          <a href="/">
+            <img
+              className="mx-auto h-12 w-auto text-white"
+              src="../src/assets/logo.svg"
+              alt="Logo"
+            />
+          </a>
           <h2 className="mt-6 text-center text-3xl font-bold text-white">
             Sign in to your account
           </h2>
@@ -68,7 +70,7 @@ function LoginPage() {
                   }}
                   className={`appearance-none block w-full px-3 py-2 border ${
                     errorText ? "border-red-500" : "border-gray-700"
-                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 !important`}
+                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700`}
                   placeholder="Enter your email"
                 />
               </div>
@@ -107,7 +109,7 @@ function LoginPage() {
                   }}
                   className={`appearance-none block w-full px-3 py-2 border ${
                     errorText ? "border-red-500" : "border-gray-700"
-                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 !important`}
+                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700`}
                   placeholder="Enter your password"
                 />
               </div>
