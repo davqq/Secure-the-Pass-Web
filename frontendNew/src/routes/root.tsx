@@ -27,6 +27,7 @@ const root = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const controllerRef = useRef<AbortController | null>();
   const [loading, setLoading] = useState(true);
+  const [navbarVisible, setNavbarVisible] = useState(true);
   const [groupedAccounts, setGroupedAccounts] = useState<{
     [key: string]: Account[];
   }>({});
@@ -113,100 +114,112 @@ const root = () => {
 
     setGroupedAccounts(updatedGroupedAccounts);
   }, [accounts]);
+
+  const toggleNavbarVisibility = () => {
+    setNavbarVisible(!navbarVisible);
+  };
+
   return (
     <>
-      <div className="flex flex-col w-80 border-solid border-gray-600 border-r bg-gray-900">
-        <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b border-gray-600 ">
-          <form id="search-form" role="search">
-            <input
-              id="q"
-              aria-label="Search contacts"
-              placeholder="Search"
-              type="search"
-              name="q"
-              className={`appearance-none block w-full px-3 py-2 pl-7 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 bg-no-repeat bg-[length:1em] bg-leftWithPadding focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 ${
-                loading ? "bg-none" : "bg-searchspinner"
-              }`}
-              value={searchParams.get("q") || ""}
-              onChange={(e) => {
-                setSearchParams(
-                  { q: e.target.value },
-                  {
-                    replace: searchParams.has("q"),
-                  }
-                );
-                setLoading(true);
-              }}
-            />
-            <div
-              className="w-4 h-4 animate-spin left-[2.6rem] top-7 absolute bg-searchspinner"
-              aria-hidden
-              hidden={!loading}
-            />
-            <div
-              className="absolute w-[1px] h-[1px] p-0 m-[-1px] overflow-hidden whitespace-nowrap border-0"
-              aria-live="polite"
-            />
-          </form>
-          <button
-            type="submit"
-            className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600"
-          >
-            New
-          </button>
-        </div>
-        <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">
-          {!groupedAccounts || Object.entries(groupedAccounts).length === 0 ? (
-            <p>No accounts yet</p>
-          ) : (
-            Object.entries(groupedAccounts).map(([groupLabel, accounts]) => (
-              <li className="list-none" key={groupLabel}>
-                <p className="font-bold text-xs text-gray-400">{groupLabel}</p>
-                <ul className="p-0 m-0">
-                  {accounts.map((account: Account) => (
-                    <li className="mt-1 mb-1" key={account.Guid}>
-                      <NavLink
-                        to={`/account/${account.Guid}`}
-                        id="accountList"
-                        className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
-                      >
-                        <div className="flex items-center">
-                          <div className="relative min-h-[3em] flex items-center">
-                            <CompanyLogo companyName={account.Url} />
-                            {account.Favorite && (
-                              <span className="absolute right-0 bottom-0 text-yellow-500 rounded-r text-xl">
-                                ★
-                              </span>
-                            )}
-                          </div>
-                          <div className="w-40 ml-2 flex flex-col">
-                            {account.Url ? (
-                              <span className="text-ellipsis overflow-hidden  whitespace-nowrap ">
-                                {account.Url}
-                              </span>
-                            ) : (
-                              <i className="text-inherit">No Name</i>
-                            )}
+      {navbarVisible && (
+        <div className="flex flex-col w-80 border-solid border-gray-600 border-r bg-gray-900">
+          <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b border-gray-600 ">
+            <form id="search-form" role="search">
+              <input
+                id="q"
+                aria-label="Search contacts"
+                placeholder="Search"
+                type="search"
+                name="q"
+                className={`appearance-none block w-full px-3 py-2 pl-7 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 bg-no-repeat bg-[length:1em] bg-leftWithPadding focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 ${
+                  loading ? "bg-none" : "bg-searchspinner"
+                }`}
+                value={searchParams.get("q") || ""}
+                onChange={(e) => {
+                  setSearchParams(
+                    { q: e.target.value },
+                    {
+                      replace: searchParams.has("q"),
+                    }
+                  );
+                  setLoading(true);
+                }}
+              />
+              <div
+                className="w-4 h-4 animate-spin left-[2.7rem] top-[1.80em] absolute bg-searchspinner sm:w-3.5 sm:h-3.5"
+                aria-hidden
+                hidden={!loading}
+              />
+            </form>
+            <button
+              type="submit"
+              className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600"
+            >
+              New
+            </button>
+          </div>
+          <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">
+            {!groupedAccounts ||
+            Object.entries(groupedAccounts).length === 0 ? (
+              <p>No accounts yet</p>
+            ) : (
+              Object.entries(groupedAccounts).map(([groupLabel, accounts]) => (
+                <li className="list-none" key={groupLabel}>
+                  <p className="font-bold text-xs text-gray-400">
+                    {groupLabel}
+                  </p>
+                  <ul className="p-0 m-0">
+                    {accounts.map((account: Account) => (
+                      <li className="mt-1 mb-1" key={account.Guid}>
+                        <NavLink
+                          to={`/account/${account.Guid}`}
+                          id="accountList"
+                          className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
+                        >
+                          <div className="flex items-center">
+                            <div className="relative min-h-[3em] flex items-center">
+                              {/* <CompanyLogo companyName={account.Url} /> */}
+                              {/* {account.Favorite && (
+                                <span className="absolute right-0 bottom-0 text-yellow-500 rounded-r text-xl">
+                                  ★
+                                </span>
+                              )} */}
+                            </div>
+                            <div className="w-40 ml-2 flex flex-col">
+                              {account.Url ? (
+                                <span className="text-ellipsis overflow-hidden whitespace-nowrap ">
+                                  {account.Url}
+                                </span>
+                              ) : (
+                                <i className="text-inherit">No Name</i>
+                              )}
 
-                            <span className="text-xs text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden">
-                              {account.Email}
-                            </span>
+                              <span className="text-xs text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden">
+                                {account.Email}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))
-          )}
-        </nav>
-      </div>
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))
+            )}
+          </nav>
+        </div>
+      )}
 
       <div
         id="detail"
         className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-gray-900 overflow-auto"
       >
+        <button
+          className="absolute t-2 text-white"
+          onClick={toggleNavbarVisibility}
+        >
+          Toggle Navbar
+        </button>
         <Outlet />
       </div>
     </>

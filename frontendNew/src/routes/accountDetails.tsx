@@ -78,7 +78,7 @@ const accountDetails = () => {
   return (
     <div className="max-w-full flex flex-nowrap flex-col justify-start items-start">
       <div className="flex">
-        <CompanyLogo companyName={account.Url} />
+        {/* <CompanyLogo companyName={account.Url} /> */}
         <h1 className="text-[2rem] font-[700] m-4 leading-[1.2] text-center items-center flex text-white">
           {account?.Url}
         </h1>
@@ -115,7 +115,7 @@ const accountDetails = () => {
       {account.Notes && (
         <div className="p-2.5 flex flex-col w-full overflow-hidden">
           <p className="text-sm text-headline">notes</p>
-          <p>{account.Notes}</p>
+          <p className="text-white">{account.Notes}</p>
         </div>
       )}
       <br />
