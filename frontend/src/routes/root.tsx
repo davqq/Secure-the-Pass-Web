@@ -173,7 +173,7 @@ const root = () => {
           <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">
             {!groupedAccounts ||
             Object.entries(groupedAccounts).length === 0 ? (
-              <p>No accounts yet</p>
+              <p className="text-white">No accounts yet</p>
             ) : (
               Object.entries(groupedAccounts).map(([groupLabel, accounts]) => (
                 <li className="list-none" key={groupLabel}>
