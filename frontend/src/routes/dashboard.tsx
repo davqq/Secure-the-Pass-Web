@@ -1,159 +1,76 @@
-import { useState, useEffect, useRef } from "react";
-import env from "react-dotenv";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import {
-  CardActionArea,
-  CircularProgress,
-  Grid,
-  IconButton,
-} from "@mui/material";
-import "./home.css";
-import CreateAccount from "./createAccount";
-import AccountDetails from "./accountDetails";
-import { useSearchParams } from "react-router-dom";
-import getCookie from "../helper/getCookie";
-
-export interface Account {
-  Guid?: string;
-  Username?: string;
-  Email?: string;
-  Password?: string;
-  Url?: string;
-  UserGuid?: string;
-}
-
-function Dashboard() {
-  const [accounts, setAccounts] = useState<Account[]>([]);
-  const [account, setAccount] = useState<Account>({});
-  const [openNew, setOpenNew] = useState(false);
-  const [openDetails, setOpenDetails] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [searchParams] = useSearchParams();
-  const controllerRef = useRef<AbortController | null>();
-
-  useEffect(() => {
-    if (controllerRef.current) {
-      controllerRef.current.abort();
-    }
-    const controller = new AbortController();
-    controllerRef.current = controller;
-    setLoading(true);
-    fetch(`${env.API_URL}/getaccounts/${searchParams.get("q") || ""}`, {
-      method: "GET",
-      signal: controllerRef.current?.signal,
-      headers: [
-        ["Content-Type", "application/json"],
-        ["Authorization", `${getCookie("jwt")}`],
-      ],
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setAccounts(result);
-        setLoading(false);
-        controllerRef.current = null;
-      });
-  }, [searchParams]);
-
-  if (loading) {
-    return (
-      <section className="home">
-        <div className="text">Dashboard Sidebar</div>
-        <div className="loader">
-          <CircularProgress />
-        </div>
-      </section>
-    );
-  }
-
+import React from "react";
+const Dashboard = () => {
   return (
-    <section className="home">
-      <div className="text">Dashboard Sidebar</div>
-      <div className="wrapper">
-        <Grid container alignItems="flex-start">
-          {accounts.map((account) => {
-            return (
-              <Grid item xl={2} lg={3} md={4} sm={6} xs={12}>
-                <Card
-                  key={account.Guid}
-                  style={{
-                    margin: 10,
-                  }}
-                  className="card"
-                >
-                  <CardActionArea
-                    style={{ height: 150 }}
-                    onClick={() => {
-                      setAccount(account);
-                      setOpenDetails(true);
-                    }}
-                  >
-                    <CardContent>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
-                        style={{
-                          wordBreak: "break-word",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {account.Url}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        style={{
-                          wordBreak: "break-word",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                        }}
-                        className="subtitle"
-                      >
-                        {account.Username}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        style={{
-                          wordBreak: "break-word",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                        }}
-                        className="subtitle"
-                      >
-                        {account.Email}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            );
-          })}
-        </Grid>
-        <IconButton
-          id="addButton"
-          onClick={() => {
-            setOpenNew(true);
-          }}
-        >
-          +
-        </IconButton>
+    <div className="flex h-screen bg-gray-100 w-full">
+      {/* Sidebar / Start */}
+      <div className="bg-white w-64 flex flex-col">
+        {/* Logo section */}
+        <div className="flex items-center justify-center mt-6">
+          <div className="flex items-center">
+            <svg
+              className="h-6 w-6 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V7.414A2 2 0 0018.414 6L14 1.586A2 2 0 0012 2z"
+              ></path>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M2 6a2 2 0 012-2h6v2a2 2 0 01-2 2H4a2 2 0 01-2-2z"
+              ></path>
+            </svg>
+            <span className="text-gray-600 ml-3 text-2xl font-bold">
+              My Brand
+            </span>
+          </div>
+        </div>
+        {/* Nav section */}
+        <nav className="mt-10 px-6 ">
+          <a
+            className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-400 hover:text-white"
+            href="#"
+          >
+            Item 1
+          </a>
+          <a
+            className="block mt-2 py-2.5 px-4 rounded transition duration-200 hover:bg-blue-400 hover:text-white"
+            href="#"
+          >
+            Item 2
+          </a>
+          <a
+            className="block mt-2 py-2.5 px-4 rounded transition duration-200 hover:bg-blue-400 hover:text-white"
+            href="#"
+          >
+            Item 3
+          </a>
+          <a
+            className="block mt-2 py-2.5 px-4 rounded transition duration-200 hover:bg-blue-400 hover:text-white"
+            href="#"
+          >
+            Item 4
+          </a>
+        </nav>
       </div>
-      <CreateAccount open={openNew} setOpen={setOpenNew} />
-      <AccountDetails
-        open={openDetails}
-        setOpen={setOpenDetails}
-        account={account}
-        setaccount={setAccount}
-      />
-    </section>
+      {/* Sidebar / End */}
+      {/* Main content / Start */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="p-4 bg-blue-500 text-white shadow-lg">
+          <h2 className="text-lg leading-none">Dashboard</h2>
+        </header>
+        <main className="flex-1 p-4 overflow-y-scroll">
+          {/* Main content goes here */}
+        </main>
+      </div>
+      {/* Main content / End */}
+    </div>
   );
-}
-
+};
 export default Dashboard;

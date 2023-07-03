@@ -1,25 +1,69 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Home, { loader as homeLoader } from "./routes/Home";
-import SignIn from "./routes/signin";
-import SignUp from "./routes/signup";
-import Dashboard from "./routes/dashboard";
+import Root from "./routes/root";
+import ErrorPage from "./error-page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./routes/errorpage";
+import AccountDetails from "./routes/accountDetails";
+import SignUp from "./routes/signup";
+import SignIn from "./routes/signin";
+import "./index.css";
 import Logout from "./routes/logout";
+import getCookie from "./helper/getCookie";
+import env from "react-dotenv";
+import NewAccount from "./routes/newAccount";
+import Dashboard from "./routes/dashboard";
+import ForgotPasswordPage from "./routes/forgotPassword";
+
+export const checktoken = async () => {
+  fetch(`${env.API_URL}/checktoken`, {
+    method: "POST",
+    headers: [
+      ["Content-Type", "application/json"],
+      ["Authorization", `${getCookie("jwt")}`],
+    ],
+  }).then((result) => {
+    if (result.status === 403 || result.status === 401) {
+      return window.location.replace("/logout");
+    }
+  });
+
+  if (localStorage.getItem("dark") === "true") {
+    (document.querySelector("body") as HTMLBodyElement).classList.add("dark");
+  }
+
+  return null;
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-    loader: homeLoader,
+    element: <Root />,
+    loader: checktoken,
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <Dashboard />,
+        path: "/account/:accountId",
+        element: <AccountDetails />,
+        loader: checktoken,
+      },
+      {
+        path: "/account/:accountId/edit",
+        loader: checktoken,
+      },
+      {
+        path: "/account/:accountId/remove",
+        loader: checktoken,
+      },
+      {
+        path: "/account/new",
+        loader: checktoken,
+        element: <NewAccount />,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
   {
     path: "/login",
@@ -32,13 +76,18 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
+    path: "/forgot-password",
+    errorElement: <ErrorPage />,
+    element: <ForgotPasswordPage />,
+  },
+  {
     path: "/logout",
     errorElement: <ErrorPage />,
-    loader: Logout,
+    element: <Logout />,
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLInputElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>

@@ -32,6 +32,18 @@ const root = () => {
     [key: string]: Account[];
   }>({});
 
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 640px)").matches
+  );
+
+  window.matchMedia("(min-width: 640px)").onchange = (e) => {
+    setMatches(e.matches);
+  };
+
+  useEffect(() => {
+    window.location.href.includes("/account/") && setNavbarVisible(false);
+  }, []);
+
   useEffect(() => {
     if (controllerRef.current) {
       controllerRef.current.abort();
@@ -55,6 +67,21 @@ const root = () => {
         });
     }, 700);
   }, [searchParams]);
+
+  useEffect(() => {
+    const updatedGroupedAccounts: { [key: string]: Account[] } = {};
+    accounts.forEach((account: Account) => {
+      const groupLabel: string = getGroupLabel(account.UpdatedAt);
+
+      if (!updatedGroupedAccounts[groupLabel]) {
+        updatedGroupedAccounts[groupLabel] = [];
+      }
+
+      updatedGroupedAccounts[groupLabel].push(account);
+    });
+
+    setGroupedAccounts(updatedGroupedAccounts);
+  }, [accounts]);
 
   const getGroupLabel = (updatedAt: string) => {
     const today = new Date();
@@ -100,31 +127,16 @@ const root = () => {
     return monthNames[updatedDate.getMonth()];
   };
 
-  useEffect(() => {
-    const updatedGroupedAccounts: { [key: string]: Account[] } = {};
-    accounts.forEach((account: Account) => {
-      const groupLabel: string = getGroupLabel(account.UpdatedAt);
-
-      if (!updatedGroupedAccounts[groupLabel]) {
-        updatedGroupedAccounts[groupLabel] = [];
-      }
-
-      updatedGroupedAccounts[groupLabel].push(account);
-    });
-
-    setGroupedAccounts(updatedGroupedAccounts);
-  }, [accounts]);
-
   const toggleNavbarVisibility = () => {
     setNavbarVisible(!navbarVisible);
   };
 
   return (
     <>
-      {navbarVisible && (
-        <div className="flex flex-col w-80 border-solid border-gray-600 border-r bg-gray-900">
+      {(matches || navbarVisible) && (
+        <div className="flex flex-col w-80 border-solid border-gray-600 border-r bg-gray-900 max-[640px]:w-full">
           <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b border-gray-600 ">
-            <form id="search-form" role="search">
+            <form id="search-form" role="search" className="w-full">
               <input
                 id="q"
                 aria-label="Search contacts"
@@ -174,6 +186,7 @@ const root = () => {
                         <NavLink
                           to={`/account/${account.Guid}`}
                           id="accountList"
+                          onClick={() => !matches && setNavbarVisible(false)}
                           className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
                         >
                           <div className="flex items-center">
@@ -185,7 +198,7 @@ const root = () => {
                                 </span>
                               )} */}
                             </div>
-                            <div className="w-40 ml-2 flex flex-col">
+                            <div className="w-56 ml-2 flex flex-col">
                               {account.Url ? (
                                 <span className="text-ellipsis overflow-hidden whitespace-nowrap ">
                                   {account.Url}
@@ -210,18 +223,35 @@ const root = () => {
         </div>
       )}
 
-      <div
-        id="detail"
-        className="flex-1 pb-16 pt-16 pl-8 pr-8 w-full bg-gray-900 overflow-auto"
-      >
-        <button
-          className="absolute t-2 text-white"
-          onClick={toggleNavbarVisibility}
-        >
-          Toggle Navbar
-        </button>
-        <Outlet />
-      </div>
+      {(matches || !navbarVisible) && (
+        <>
+          {!matches && (
+            <button
+              className="absolute mt-5 ml-5 text-white"
+              onClick={toggleNavbarVisibility}
+            >
+              <svg
+                className="h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M7.293 15.707a1 1 0 0 1-1.414-1.414L11.586 10l-5.707-5.293a1 1 0 1 1 1.414-1.414l6 6a1 1 0 0 1 0 1.414l-6 6z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          )}
+          <div
+            id="detail"
+            className="flex-1 py-16 px-8 w-full bg-gray-900 overflow-auto"
+          >
+            <Outlet />
+          </div>
+        </>
+      )}
     </>
   );
 };
