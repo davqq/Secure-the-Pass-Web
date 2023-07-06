@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Account } from "./root";
 import getCookie from "../helper/getCookie";
@@ -9,12 +9,19 @@ const accountDetails = () => {
   const { accountId } = useParams();
   const [account, setAccount] = useState<Account>();
   const [loading, setLoading] = useState(true);
+  const controllerRef = useRef<AbortController | null>();
 
   useEffect(() => {
+    if (controllerRef.current) {
+      controllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    controllerRef.current = controller;
     setLoading(true);
     setTimeout(() => {
       fetch(`${env.API_URL}/getaccount/${accountId}`, {
         method: "GET",
+        signal: controllerRef.current?.signal,
         headers: [
           ["Content-Type", "application/json"],
           ["Authorization", `${getCookie("jwt")}`],

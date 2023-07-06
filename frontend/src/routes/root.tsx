@@ -22,12 +22,21 @@ export interface Account {
   Favorite: boolean;
 }
 
+export interface User {
+  Guid: string;
+  Username: string;
+  Email: string;
+}
+
 const root = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [accounts, setAccounts] = useState<Account[]>([]);
   const controllerRef = useRef<AbortController | null>();
   const [loading, setLoading] = useState(true);
   const [navbarVisible, setNavbarVisible] = useState(true);
+  const [user, setUser] = useState<User>();
+  const [isOpen, setIsOpen] = useState(false);
+  const popUpRef = useRef<HTMLDivElement>(null);
   const [groupedAccounts, setGroupedAccounts] = useState<{
     [key: string]: Account[];
   }>({});
@@ -41,6 +50,18 @@ const root = () => {
   };
 
   useEffect(() => {
+    fetch(`${env.API_URL}/getuser`, {
+      method: "GET",
+      headers: [
+        ["Content-Type", "application/json"],
+        ["Authorization", `${getCookie("jwt")}`],
+      ],
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setUser(result);
+      });
+
     window.location.href.includes("/account/") && setNavbarVisible(false);
   }, []);
 
@@ -50,6 +71,7 @@ const root = () => {
     }
     const controller = new AbortController();
     controllerRef.current = controller;
+    setLoading(true);
     setTimeout(() => {
       fetch(`${env.API_URL}/getaccounts/${searchParams.get("q") || ""}`, {
         method: "GET",
@@ -147,15 +169,14 @@ const root = () => {
                   loading ? "bg-none" : "bg-searchspinner"
                 }`}
                 value={searchParams.get("q") || ""}
-                onChange={(e) => {
+                onChange={(e) =>
                   setSearchParams(
                     { q: e.target.value },
                     {
                       replace: searchParams.has("q"),
                     }
-                  );
-                  setLoading(true);
-                }}
+                  )
+                }
               />
               <div
                 className="w-4 h-4 animate-spin left-[2.7rem] top-[1.80em] absolute bg-searchspinner sm:w-3.5 sm:h-3.5"
@@ -170,7 +191,7 @@ const root = () => {
               New
             </button>
           </div>
-          <nav className="flex-1 overflow-auto pt-4 pl-8 pr-8">
+          <nav className="flex-1 overflow-auto pt-4 px-8">
             {!groupedAccounts ||
             Object.entries(groupedAccounts).length === 0 ? (
               <p className="text-white">No accounts yet</p>
@@ -189,15 +210,7 @@ const root = () => {
                           onClick={() => !matches && setNavbarVisible(false)}
                           className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
                         >
-                          <div className="flex items-center">
-                            <div className="relative min-h-[3em] flex items-center">
-                              {/* <CompanyLogo companyName={account.Url} /> */}
-                              {/* {account.Favorite && (
-                                <span className="absolute right-0 bottom-0 text-yellow-500 rounded-r text-xl">
-                                  ★
-                                </span>
-                              )} */}
-                            </div>
+                          <div className="flex items-center min-h-[3em]">
                             <div className="w-56 ml-2 flex flex-col">
                               {account.Url ? (
                                 <span className="text-ellipsis overflow-hidden whitespace-nowrap ">
@@ -220,6 +233,73 @@ const root = () => {
               ))
             )}
           </nav>
+          <div
+            className="relative flex py-2 px-8 border-solid mb-2 border-gray-600 border-t"
+            onBlurCapture={(event) => {
+              if (
+                popUpRef.current &&
+                !popUpRef.current.contains(event.relatedTarget)
+              ) {
+                setIsOpen(false);
+              }
+            }}
+          >
+            {isOpen && (
+              <div
+                ref={popUpRef}
+                className="absolute w-4/5 self-center bottom-full z-20 mb-2 overflow-hidden rounded-xl bg-gray-950 pb-1.5 pt-1 outline-none opacity-100 translate-y-0 "
+              >
+                <nav role="none">
+                  <a
+                    className="flex p-3 rounded-xl gap-3 items-center w-full transition-color duration-200 text-white cursor-pointer text-sm hover:bg-gray-700"
+                    href="/logout"
+                    role="menuitem"
+                    tabIndex={-1}
+                  >
+                    <svg
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="h-4 w-4"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                      <polyline points="16 17 21 12 16 7"></polyline>
+                      <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Log out
+                  </a>
+                </nav>
+              </div>
+            )}
+            <button
+              className="w-full flex items-center justify-between p-2 rounded-xl text-white no-underline hover:bg-gray-600 min-h-[3em]"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {user?.Username}
+              <svg
+                stroke="currentColor"
+                fill="none"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="h-4 w-4 flex-shrink-0 text-gray-500"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="19" cy="12" r="1"></circle>
+                <circle cx="5" cy="12" r="1"></circle>
+              </svg>
+            </button>
+          </div>
         </div>
       )}
 
