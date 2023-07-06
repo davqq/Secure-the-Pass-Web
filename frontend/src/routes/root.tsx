@@ -163,6 +163,7 @@ const root = () => {
                 id="q"
                 aria-label="Search contacts"
                 placeholder="Search"
+                autoFocus={true}
                 type="search"
                 name="q"
                 className={`appearance-none block w-full px-3 py-2 pl-7 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 bg-no-repeat bg-[length:1em] bg-leftWithPadding focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 ${
@@ -172,9 +173,7 @@ const root = () => {
                 onChange={(e) =>
                   setSearchParams(
                     { q: e.target.value },
-                    {
-                      replace: searchParams.has("q"),
-                    }
+                    { replace: searchParams.has("q") }
                   )
                 }
               />
@@ -278,7 +277,8 @@ const root = () => {
               </div>
             )}
             <button
-              className="w-full flex items-center justify-between p-2 rounded-xl text-white no-underline hover:bg-gray-600 min-h-[3em]"
+              className="w-full flex items-center justify-between p-2 rounded-xl text-white no-underline hover:bg-gray-600 min-h-[3em] focus:bg-gray-600"
+              aria-haspopup={isOpen}
               onClick={() => setIsOpen(!isOpen)}
             >
               {user?.Username}
