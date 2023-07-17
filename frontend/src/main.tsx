@@ -27,10 +27,6 @@ export const checktoken = async () => {
     }
   });
 
-  if (localStorage.getItem("dark") === "true") {
-    (document.querySelector("body") as HTMLBodyElement).classList.add("dark");
-  }
-
   return null;
 };
 
