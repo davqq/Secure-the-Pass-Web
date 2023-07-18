@@ -163,7 +163,7 @@ const root = () => {
                 id="q"
                 aria-label="Search contacts"
                 placeholder="Search"
-                autoFocus={true}
+                autoFocus={matches}
                 type="search"
                 name="q"
                 className={`appearance-none block w-full px-3 py-2 pl-7 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 bg-no-repeat bg-[length:1em] bg-leftWithPadding focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 ${
@@ -243,39 +243,39 @@ const root = () => {
               }
             }}
           >
-            {isOpen && (
-              <div
-                ref={popUpRef}
-                className="absolute w-4/5 self-center bottom-full z-20 mb-2 overflow-hidden rounded-xl bg-gray-950 pb-1.5 pt-1 outline-none opacity-100 translate-y-0 "
-              >
-                <nav role="none">
-                  <a
-                    className="flex p-3 rounded-xl gap-3 items-center w-full transition-color duration-200 text-white cursor-pointer text-sm hover:bg-gray-700"
-                    href="/logout"
-                    role="menuitem"
-                    tabIndex={-1}
+            <div
+              ref={popUpRef}
+              className={`absolute w-4/5 self-center bottom-full z-20 mb-2 overflow-hidden rounded-xl bg-gray-950 pb-1.5 pt-1 outline-none ${
+                isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+              } transition-transform duration-200 ease-in-out`}
+            >
+              <nav role="none">
+                <a
+                  className="flex p-3 rounded-xl gap-3 items-center w-full text-white cursor-pointer text-sm hover:bg-gray-700"
+                  href="/logout"
+                  role="menuitem"
+                  tabIndex={-1}
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-4 w-4"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      stroke="currentColor"
-                      fill="none"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className="h-4 w-4"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                      <polyline points="16 17 21 12 16 7"></polyline>
-                      <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                    Log out
-                  </a>
-                </nav>
-              </div>
-            )}
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  Log out
+                </a>
+              </nav>
+            </div>
             <button
               className="w-full flex items-center justify-between p-2 rounded-xl text-white no-underline hover:bg-gray-600 min-h-[3em] focus:bg-gray-600"
               aria-haspopup={isOpen}
