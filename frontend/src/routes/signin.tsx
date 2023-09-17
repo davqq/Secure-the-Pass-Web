@@ -141,6 +141,14 @@ function LoginPage() {
           </form>
         </div>
       </div>
+      <div className="absolute bottom-0 right-0 p-4">
+        <a
+          className="font-medium text-blue-600  hover:text-blue-500"
+          href="https://www.davq.de"
+        >
+          By David
+        </a>
+      </div>
     </div>
   );
 }
