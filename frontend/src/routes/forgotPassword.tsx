@@ -16,7 +16,7 @@ const ForgotPasswordPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 w-full">
       <div className="max-w-md w-full mx-auto">
-        <a href="/">
+        <a href="/accounts">
           <div className="flex items-center justify-start">
             <img
               className="mx-auto h-12 w-auto"

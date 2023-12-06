@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Account } from "./root";
+import { Account } from "./AccountsOverview";
 import getCookie from "../helper/getCookie";
 import env from "react-dotenv";
-import CompanyLogo from "./CompanyLogo";
 
 const accountDetails = () => {
   const { accountId } = useParams();

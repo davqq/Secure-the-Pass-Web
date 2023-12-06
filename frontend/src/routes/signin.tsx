@@ -20,7 +20,7 @@ function LoginPage() {
         const token = res.headers.get("Authorization");
         if (token) {
           document.cookie = `jwt=${token};`;
-          window.location.replace("/");
+          window.location.replace("/accounts");
         } else if (!document.cookie.includes("jwt")) {
           setErrorText("Invalid email or password");
         }
@@ -34,7 +34,7 @@ function LoginPage() {
     <div className="flex justify-center items-center min-h-screen bg-gray-900 w-full">
       <div className="max-w-md w-full mx-auto">
         <div className="text-center">
-          <a href="/">
+          <a href="/accounts">
             <img
               className="mx-auto h-12 w-auto text-white"
               src="../src/assets/logo.svg"

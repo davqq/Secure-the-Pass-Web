@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Root from "./routes/root";
+import AccountsOverview from "./routes/AccountsOverview";
 import ErrorPage from "./error-page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AccountDetails from "./routes/accountDetails";
@@ -11,7 +11,6 @@ import Logout from "./routes/logout";
 import getCookie from "./helper/getCookie";
 import env from "react-dotenv";
 import NewAccount from "./routes/newAccount";
-import Dashboard from "./routes/dashboard";
 import ForgotPasswordPage from "./routes/forgotPassword";
 
 export const checktoken = async () => {
@@ -22,8 +21,11 @@ export const checktoken = async () => {
       ["Authorization", `${getCookie("jwt")}`],
     ],
   }).then((result) => {
+    console.log(window.location);
     if (result.status === 403 || result.status === 401) {
       return window.location.replace("/logout");
+    } else if (!window.location.pathname.includes("/accounts")) {
+      return window.location.replace("/accounts");
     }
   });
 
@@ -33,33 +35,38 @@ export const checktoken = async () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    errorElement: <ErrorPage />,
+    loader: checktoken,
+  },
+  {
+    path: "/accounts",
+    element: <AccountsOverview />,
     loader: checktoken,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/account/:accountId",
+        path: "/accounts/:accountId",
         element: <AccountDetails />,
+        errorElement: <ErrorPage />,
         loader: checktoken,
       },
       {
-        path: "/account/:accountId/edit",
+        path: "/accounts/:accountId/edit",
+        errorElement: <ErrorPage />,
         loader: checktoken,
       },
       {
-        path: "/account/:accountId/remove",
+        path: "/accounts/:accountId/remove",
+        errorElement: <ErrorPage />,
         loader: checktoken,
       },
       {
-        path: "/account/new",
+        path: "/accounts/new",
+        errorElement: <ErrorPage />,
         loader: checktoken,
         element: <NewAccount />,
       },
     ],
-  },
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
   },
   {
     path: "/login",
