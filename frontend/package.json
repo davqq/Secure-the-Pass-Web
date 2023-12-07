@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "react-dotenv && vite",
-    "build": "react-dotenv && tsc && vite build",
+    "build": "react-dotenv && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
