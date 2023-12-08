@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: "dist",
     rollupOptions: {
       input: {
-        app: "/public/index.html", // default
+        root: "./public/index.html", // default
       },
     },
   },
