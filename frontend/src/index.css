@@ -26,15 +26,11 @@ code {
 
 html,
 body {
-  height: 100%;
-  margin: 0;
-  line-height: 1.5;
-  color: #121212;
+  @apply h-full m-0 leading-6 text-[#121212];
 }
 
 #accountList.active {
-  background-color: #006eff;
-  color: white;
+  @apply bg-blue-500 text-white;
 }
 
 #q:-webkit-autofill,

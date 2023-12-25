@@ -153,11 +153,11 @@ const AccountsOverview = () => {
   };
 
   return (
-    <>
+    <div className="flex w-full bg-[#111827] justify-center">
       {(matches || navbarVisible) && (
-        <div className="flex flex-col w-80 border-solid border-gray-600 border-r bg-gray-900 max-[640px]:w-full">
-          <div className="pl-8 pr-8 flex items-center gap-2 pt-4 pb-4 border-b border-gray-600 ">
-            <form id="search-form" role="search" className="w-full">
+        <div className="flex flex-col w-80 border-solid border-gray-600 border-x bg-gray-900 max-[640px]:w-full">
+          <div className="flex items-center pl-8 pr-8 gap-2 pt-4 pb-4 border-b border-gray-600 ">
+            <form id="search-form" role="search" className="w-full flex">
               <input
                 id="q"
                 aria-label="Search contacts"
@@ -165,9 +165,7 @@ const AccountsOverview = () => {
                 autoFocus={matches}
                 type="search"
                 name="q"
-                className={`appearance-none block w-full px-3 py-2 pl-7 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 bg-no-repeat bg-[length:1em] bg-leftWithPadding focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700 ${
-                  loading ? "bg-none" : "bg-searchspinner"
-                }`}
+                className={`appearance-none block w-full px-3 py-2 pl-7 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 bg-no-repeat bg-[length:1em] bg-leftWithPadding focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700`}
                 value={searchParams.get("q") || ""}
                 onChange={(e) =>
                   setSearchParams(
@@ -177,9 +175,9 @@ const AccountsOverview = () => {
                 }
               />
               <div
-                className="w-4 h-4 animate-spin left-[2.7rem] top-[1.80em] absolute bg-searchspinner sm:w-3.5 sm:h-3.5"
-                aria-hidden
-                hidden={!loading}
+                className={`w-4 h-4  animate-spin ml-2 bg-searchspinner z-10 sm:w-3.5 sm:h-3.5 ${
+                  loading ? "animate-spin" : "animate-none"
+                }`}
               />
             </form>
             <a
@@ -304,7 +302,7 @@ const AccountsOverview = () => {
       )}
 
       {(matches || !navbarVisible) && (
-        <>
+        <div className="flex border-solid border-r border-gray-600 max-w-3xl">
           {!matches && (
             <button
               className="absolute mt-5 ml-5 text-white"
@@ -330,9 +328,9 @@ const AccountsOverview = () => {
           >
             <Outlet />
           </div>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

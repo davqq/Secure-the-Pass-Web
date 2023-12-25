@@ -2,7 +2,7 @@ const NewAccount = () => {
   return (
     <form>
       <div className="justify-center">
-        <h1>New Account</h1>
+        <h1 className="block text-4xl font-medium text-white">New Account</h1>
       </div>
     </form>
   );
