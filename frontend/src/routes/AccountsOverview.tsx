@@ -155,9 +155,13 @@ const AccountsOverview = () => {
   return (
     <div className="flex w-full bg-[#111827] justify-center">
       {(matches || navbarVisible) && (
-        <div className="flex flex-col w-80 border-solid border-gray-600 border-x bg-gray-900 max-[640px]:w-full">
+        <div className="flex flex-col w-80 border-solid border-gray-600 border-r bg-gray-900 max-[640px]:w-full">
           <div className="flex items-center pl-8 pr-8 gap-2 pt-4 pb-4 border-b border-gray-600 ">
-            <form id="search-form" role="search" className="w-full flex">
+            <form
+              id="search-form"
+              role="search"
+              className="w-full flex relative"
+            >
               <input
                 id="q"
                 aria-label="Search contacts"
@@ -167,19 +171,22 @@ const AccountsOverview = () => {
                 name="q"
                 className={`appearance-none block w-full px-3 py-2 pl-7 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 bg-no-repeat bg-[length:1em] bg-leftWithPadding focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700`}
                 value={searchParams.get("q") || ""}
-                onChange={(e) =>
+                onChange={(e) => {
                   setSearchParams(
                     { q: e.target.value },
                     { replace: searchParams.has("q") }
-                  )
-                }
+                  );
+                }}
               />
-              <div
-                className={`w-4 h-4  animate-spin ml-2 bg-searchspinner z-10 sm:w-3.5 sm:h-3.5 ${
-                  loading ? "animate-spin" : "animate-none"
-                }`}
-              />
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
+                <div
+                  className={`w-4 h-4 bg-searchspinner ${
+                    loading ? "animate-spin" : "animate-none"
+                  }`}
+                />
+              </div>
             </form>
+
             <a
               href="/accounts/new"
               type="submit"
@@ -302,14 +309,14 @@ const AccountsOverview = () => {
       )}
 
       {(matches || !navbarVisible) && (
-        <div className="flex border-solid border-r border-gray-600 max-w-3xl">
+        <div className="flex max-w-5xl w-[64rem]">
           {!matches && (
             <button
               className="absolute mt-5 ml-5 text-white"
               onClick={toggleNavbarVisibility}
             >
               <svg
-                className="h-5 w-5"
+                className="h-5 w-5 fl"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -328,6 +335,18 @@ const AccountsOverview = () => {
           >
             <Outlet />
           </div>
+        </div>
+      )}
+
+      {/* Watermark */}
+      {!window.location.pathname.includes("/accounts/") && (
+        <div className="absolute top-1/2 right-1/2  transform -translate-y-1/2 translate-x-1/2">
+          <img
+            className="h-56 text-white opacity-80"
+            src="../src/assets/securethepass_1000x1000.svg"
+            alt="Logo"
+          />
+          <h1>Secure The Pass•••</h1>
         </div>
       )}
     </div>

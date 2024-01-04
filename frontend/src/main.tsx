@@ -12,6 +12,7 @@ import getCookie from "./helper/getCookie";
 import env from "react-dotenv";
 import NewAccount from "./routes/newAccount";
 import ForgotPasswordPage from "./routes/forgotPassword";
+import Root from "./routes/root";
 
 export const checktoken = async () => {
   fetch(`${env.API_URL}/checktoken`, {
@@ -29,12 +30,13 @@ export const checktoken = async () => {
     }
   });
 
-  return null;
+  return <Root />;
 };
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Root />,
     errorElement: <ErrorPage />,
     loader: checktoken,
   },

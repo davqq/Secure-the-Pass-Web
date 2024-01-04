@@ -160,8 +160,11 @@ function Favorite(account: Account) {
               ...account,
               Favorite: !favorite,
             }),
+          }).then((res) => {
+            if (res.status === 200) {
+              favorite = !favorite;
+            }
           });
-          document.location.reload();
         }}
       >
         {favorite ? "★" : "☆"}
