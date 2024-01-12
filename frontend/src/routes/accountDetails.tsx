@@ -32,7 +32,6 @@ const accountDetails = () => {
         .then((result) => {
           setAccount(result);
           setLoading(false);
-          setFavorite(result.Favorite);
         });
     }, 700);
   }, [accountId]);
