@@ -152,11 +152,7 @@ const AccountsOverview = () => {
   };
 
   if (loading) {
-    return (
-      <div className="animate-pulse bg-[#111827] w-full h-full justify-center">
-        Loading...
-      </div>
-    );
+    return <div className="bg-[#111827] w-full h-full" />;
   }
 
   return (
