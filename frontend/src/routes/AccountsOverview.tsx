@@ -1,6 +1,7 @@
 import { NavLink, Outlet, useSearchParams } from "react-router-dom";
 import getCookie from "../helper/getCookie";
 import { useEffect, useRef, useState } from "react";
+import logoBig from "../assets/securethepass_1000x1000.svg";
 
 export interface Account {
   Guid: string;
@@ -342,11 +343,7 @@ const AccountsOverview = () => {
       {/* Watermark */}
       {!window.location.pathname.includes("/accounts/") && matches && (
         <div className="absolute top-1/2 right-1/2  transform -translate-y-1/2 translate-x-full flex justify-center flex-col">
-          <img
-            className="h-56 text-white"
-            src="../src/assets/securethepass_1000x1000.svg"
-            alt="Logo"
-          />
+          <img className="h-56 text-white" src={logoBig} alt="Logo" />
           <h1 className="mt-16 text-white text-6xl opacity-80 text-center">
             Secure The Pass•••
           </h1>

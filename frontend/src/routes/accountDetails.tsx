@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Account } from "./AccountsOverview";
 import getCookie from "../helper/getCookie";
-import eyeOpen from "./visibility_FILL1_wght400_GRAD0_opsz24.svg";
-import eyeClosed from "./visibility_off_FILL1_wght400_GRAD0_opsz24.svg";
+import eyeOpen from "../assets/visibility_FILL1_wght400_GRAD0_opsz24.svg";
+import eyeClosed from "../assets/visibility_off_FILL1_wght400_GRAD0_opsz24.svg";
 
 const accountDetails = () => {
   const { accountId } = useParams();

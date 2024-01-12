@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import logo from "../assets/logo.svg";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -36,7 +37,7 @@ function LoginPage() {
           <a href="/accounts">
             <img
               className="mx-auto h-12 w-auto text-white"
-              src="../src/assets/logo.svg"
+              src={logo}
               alt="Logo"
             />
           </a>

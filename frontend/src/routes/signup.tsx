@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from "../assets/logo.svg";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -41,11 +42,7 @@ function RegisterPage() {
       <div className="max-w-md w-full mx-auto">
         <div className="text-center">
           <a href="/">
-            <img
-              className="mx-auto h-12 w-auto"
-              src="../src/assets/logo.svg"
-              alt="Logo"
-            />
+            <img className="mx-auto h-12 w-auto" src={logo} alt="Logo" />
           </a>
           <h2 className="mt-6 text-center text-3xl font-bold text-white">
             Create an account
