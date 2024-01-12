@@ -171,7 +171,7 @@ function Favorite(account: Account) {
         }`}
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
         onClick={() => {
-          fetch(env.API_URL + "/updateaccount", {
+          fetch(import.meta.env.VITE_API_URL + "/updateaccount", {
             method: "PUT",
             headers: [
               ["Content-Type", "application/json"],
