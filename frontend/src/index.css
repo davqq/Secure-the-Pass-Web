@@ -52,3 +52,19 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: #ffffff;
   caret-color: #ffffff;
 }
+
+::-webkit-scrollbar {
+  @apply w-2 h-2 bg-transparent;
+}
+
+::-webkit-scrollbar-track {
+  @apply hidden;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-gray-400;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}

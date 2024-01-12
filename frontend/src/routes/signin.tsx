@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import env from "react-dotenv";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -9,7 +8,7 @@ function LoginPage() {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(email, password);
-    fetch(`${env.API_URL}/login`, {
+    fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

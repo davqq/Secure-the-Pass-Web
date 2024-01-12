@@ -1,11 +1,4 @@
-import {
-  Form,
-  NavLink,
-  Outlet,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
-import env from "react-dotenv";
+import { NavLink, Outlet, useSearchParams } from "react-router-dom";
 import getCookie from "../helper/getCookie";
 import { useEffect, useRef, useState } from "react";
 
@@ -49,7 +42,7 @@ const AccountsOverview = () => {
   };
 
   useEffect(() => {
-    fetch(`${env.API_URL}/getuser`, {
+    fetch(`${import.meta.env.VITE_API_URL}/getuser`, {
       method: "GET",
       headers: [
         ["Content-Type", "application/json"],
@@ -72,14 +65,19 @@ const AccountsOverview = () => {
     controllerRef.current = controller;
     setLoading(true);
     setTimeout(() => {
-      fetch(`${env.API_URL}/getaccounts/${searchParams.get("q") || ""}`, {
-        method: "GET",
-        signal: controllerRef.current?.signal,
-        headers: [
-          ["Content-Type", "application/json"],
-          ["Authorization", `${getCookie("jwt")}`],
-        ],
-      })
+      fetch(
+        `${import.meta.env.VITE_API_URL}/getaccounts/${
+          searchParams.get("q") || ""
+        }`,
+        {
+          method: "GET",
+          signal: controllerRef.current?.signal,
+          headers: [
+            ["Content-Type", "application/json"],
+            ["Authorization", `${getCookie("jwt")}`],
+          ],
+        }
+      )
         .then((res) => res.json())
         .then((result) => {
           setAccounts(result);
@@ -155,7 +153,7 @@ const AccountsOverview = () => {
   return (
     <div className="flex w-full bg-[#111827] justify-center">
       {(matches || navbarVisible) && (
-        <div className="flex flex-col w-80 border-solid border-gray-600 border-r bg-gray-900 max-[640px]:w-full">
+        <div className="flex flex-col w-100 border-solid border-gray-600 border-r bg-gray-900 max-[640px]:w-full">
           <div className="flex items-center pl-8 pr-8 gap-2 pt-4 pb-4 border-b border-gray-600 ">
             <form
               id="search-form"
@@ -214,20 +212,21 @@ const AccountsOverview = () => {
                           onClick={() => !matches && setNavbarVisible(false)}
                           className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
                         >
-                          <div className="flex items-center min-h-[3em]">
-                            <div className="w-56 ml-2 flex flex-col">
-                              {account.Url ? (
+                          <div className="flex items-center min-h-[3em] mx-2">
+                            <div className="w-56 flex flex-col">
+                              {account.Url && (
                                 <span className="text-ellipsis overflow-hidden whitespace-nowrap ">
                                   {account.Url}
                                 </span>
-                              ) : (
-                                <i className="text-inherit">No Name</i>
                               )}
 
                               <span className="text-xs text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden">
                                 {account.Email}
                               </span>
                             </div>
+                            <span className="text-[#eeb004]">
+                              {account.Favorite && "★"}
+                            </span>
                           </div>
                         </NavLink>
                       </li>
@@ -251,12 +250,14 @@ const AccountsOverview = () => {
             <div
               ref={popUpRef}
               className={`absolute w-4/5 self-center bottom-full z-20 mb-2 overflow-hidden rounded-xl bg-gray-950 pb-1.5 pt-1 outline-none ${
-                isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                isOpen
+                  ? "opacity-100 translate-y-0 "
+                  : "opacity-0 hidden translate-y-2"
               } transition-transform duration-200 ease-in-out`}
             >
               <nav role="none">
                 <a
-                  className="flex p-3 rounded-xl gap-3 items-center w-full text-white cursor-pointer text-sm hover:bg-gray-700"
+                  className="flex p-3 rounded-xl gap-3 items-center w-full text-white text-sm hover:bg-gray-700"
                   href="/logout"
                   role="menuitem"
                   tabIndex={-1}
@@ -339,14 +340,16 @@ const AccountsOverview = () => {
       )}
 
       {/* Watermark */}
-      {!window.location.pathname.includes("/accounts/") && (
-        <div className="absolute top-1/2 right-1/2  transform -translate-y-1/2 translate-x-1/2">
+      {!window.location.pathname.includes("/accounts/") && matches && (
+        <div className="absolute top-1/2 right-1/2  transform -translate-y-1/2 translate-x-full flex justify-center flex-col">
           <img
-            className="h-56 text-white opacity-80"
+            className="h-56 text-white"
             src="../src/assets/securethepass_1000x1000.svg"
             alt="Logo"
           />
-          <h1>Secure The Pass•••</h1>
+          <h1 className="mt-16 text-white text-6xl opacity-80 text-center">
+            Secure The Pass•••
+          </h1>
         </div>
       )}
     </div>

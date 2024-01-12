@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Account } from "./AccountsOverview";
 import getCookie from "../helper/getCookie";
-import env from "react-dotenv";
 
 const accountDetails = () => {
   const { accountId } = useParams();
   const [account, setAccount] = useState<Account>();
   const [loading, setLoading] = useState(true);
   const controllerRef = useRef<AbortController | null>();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (controllerRef.current) {
@@ -18,7 +18,7 @@ const accountDetails = () => {
     controllerRef.current = controller;
     setLoading(true);
     setTimeout(() => {
-      fetch(`${env.API_URL}/getaccount/${accountId}`, {
+      fetch(`${import.meta.env.VITE_API_URL}/getaccount/${accountId}`, {
         method: "GET",
         signal: controllerRef.current?.signal,
         headers: [
@@ -30,6 +30,7 @@ const accountDetails = () => {
         .then((result) => {
           setAccount(result);
           setLoading(false);
+          setFavorite(result.Favorite);
         });
     }, 700);
   }, [accountId]);
@@ -39,7 +40,7 @@ const accountDetails = () => {
       <div className="max-w-full flex flex-nowrap flex-col justify-start items-start animate-pulse">
         <div className="flex items-center mt-4 space-x-3">
           <svg
-            className="text-gray-200 w-14 h-14 dark:text-gray-700"
+            className="text-gray-200 w-14 h-14 dark:text-gray-700 "
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -84,7 +85,6 @@ const accountDetails = () => {
   return (
     <div className="max-w-full flex flex-nowrap flex-col justify-start items-start">
       <div className="flex">
-        {/* <CompanyLogo companyName={account.Url} /> */}
         <h1 className="text-[2rem] font-[700] m-4 leading-[1.2] text-center items-center flex text-white">
           {account?.Url}
         </h1>
@@ -108,7 +108,33 @@ const accountDetails = () => {
         {account?.Password && (
           <div className="p-2.5 overflow-auto">
             <div className="text-sm text-headline">password</div>
-            <div className="text-white">{account.Password}</div>
+            <div className="flex">
+              <div className="text-white">
+                {showPassword
+                  ? account.Password
+                  : "•".repeat(account.Password.length)}
+              </div>
+              <button
+                className="text-white ml-2"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                {showPassword ? (
+                  <img
+                    className="h-5"
+                    src="../src/assets/visibility_off_FILL1_wght400_GRAD0_opsz24.svg"
+                    alt="Logo"
+                  />
+                ) : (
+                  <img
+                    className="h-5"
+                    src="../src/assets/visibility_FILL1_wght400_GRAD0_opsz24.svg"
+                    alt="Logo"
+                  />
+                )}
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -140,7 +166,8 @@ const accountDetails = () => {
 };
 
 function Favorite(account: Account) {
-  let favorite = account.Favorite;
+  const [favorite, setFavorite] = useState(account?.Favorite);
+
   return (
     <div className="flex items-center mt-1">
       <button
@@ -162,7 +189,7 @@ function Favorite(account: Account) {
             }),
           }).then((res) => {
             if (res.status === 200) {
-              favorite = !favorite;
+              setFavorite(!favorite);
             }
           });
         }}

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import env from "react-dotenv";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -9,7 +8,7 @@ function RegisterPage() {
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch(`${env.API_URL}/register`, {
+    fetch(`${import.meta.env.VITE_API_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
