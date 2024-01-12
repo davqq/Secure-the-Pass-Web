@@ -20,14 +20,18 @@ export const checktoken = async () => {
       ["Content-Type", "application/json"],
       ["Authorization", `${getCookie("jwt")}`],
     ],
-  }).then((result) => {
-    console.log(window.location);
-    if (result.status === 403 || result.status === 401) {
+  })
+    .then((result) => {
+      if (result.status === 403 || result.status === 401) {
+        return window.location.replace("/logout");
+      } else if (!window.location.pathname.includes("/accounts")) {
+        return window.location.replace("/accounts");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
       return window.location.replace("/logout");
-    } else if (!window.location.pathname.includes("/accounts")) {
-      return window.location.replace("/accounts");
-    }
-  });
+    });
 
   return <Root />;
 };

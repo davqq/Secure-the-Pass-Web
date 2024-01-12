@@ -151,6 +151,10 @@ const AccountsOverview = () => {
     setNavbarVisible(!navbarVisible);
   };
 
+  if (loading) {
+    return "bg-[#111827] w-full h-full";
+  }
+
   return (
     <div className="flex w-full bg-[#111827] justify-center">
       {(matches || navbarVisible) && (
