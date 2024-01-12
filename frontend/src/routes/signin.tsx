@@ -8,7 +8,6 @@ function LoginPage() {
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email, password);
     fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: "POST",
       headers: {

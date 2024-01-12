@@ -14,7 +14,6 @@ import updateAccount from "./functions/account/updateAccount";
 import createAccount from "./functions/account/createAccount";
 import cors from "cors";
 import generator from "generate-password-ts";
-import * as fs from "fs";
 
 env.config();
 
@@ -147,15 +146,4 @@ app.get("/api/generatepassword", (req, res) => {
   });
 
   res.send({ password: password });
-});
-
-interface Company {
-  name: string;
-  url: string;
-}
-
-app.get("/api/getcompanies", authMiddleware, async (req: any, res) => {
-  const fileContents = fs.readFileSync("./companies.json", "utf-8");
-  const companies = JSON.parse(fileContents) as Company[];
-  res.send(companies.sort((a, b) => (a.name > b.name ? 1 : -1)));
 });

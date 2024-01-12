@@ -201,7 +201,7 @@ const AccountsOverview = () => {
             ) : (
               Object.entries(groupedAccounts).map(([groupLabel, accounts]) => (
                 <li className="list-none" key={groupLabel}>
-                  <p className="font-bold text-xs text-gray-400">
+                  <p className="font-bold text-xs text-gray-400 mt-2">
                     {groupLabel}
                   </p>
                   <ul className="p-0 m-0">
@@ -213,7 +213,7 @@ const AccountsOverview = () => {
                           onClick={() => !matches && setNavbarVisible(false)}
                           className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
                         >
-                          <div className="flex items-center min-h-[3em] mx-2">
+                          <div className="flex items-center min-h-[3em] mx-2 w-full">
                             <div className="w-56 flex flex-col">
                               {account.Url && (
                                 <span className="text-ellipsis overflow-hidden whitespace-nowrap ">
@@ -225,7 +225,7 @@ const AccountsOverview = () => {
                                 {account.Email}
                               </span>
                             </div>
-                            <span className="text-[#eeb004]">
+                            <span className="text-[#eeb004] flex origin-right">
                               {account.Favorite && "★"}
                             </span>
                           </div>
@@ -318,16 +318,13 @@ const AccountsOverview = () => {
               onClick={toggleNavbarVisibility}
             >
               <svg
-                className="h-5 w-5 fl"
+                className="h-8 w-8"
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+                fill="#fff"
+                viewBox="0 -960 960 960"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 15.707a1 1 0 0 1-1.414-1.414L11.586 10l-5.707-5.293a1 1 0 1 1 1.414-1.414l6 6a1 1 0 0 1 0 1.414l-6 6z"
-                  clipRule="evenodd"
-                />
+                <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
               </svg>
             </button>
           )}
