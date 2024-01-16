@@ -63,31 +63,31 @@ const authMiddleware = (req: any, res: Response, next: NextFunction) => {
   });
 };
 
-app.post("/api/login", cors(corsOptions), async (req, res) => {
+app.post("/login", cors(corsOptions), async (req, res) => {
   await login({ user: req.body as User, config, res });
 });
 
-app.post("/api/register", async (req, res) => {
+app.post("/register", async (req, res) => {
   await register({ user: req.body as User, config, res });
 });
 
-app.post("/api/checktoken", authMiddleware, (req, res) => {
+app.post("/checktoken", authMiddleware, (req, res) => {
   res.send("Token is valid");
 });
 
-app.get("/api/getuser", authMiddleware, async (req: any, res) => {
+app.get("/getuser", authMiddleware, async (req: any, res) => {
   res.send(req.user as User);
 });
 
-app.delete("/api/deleteuser", authMiddleware, async (req: any, res) => {
+app.delete("/deleteuser", authMiddleware, async (req: any, res) => {
   await deleteUser({ config, user: req.user as User, res });
 });
 
-app.put("/api/updateuser", authMiddleware, async (req, res) => {
+app.put("/updateuser", authMiddleware, async (req, res) => {
   await updateUser({ config, user: req.body as User, res });
 });
 
-app.get("/api/getaccounts", authMiddleware, async (req: any, res) => {
+app.get("/getaccounts", authMiddleware, async (req: any, res) => {
   await getAccounts({
     config,
     currentUser: req.user as User,
@@ -95,7 +95,7 @@ app.get("/api/getaccounts", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.get("/api/getaccounts/:q", authMiddleware, async (req: any, res) => {
+app.get("/getaccounts/:q", authMiddleware, async (req: any, res) => {
   await getAccounts({
     config,
     currentUser: req.user as User,
@@ -104,7 +104,7 @@ app.get("/api/getaccounts/:q", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.get("/api/getaccount/:guid", authMiddleware, async (req, res) => {
+app.get("/getaccount/:guid", authMiddleware, async (req, res) => {
   await getAccount({
     config,
     accountGuid: req.params.guid,
@@ -112,7 +112,7 @@ app.get("/api/getaccount/:guid", authMiddleware, async (req, res) => {
   });
 });
 
-app.post("/api/createaccount", authMiddleware, async (req: any, res) => {
+app.post("/createaccount", authMiddleware, async (req: any, res) => {
   await createAccount({
     config,
     user: req.user as User,
@@ -121,7 +121,7 @@ app.post("/api/createaccount", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.delete("/api/deleteaccount", authMiddleware, async (req, res) => {
+app.delete("/deleteaccount", authMiddleware, async (req, res) => {
   const account = req.body as Account;
   await deleteAccount({
     config,
@@ -130,7 +130,7 @@ app.delete("/api/deleteaccount", authMiddleware, async (req, res) => {
   });
 });
 
-app.put("/api/updateaccount", authMiddleware, async (req: any, res) => {
+app.put("/updateaccount", authMiddleware, async (req: any, res) => {
   const account = req.body as Account;
   account.UserGuid = (req.user as User).Guid;
   await updateAccount({
@@ -140,7 +140,7 @@ app.put("/api/updateaccount", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.get("/api/generatepassword", (req, res) => {
+app.get("/generatepassword", authMiddleware, (req, res) => {
   const password = generator.generate({
     length: 10,
     numbers: true,
