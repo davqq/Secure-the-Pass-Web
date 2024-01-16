@@ -63,7 +63,7 @@ const authMiddleware = (req: any, res: Response, next: NextFunction) => {
   });
 };
 
-app.post("/login", cors(corsOptions), async (req, res) => {
+app.post("/login", async (req, res) => {
   await login({ user: req.body as User, config, res });
 });
 
