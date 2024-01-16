@@ -37,6 +37,7 @@ const corsOptions: cors.CorsOptions = {
   origin: "*",
   credentials: true, //access-control-allow-credentials:true
   optionsSuccessStatus: 200,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: true,
 };
 
@@ -62,7 +63,7 @@ const authMiddleware = (req: any, res: Response, next: NextFunction) => {
   });
 };
 
-app.post("/api/login", async (req, res) => {
+app.post("/api/login", cors(corsOptions), async (req, res) => {
   await login({ user: req.body as User, config, res });
 });
 
@@ -120,7 +121,7 @@ app.post("/api/createaccount", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.delete("/api/deleteaccount", authMiddleware, async (req: any, res) => {
+app.delete("/api/deleteaccount", authMiddleware, async (req, res) => {
   const account = req.body as Account;
   await deleteAccount({
     config,
