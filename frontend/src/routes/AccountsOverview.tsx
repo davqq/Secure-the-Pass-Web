@@ -229,7 +229,7 @@ const AccountsOverview = () => {
                                 {account.Email}
                               </span>
                             </div>
-                            <span className="text-[#eeb004] flex origin-right">
+                            <span className="text-[#eeb004] flex ml-auto mr-3">
                               {account.Favorite && "★"}
                             </span>
                           </div>
@@ -241,75 +241,77 @@ const AccountsOverview = () => {
               ))
             )}
           </nav>
-          <div
-            className="relative flex py-2 px-8 border-solid mb-2 border-gray-600 border-t"
-            onBlurCapture={(event) => {
-              if (
-                popUpRef.current &&
-                !popUpRef.current.contains(event.relatedTarget)
-              ) {
-                setIsOpen(false);
-              }
-            }}
-          >
+          <div className="border-solid border-gray-600 border-t">
             <div
-              ref={popUpRef}
-              className={`absolute w-4/5 self-center bottom-full z-20 mb-2 overflow-hidden rounded-xl bg-gray-950 pb-1.5 pt-1 outline-none ${
-                isOpen
-                  ? "opacity-100 translate-y-0 "
-                  : "opacity-0 hidden translate-y-2"
-              } transition-transform duration-200 ease-in-out`}
+              className="relative flex py-2 mx-8"
+              onBlurCapture={(event) => {
+                if (
+                  popUpRef.current &&
+                  !popUpRef.current.contains(event.relatedTarget)
+                ) {
+                  setIsOpen(false);
+                }
+              }}
             >
-              <nav role="none">
-                <a
-                  className="flex p-3 rounded-xl gap-3 items-center w-full text-white text-sm hover:bg-gray-700"
-                  href="/logout"
-                  role="menuitem"
-                  tabIndex={-1}
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="none"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                    <polyline points="16 17 21 12 16 7"></polyline>
-                    <line x1="21" y1="12" x2="9" y2="12"></line>
-                  </svg>
-                  Log out
-                </a>
-              </nav>
-            </div>
-            <button
-              className="w-full flex items-center justify-between p-2 rounded-xl text-white no-underline hover:bg-gray-600 min-h-[3em] focus:bg-gray-600"
-              aria-haspopup={isOpen}
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {user?.Username}
-              <svg
-                stroke="currentColor"
-                fill="none"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                className="h-4 w-4 flex-shrink-0 text-gray-500"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                ref={popUpRef}
+                className={`absolute w-full self-center bottom-full z-20 mb-2 overflow-hidden rounded-xl bg-gray-950 py-1 outline-none ${
+                  isOpen
+                    ? "opacity-100 translate-y-0 "
+                    : "opacity-0 hidden translate-y-2"
+                } transition-transform duration-200 ease-in-out`}
               >
-                <circle cx="12" cy="12" r="1"></circle>
-                <circle cx="19" cy="12" r="1"></circle>
-                <circle cx="5" cy="12" r="1"></circle>
-              </svg>
-            </button>
+                <nav role="none">
+                  <a
+                    className="flex p-3 rounded-xl gap-3 items-center w-full text-white text-sm hover:bg-gray-700"
+                    href="/logout"
+                    role="menuitem"
+                    tabIndex={-1}
+                  >
+                    <svg
+                      stroke="currentColor"
+                      fill="none"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-4 w-4"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                      <polyline points="16 17 21 12 16 7"></polyline>
+                      <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Log out
+                  </a>
+                </nav>
+              </div>
+              <button
+                className="w-full flex items-center justify-between p-2 rounded-xl text-white no-underline hover:bg-gray-600 min-h-[3em] focus:bg-gray-600"
+                aria-haspopup={isOpen}
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                {user?.Username}
+                <svg
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="h-4 w-4 flex-shrink-0 text-gray-500"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="12" cy="12" r="1"></circle>
+                  <circle cx="19" cy="12" r="1"></circle>
+                  <circle cx="5" cy="12" r="1"></circle>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       )}
