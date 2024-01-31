@@ -34,8 +34,8 @@ const app = express();
 const port = process.env.PORT;
 
 const corsOptions: cors.CorsOptions = {
-  origin: process.env.Origin,
-  credentials: true, //access-control-allow-credentials:true
+  origin: (process.env.Origin as string).split(","),
+  credentials: true,
   optionsSuccessStatus: 200,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: true,
