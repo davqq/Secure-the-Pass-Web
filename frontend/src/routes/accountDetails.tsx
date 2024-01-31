@@ -13,27 +13,45 @@ const accountDetails = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    if (controllerRef.current) {
-      controllerRef.current.abort();
-    }
     const controller = new AbortController();
     controllerRef.current = controller;
     setLoading(true);
-    setTimeout(() => {
-      fetch(`${import.meta.env.VITE_API_URL}/accounts/${accountId}`, {
-        method: "GET",
-        signal: controllerRef.current?.signal,
-        headers: [
-          ["Content-Type", "application/json"],
-          ["Authorization", `${getCookie("jwt")}`],
-        ],
-      })
-        .then((res) => res.json())
-        .then((result) => {
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/accounts/${accountId}`,
+          {
+            method: "GET",
+            signal: controllerRef.current?.signal,
+            headers: [
+              ["Content-Type", "application/json"],
+              ["Authorization", `${getCookie("jwt")}`],
+            ],
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const result = await response.json();
+
+        if (!controller.signal.aborted) {
           setAccount(result);
           setLoading(false);
-        });
-    }, 700);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      controller.abort();
+    };
   }, [accountId]);
 
   if (!account || loading) {
@@ -41,50 +59,48 @@ const accountDetails = () => {
       <div className="max-w-full flex flex-nowrap flex-col justify-start items-start animate-pulse">
         <div className="flex items-center mt-4 space-x-3">
           <div>
-            <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2"></div>
+            <div className="h-2.5 rounded-full bg-gray-700 w-32 mb-2"></div>
           </div>
         </div>
 
         <br />
         <div className="grid grid-rows-3 grid-flow-col auto-rows-max w-full border-solid border border-gray-600 rounded-xl">
           <div className="p-2.5 overflow-auto border-b border-gray-600">
-            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div className="h-2.5 rounded-full bg-gray-600 w-24 mb-2.5"></div>
+            <div className="w-32 h-2 rounded-full bg-gray-700"></div>
           </div>
           <div className="p-2.5 overflow-auto border-b border-gray-600">
-            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div className="h-2.5 rounded-full bg-gray-600 w-24 mb-2.5"></div>
+            <div className="w-32 h-2 rounded-full bg-gray-700"></div>
           </div>
           <div className="p-2.5 overflow-auto">
-            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div className="h-2.5 rounded-full bg-gray-600 w-24 mb-2.5"></div>
+            <div className="w-32 h-2 rounded-full bg-gray-700"></div>
           </div>
         </div>
 
         <br />
 
         <div className="w-full items-center justify-center flex ">
-          <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+          <div className="w-32 h-2 rounded-full bg-gray-700" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-full flex flex-nowrap flex-col justify-start items-start">
+    <div className="w-full h-full flex overflow-auto flex-nowrap flex-col justify-start items-start">
       <div className="flex">
-        <h1 className="text-[2rem] font-[700] m-4 leading-[1.2] text-center items-center flex text-white">
-          {account?.Url}
-        </h1>
+        <h1 className="text-3xl font-[700] m-4 text-white">{account?.Url}</h1>
         <Favorite {...account} />
       </div>
 
       <br />
-      <div className="grid-rows-3 grid-flow-col w-full border-solid border border-gray-600 rounded-xl">
+      <div className="grid grid-flow-row w-full border-solid border border-gray-600 rounded-xl">
         {account?.Username && (
           <div className="p-2.5 overflow-auto border-b border-gray-600">
             <div className="text-sm text-headline">username</div>
-            <div className="text-white">{account.Username}</div>
+            <div className=" text-white">{account.Username}</div>
           </div>
         )}
         {account?.Email && (
@@ -96,23 +112,23 @@ const accountDetails = () => {
         {account?.Password && (
           <div className="p-2.5 overflow-auto">
             <div className="text-sm text-headline">password</div>
-            <div className="flex">
-              <div className="text-white">
+            <div className="flex flex-grow">
+              <div className="text-white overflow-x-scroll">
                 {showPassword
                   ? account.Password
                   : "•".repeat(account.Password.length)}
               </div>
               <button
-                className="text-white ml-2"
+                className="text-white ml-2 min-w-fit h-fit self-center"
                 onClick={() => {
                   setShowPassword(!showPassword);
                 }}
               >
-                {showPassword ? (
-                  <img className="h-5" src={eyeClosed} alt="Logo" />
-                ) : (
-                  <img className="h-5" src={eyeOpen} alt="Logo" />
-                )}
+                <img
+                  className="h-5 w-5"
+                  src={showPassword ? eyeClosed : eyeOpen}
+                  alt="Logo"
+                />
               </button>
             </div>
           </div>
@@ -157,7 +173,7 @@ function Favorite(account: Account) {
         }`}
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
         onClick={() => {
-          fetch(import.meta.env.VITE_API_URL + "/updateaccount", {
+          fetch(import.meta.env.VITE_API_URL + "/accounts", {
             method: "PUT",
             headers: [
               ["Content-Type", "application/json"],

@@ -67,7 +67,7 @@ const AccountsOverview = () => {
     setLoading(true);
     setTimeout(() => {
       fetch(
-        `${import.meta.env.VITE_API_URL}/accounts/${
+        `${import.meta.env.VITE_API_URL}/accounts?q=${
           searchParams.get("q") || ""
         }`,
         {
@@ -151,7 +151,7 @@ const AccountsOverview = () => {
     setNavbarVisible(!navbarVisible);
   };
 
-  if (loading) {
+  if (loading && searchParams.get("q") === "") {
     return <div className="bg-[#111827] w-full h-full" />;
   }
 
@@ -159,7 +159,7 @@ const AccountsOverview = () => {
     <div className="flex w-full bg-[#111827] justify-center">
       {(matches || navbarVisible) && (
         <div className="flex flex-col w-100 border-solid border-gray-600 border-r bg-gray-900 max-[640px]:w-full">
-          <div className="flex items-center pl-8 pr-8 gap-2 pt-4 pb-4 border-b border-gray-600 ">
+          <div className="flex items-center px-8 gap-2 py-4 border-b border-gray-600 ">
             <form
               id="search-form"
               role="search"
@@ -198,7 +198,7 @@ const AccountsOverview = () => {
               New
             </a>
           </div>
-          <nav className="flex-1 overflow-auto pt-4 px-8">
+          <nav className="flex-1 overflow-auto mr-1.5 my-1 pt-4 px-8">
             {!groupedAccounts ||
             Object.entries(groupedAccounts).length === 0 ? (
               <p className="text-white">No accounts yet</p>
@@ -218,18 +218,14 @@ const AccountsOverview = () => {
                           className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
                         >
                           <div className="flex items-center min-h-[3em] mx-2 w-full">
-                            <div className="w-56 flex flex-col">
-                              {account.Url && (
-                                <span className="text-ellipsis overflow-hidden whitespace-nowrap ">
-                                  {account.Url}
-                                </span>
-                              )}
+                            <div className="flex flex-col overflow-hidden whitespace-nowrap">
+                              {account.Url && <span>{account.Url}</span>}
 
-                              <span className="text-xs text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden">
+                              <span className="text-xs text-gray-400">
                                 {account.Email}
                               </span>
                             </div>
-                            <span className="text-[#eeb004] flex ml-auto mr-3">
+                            <span className="text-[#eeb004] text-base flex ml-auto mr-3">
                               {account.Favorite && "★"}
                             </span>
                           </div>
