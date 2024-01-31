@@ -92,15 +92,7 @@ app.get("/accounts", authMiddleware, async (req: any, res) => {
     config,
     currentUser: req.user as User,
     res,
-  });
-});
-
-app.get("/accounts/:q", authMiddleware, async (req: any, res) => {
-  await getAccounts({
-    config,
-    currentUser: req.user as User,
-    res,
-    search: req.params.q,
+    search: req.query.q,
   });
 });
 
