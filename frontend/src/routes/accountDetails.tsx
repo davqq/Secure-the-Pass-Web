@@ -20,7 +20,7 @@ const accountDetails = () => {
     controllerRef.current = controller;
     setLoading(true);
     setTimeout(() => {
-      fetch(`${import.meta.env.VITE_API_URL}/getaccount/${accountId}`, {
+      fetch(`${import.meta.env.VITE_API_URL}/accounts/${accountId}`, {
         method: "GET",
         signal: controllerRef.current?.signal,
         headers: [

@@ -43,7 +43,7 @@ const AccountsOverview = () => {
   };
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/getuser`, {
+    fetch(`${import.meta.env.VITE_API_URL}/user`, {
       method: "GET",
       headers: [
         ["Content-Type", "application/json"],
@@ -67,7 +67,7 @@ const AccountsOverview = () => {
     setLoading(true);
     setTimeout(() => {
       fetch(
-        `${import.meta.env.VITE_API_URL}/getaccounts/${
+        `${import.meta.env.VITE_API_URL}/accounts/${
           searchParams.get("q") || ""
         }`,
         {

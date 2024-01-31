@@ -75,19 +75,19 @@ app.post("/checktoken", authMiddleware, (req, res) => {
   res.send("Token is valid");
 });
 
-app.get("/getuser", authMiddleware, async (req: any, res) => {
+app.get("/user", authMiddleware, async (req: any, res) => {
   res.send(req.user as User);
 });
 
-app.delete("/deleteuser", authMiddleware, async (req: any, res) => {
+app.delete("/user", authMiddleware, async (req: any, res) => {
   await deleteUser({ config, user: req.user as User, res });
 });
 
-app.put("/updateuser", authMiddleware, async (req, res) => {
+app.put("/user", authMiddleware, async (req, res) => {
   await updateUser({ config, user: req.body as User, res });
 });
 
-app.get("/getaccounts", authMiddleware, async (req: any, res) => {
+app.get("/accounts", authMiddleware, async (req: any, res) => {
   await getAccounts({
     config,
     currentUser: req.user as User,
@@ -95,7 +95,7 @@ app.get("/getaccounts", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.get("/getaccounts/:q", authMiddleware, async (req: any, res) => {
+app.get("/accounts/:q", authMiddleware, async (req: any, res) => {
   await getAccounts({
     config,
     currentUser: req.user as User,
@@ -104,7 +104,7 @@ app.get("/getaccounts/:q", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.get("/getaccount/:guid", authMiddleware, async (req, res) => {
+app.get("/accounts/:guid", authMiddleware, async (req, res) => {
   await getAccount({
     config,
     accountGuid: req.params.guid,
@@ -112,7 +112,7 @@ app.get("/getaccount/:guid", authMiddleware, async (req, res) => {
   });
 });
 
-app.post("/createaccount", authMiddleware, async (req: any, res) => {
+app.post("/accounts", authMiddleware, async (req: any, res) => {
   await createAccount({
     config,
     user: req.user as User,
@@ -121,7 +121,7 @@ app.post("/createaccount", authMiddleware, async (req: any, res) => {
   });
 });
 
-app.delete("/deleteaccount", authMiddleware, async (req, res) => {
+app.delete("/accounts", authMiddleware, async (req: any, res) => {
   const account = req.body as Account;
   await deleteAccount({
     config,
@@ -130,7 +130,7 @@ app.delete("/deleteaccount", authMiddleware, async (req, res) => {
   });
 });
 
-app.put("/updateaccount", authMiddleware, async (req: any, res) => {
+app.put("/accounts", authMiddleware, async (req: any, res) => {
   const account = req.body as Account;
   account.UserGuid = (req.user as User).Guid;
   await updateAccount({
