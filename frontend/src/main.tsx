@@ -61,11 +61,6 @@ const router = createBrowserRouter([
         loader: checktoken,
       },
       {
-        path: "/accounts/:accountId/remove",
-        errorElement: <ErrorPage />,
-        loader: checktoken,
-      },
-      {
         path: "/accounts/new",
         errorElement: <ErrorPage />,
         loader: checktoken,

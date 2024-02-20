@@ -27,11 +27,11 @@ const createAccount = async ({
     request.input("Url", sql.VarChar, account.Url);
     request.input("UserGuid", sql.VarChar, user.Guid);
     request.input("UpdatedAt", sql.VarChar, new Date().toISOString());
-    request.input("Favorite", sql.Int, account.Favorite);
+    request.input("Favorite", sql.Bit, account.Favorite ?? false);
     request.input("Notes", sql.VarChar, account.Notes);
     request.input("CreatedAt", sql.VarChar, new Date().toISOString());
     await request.query<Account>(
-      `INSERT INTO [dbo].[Account] (Guid, Username, Email, Password, Url, UserGuid, UpdatedAt, Favorite, Notes, CreateAt) ` +
+      `INSERT INTO [dbo].[Account] (Guid, Username, Email, Password, Url, UserGuid, UpdatedAt, Favorite, Notes, CreatedAt) ` +
         `VALUES (NEWID(), @Username, @Email, @Password, @Url, @UserGuid, @UpdatedAt, @Favorite, @Notes, @CreatedAt)`
     );
     handleSuccess({ success: "Account created successfully" }, 200, res);

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Account } from "./AccountsOverview";
 import getCookie from "../helper/getCookie";
 import eyeOpen from "../assets/visibility_FILL1_wght400_GRAD0_opsz24.svg";
+import edit from "../assets/edit.svg";
 import eyeClosed from "../assets/visibility_off_FILL1_wght400_GRAD0_opsz24.svg";
 
 const accountDetails = () => {
@@ -90,11 +91,21 @@ const accountDetails = () => {
 
   return (
     <div className="w-full h-full flex overflow-auto flex-nowrap flex-col justify-start items-start">
-      <div className="flex">
+      <div className="flex w-full">
         <h1 className="text-3xl font-[700] m-4 text-white">{account?.Url}</h1>
         <Favorite {...account} />
-      </div>
+        // edit button right side
+        <button
+          className="flex py-2 px-4 h-fit self-center border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-blue-500 hover:bg-blue-600"
+          onClick={() => {
+            window.location.replace(`/accounts/${accountId}/edit`);
+          }}
+        >
+          <img className="h-5 w-5 self-center" src={edit} alt="Logo" />
 
+          <span className="ml-1">Edit</span>
+        </button>
+      </div>
       <br />
       <div className="grid grid-flow-row w-full border-solid border border-gray-600 rounded-xl">
         {account?.Username && (
