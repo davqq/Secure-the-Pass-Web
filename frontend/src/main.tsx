@@ -12,6 +12,7 @@ import getCookie from "./helper/getCookie";
 import NewAccount from "./routes/newAccount";
 import ForgotPasswordPage from "./routes/forgotPassword";
 import Root from "./routes/root";
+import AccountEdit from "./routes/accountEdit";
 
 export const checktoken = async () => {
   fetch(`${import.meta.env.VITE_API_URL}/checktoken`, {
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
       {
         path: "/accounts/:accountId/edit",
         errorElement: <ErrorPage />,
+        element: <AccountEdit />,
         loader: checktoken,
       },
       {

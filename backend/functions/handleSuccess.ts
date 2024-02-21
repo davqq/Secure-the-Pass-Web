@@ -6,7 +6,6 @@ const handleSuccess = (
   res: Response,
   headers?: object
 ) => {
-  console.log(message);
   const defaultHeaders = {
     "content-type": "application/json;charset=UTF-8",
     "Access-Control-Expose-Headers": "Authorization",

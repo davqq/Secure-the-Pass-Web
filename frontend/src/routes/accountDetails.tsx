@@ -90,20 +90,19 @@ const accountDetails = () => {
   }
 
   return (
-    <div className="w-full h-full flex overflow-auto flex-nowrap flex-col justify-start items-start">
-      <div className="flex w-full">
+    <div className="w-full h-full flex flex-wrap flex-col justify-start items-start">
+      <div className="flex flex-wrap w-full">
         <h1 className="text-3xl font-[700] m-4 text-white">{account?.Url}</h1>
         <Favorite {...account} />
-        // edit button right side
         <button
-          className="flex py-2 px-4 h-fit self-center border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-blue-500 hover:bg-blue-600"
+          className="flex py-2 px-4 h-fit ml-auto self-center border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-blue-500 hover:bg-blue-600"
           onClick={() => {
             window.location.replace(`/accounts/${accountId}/edit`);
           }}
         >
           <img className="h-5 w-5 self-center" src={edit} alt="Logo" />
 
-          <span className="ml-1">Edit</span>
+          <span className="ml-1.5">Edit</span>
         </button>
       </div>
       <br />
