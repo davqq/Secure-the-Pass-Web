@@ -49,8 +49,10 @@ const getAccounts = async ({
       (search &&
         result.recordset.filter((account) => {
           return (
-            account.Url.toLowerCase().includes(search.toLowerCase()) ||
-            account.Username.toLowerCase().includes(search.toLowerCase())
+            (account?.Url ?? "").toLowerCase().includes(search.toLowerCase()) ||
+            (account?.Username ?? "")
+              .toLowerCase()
+              .includes(search.toLowerCase())
           );
         })) ||
       result.recordset;

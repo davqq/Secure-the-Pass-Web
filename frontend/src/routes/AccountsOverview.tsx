@@ -42,6 +42,15 @@ const AccountsOverview = () => {
     setMatches(e.matches);
   };
 
+  // check url and set navbarVisible to false if it contains /accounts/
+  if (
+    !matches &&
+    !navbarVisible &&
+    !window.location.href.endsWith("/accounts")
+  ) {
+    setNavbarVisible(true);
+  }
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/user`, {
       method: "GET",
@@ -208,13 +217,21 @@ const AccountsOverview = () => {
                   <p className="font-bold text-xs text-gray-400 mt-2">
                     {groupLabel}
                   </p>
-                  <ul className="p-0 m-0">
+                  <ul>
                     {accounts.map((account: Account) => (
                       <li className="mt-1 mb-1" key={account.Guid}>
                         <NavLink
                           to={`/accounts/${account.Guid}`}
                           id="accountList"
-                          onClick={() => !matches && setNavbarVisible(false)}
+                          onClick={() => {
+                            if (matches) {
+                              return;
+                            }
+
+                            setNavbarVisible(false);
+
+                            window.history.pushState({}, "", `/accounts`);
+                          }}
                           className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
                         >
                           <div className="flex items-center min-h-[3em] mx-2 w-full">
@@ -322,9 +339,9 @@ const AccountsOverview = () => {
               <svg
                 className="h-8 w-8"
                 aria-hidden="true"
+                viewBox="0 -960 960 960"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="#fff"
-                viewBox="0 -960 960 960"
               >
                 <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
               </svg>

@@ -150,7 +150,7 @@ const accountEdit = () => {
             value={password}
             id="password"
             name="password"
-            className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
+            className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
             placeholder="•••••••"
           />
           <button type="button">
@@ -175,10 +175,10 @@ const accountEdit = () => {
           placeholder="Here are some notes about the account."
         ></textarea>
       </div>
-      <div className="mt-4 flex flex-row">
+      <div className="mt-4 flex justify-end gap-4">
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className=" justify-center py-2 px-7 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           Save
         </button>
@@ -187,7 +187,7 @@ const accountEdit = () => {
           onClick={() => {
             window.location.replace(`/accounts/${accountId}`);
           }}
-          className="w-full ml-10 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="  flex justify-center py-2 px-7 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
         >
           Cancel
         </button>
