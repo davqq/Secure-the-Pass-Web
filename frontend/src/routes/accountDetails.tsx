@@ -122,8 +122,8 @@ const accountDetails = () => {
         {account?.Password && (
           <div className="p-2.5 overflow-auto">
             <div className="text-sm text-headline">password</div>
-            <div className="flex flex-grow">
-              <div className="text-white overflow-x-scroll">
+            <div className="flex w-full justify-between">
+              <div className="text-white overflow-x-auto">
                 {showPassword
                   ? account.Password
                   : "•".repeat(account.Password.length)}
