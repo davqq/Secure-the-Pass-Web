@@ -42,15 +42,6 @@ const AccountsOverview = () => {
     setMatches(e.matches);
   };
 
-  // check url and set navbarVisible to false if it contains /accounts/
-  if (
-    !matches &&
-    !navbarVisible &&
-    !window.location.href.endsWith("/accounts")
-  ) {
-    setNavbarVisible(true);
-  }
-
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/user`, {
       method: "GET",
