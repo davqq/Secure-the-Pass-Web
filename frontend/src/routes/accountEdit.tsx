@@ -8,7 +8,6 @@ const accountEdit = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [website, setWebsite] = useState("");
   const [notes, setNotes] = useState("");
   const [url, setUrl] = useState("");
 
@@ -75,20 +74,17 @@ const accountEdit = () => {
         <h1 className="block text-4xl font-medium text-white">Edit Account</h1>
       </div>
       <div className="mt-4">
-        <label
-          htmlFor="website"
-          className="block text-sm font-medium text-white"
-        >
-          Website
+        <label htmlFor="Url" className="block text-sm font-medium text-white">
+          Url
         </label>
         <input
           type="text"
-          content={website}
-          onChange={(e) => setWebsite(e.target.value)}
-          id="website"
-          name="website"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          id="url"
+          name="url"
           className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400  focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
-          placeholder="Davq.de"
+          placeholder="www.davq.de"
         />
       </div>
       <div className="mt-4">
@@ -106,20 +102,6 @@ const accountEdit = () => {
           name="username"
           className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400  focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
           placeholder="David"
-        />
-      </div>
-      <div className="mt-4">
-        <label htmlFor="Url" className="block text-sm font-medium text-white">
-          Url
-        </label>
-        <input
-          type="text"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          id="url"
-          name="url"
-          className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-400  focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
-          placeholder="www.davq.de"
         />
       </div>
       <div className="mt-4">
@@ -171,26 +153,47 @@ const accountEdit = () => {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           name="notes"
-          className="appearance-none block w-full px-3 py-2 border min-h-[10rem] border-gray-700 rounded-md shadow-sm placeholder-gray-400  focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
+          className="appearance-none block w-full px-3 py-2 border min-h-[10rem] border-gray-700 rounded-md shadow-sm placeholder-gray-400 sm:text-sm text-white bg-gray-700"
           placeholder="Here are some notes about the account."
         ></textarea>
       </div>
-      <div className="mt-4 flex justify-end gap-4">
+      <div className="flex justify-between mt-4">
         <button
-          type="submit"
-          className=" justify-center py-2 px-7 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Save
-        </button>
-        <button
-          type="reset"
+          type="button"
           onClick={() => {
-            window.location.replace(`/accounts/${accountId}`);
+            fetch(import.meta.env.VITE_API_URL + "/accounts", {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `${getCookie("jwt")}`,
+              },
+              body: JSON.stringify({
+                Guid: accountId,
+              }),
+            });
+            window.location.replace(`/accounts`);
           }}
-          className="  flex justify-center py-2 px-7 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="py-2 px-7 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600"
         >
-          Cancel
+          Delete
         </button>
+        <div className="flex justify-end gap-4">
+          <button
+            type="submit"
+            className="py-2 px-7 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600"
+          >
+            Save
+          </button>
+          <button
+            type="reset"
+            onClick={() => {
+              window.location.replace(`/accounts/${accountId}`);
+            }}
+            className="py-2 px-7 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-500 hover:bg-neutral-600"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </form>
   );

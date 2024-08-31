@@ -5,7 +5,6 @@ const NewAccount = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [website, setWebsite] = useState("");
   const [notes, setNotes] = useState("");
   const [url, setUrl] = useState("");
 
@@ -34,7 +33,6 @@ const NewAccount = () => {
         Username: username,
         Email: email,
         Password: password,
-        Website: website,
         Notes: notes,
         Url: url,
       }),
@@ -50,23 +48,6 @@ const NewAccount = () => {
     >
       <div className="justify-center">
         <h1 className="block text-4xl font-medium text-white">New Account</h1>
-      </div>
-      <div className="mt-4">
-        <label
-          htmlFor="website"
-          className="block text-sm font-medium text-white"
-        >
-          Website
-        </label>
-        <input
-          type="text"
-          required={true}
-          onChange={(e) => setWebsite(e.target.value)}
-          id="website"
-          name="website"
-          className="appearance-none block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm placeholder-gray-4000 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white bg-gray-700"
-          placeholder="Website"
-        />
       </div>
       <div className="mt-4">
         <label

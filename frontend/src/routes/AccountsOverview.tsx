@@ -158,7 +158,7 @@ const AccountsOverview = () => {
   return (
     <div className="flex w-full bg-[#111827] justify-center">
       {(matches || navbarVisible) && (
-        <div className="flex flex-col w-100 border-solid border-gray-600 border-r bg-gray-900 max-[640px]:w-full">
+        <div className="flex flex-col w-96 border-solid border-gray-600 border-r bg-gray-900 max-[640px]:w-full">
           <div className="flex items-center px-8 gap-2 py-4 border-b border-gray-600 ">
             <form
               id="search-form"
@@ -223,17 +223,17 @@ const AccountsOverview = () => {
 
                             window.history.pushState({}, "", `/accounts`);
                           }}
-                          className="flex items-center justify-between p-2 rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
+                          className="flex items-center justify-between rounded-xl text-white no-underline gap-4 hover:bg-gray-600"
                         >
-                          <div className="flex items-center min-h-[3em] mx-2 w-full">
-                            <div className="flex flex-col overflow-hidden whitespace-nowrap">
+                          <div className="flex items-center min-h-[3em] justify-between m-2 w-full">
+                            <div className="flex flex-col overflow-hidden mr-3 whitespace-nowrap">
                               {account.Url && <span>{account.Url}</span>}
 
                               <span className="text-xs text-gray-400">
                                 {account.Email}
                               </span>
                             </div>
-                            <span className="text-[#eeb004] text-base flex ml-auto mr-3">
+                            <span className="text-[#eeb004] ">
                               {account.Favorite && "★"}
                             </span>
                           </div>
