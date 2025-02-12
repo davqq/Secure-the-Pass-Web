@@ -31,11 +31,15 @@ const login = async ({
       }
     );
 
-    const bearerHeader = {
-      Authorization: `Bearer ${token}`,
-    };
+    res.cookie("session", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
 
-    handleSuccess({ success: "Login successful" }, 200, res, bearerHeader);
+
+    handleSuccess({ success: "Login successful" }, 200, res);
   } catch (err) {
     handleError(err, res);
   }

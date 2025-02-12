@@ -5,29 +5,29 @@ const formatUpdatedAt = (updatedAt: string) => {
   const timeDiff = today.getTime() - updated.getTime();
   const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-  if (daysDiff === 0) {
-    return "Today";
+  if (updated.getFullYear() !== today.getFullYear()) {
+    return updated.getFullYear().toString();
+  } else if (daysDiff === 1) {
+    return 'Today';
   } else if (daysDiff <= 7) {
-    return `Previous ${daysDiff} Days`;
-  } else if (daysDiff <= 30) {
+    return `Past 7 days`;
+  } else {
     const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ];
     const monthIndex = updated.getMonth();
     return monthNames[monthIndex];
-  } else {
-    return updatedAt;
   }
 };
 
