@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AccountForm from '../../component/AccountForm';
-import { Account } from '../../types/Account';
+import Account from '../../types/Account';
 import accountService from '../../services/accountService';
 
 const AccountEdit = () => {
@@ -10,7 +10,7 @@ const AccountEdit = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    accountService.getAccount(accountId || '0').then((result) => {
+    accountService.getAccount(accountId || '').then((result) => {
       setAccount(result);
     });
   }, [accountId]);

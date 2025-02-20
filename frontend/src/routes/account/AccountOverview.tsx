@@ -1,17 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
-import { Account } from '../../types/Account';
+import Account from '../../types/Account';
 import Navbar from '../../component/Navbar';
 import AccountList from '../../component/AccountList';
 import Layout from '../../layouts/Layout';
 import accountService from '../../services/accountService';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet, useMatch, useSearchParams } from 'react-router-dom';
 import formatUpdatedAt from '../../utils/formattedDate';
+import { useMediaQuery } from 'react-responsive';
 
 const AccountsOverview = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery] = useSearchParams();
   const controllerRef = useRef<AbortController | null>();
+  const isDetailPage = useMatch({
+    path: '/accounts/:id',
+    end: false,
+  });
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   useEffect(() => {
     setLoading(true);
@@ -42,13 +48,17 @@ const AccountsOverview = () => {
 
   return (
     <Layout>
-      <div className="flex w-full max-w-sm flex-col border-r border-gray-700">
-        <Navbar loading={loading} />
-        <AccountList groupedAccounts={groupedAccounts} />
-      </div>
-      <div className="mx-10 mt-20 w-full">
-        <Outlet />
-      </div>
+      {(!isDetailPage || !isMobile) && (
+        <div className="flex w-full flex-col border-r border-gray-700 md:max-w-sm">
+          <Navbar loading={loading} />
+          <AccountList groupedAccounts={groupedAccounts} />
+        </div>
+      )}
+      {(isDetailPage || !isMobile) && (
+        <div className="mx-5 mt-10 w-full md:mx-10 md:mt-20">
+          <Outlet />
+        </div>
+      )}
     </Layout>
   );
 };

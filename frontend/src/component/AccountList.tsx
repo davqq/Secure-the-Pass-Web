@@ -1,5 +1,5 @@
 import AccountListItem from './AccountListItem';
-import { Account } from '../types/Account';
+import Account from '../types/Account';
 import AccountGroupLabel from './AccountGroupLabel';
 
 interface AccountListProps {

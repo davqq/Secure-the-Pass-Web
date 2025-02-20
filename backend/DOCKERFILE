@@ -1,0 +1,23 @@
+# Basis-Image für Node.js
+FROM node:18
+
+# Setze das Arbeitsverzeichnis
+WORKDIR /
+
+# Kopiere die package.json und package-lock.json
+COPY package*.json ./
+
+# Installiere die Abhängigkeiten
+RUN npm install
+
+# Kopiere den Rest des Codes
+COPY . .
+
+# Baue TypeScript Code
+RUN npm run build
+
+# Exponiere Port 3000
+EXPOSE 3000
+
+# Starte die Anwendung
+CMD ["npm", "start"]

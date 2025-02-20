@@ -26,7 +26,6 @@ const updateUser = async ({
     request.input("Username", sql.VarChar, user.Username);
     request.input("Guid", sql.VarChar, user.Guid);
 
-    console.log(user);
     await request.query(
       `UPDATE [dbo].[User] SET Username = @Username, Email = @Email, Password = @Password WHERE Guid = @Guid`
     );

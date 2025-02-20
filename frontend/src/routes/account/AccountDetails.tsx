@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Account } from '../../types/Account';
+import Account from '../../types/Account';
 import eyeOpen from '@/assets/eyeClose.svg';
 import eyeClosed from '@/assets/eyeOpen.svg';
 import edit from '@/assets/edit.svg';
 import accountService from '../../services/accountService';
+import Button from '../../component/Button';
+import Favorite from '../../component/Favorite';
 
 const AccountDetails = () => {
   const { accountId } = useParams();
@@ -65,19 +67,23 @@ const AccountDetails = () => {
 
   return (
     <div className="flex h-full w-full flex-col flex-wrap items-start justify-start">
-      <div className="flex w-full flex-wrap">
-        <h1 className="m-4 text-3xl font-[700] text-white">{account?.Url}</h1>
-        <Favorite {...account} />
-        <button
-          className="text-md ml-auto flex h-fit self-center rounded-md border border-transparent bg-blue-500 px-4 py-2 font-medium text-white shadow-sm hover:bg-blue-600"
+      <div className="flex w-full items-center justify-between">
+        <div className="flex gap-3">
+          <h1 className="overflow-auto text-ellipsis text-2xl font-bold text-white">
+            {account?.Url}
+          </h1>
+          <Favorite {...account} />
+        </div>
+        <Button
+          color="blue"
           onClick={() => {
             navigate(`/accounts/${accountId}/edit`);
           }}
         >
-          <img className="h-5 w-5 self-center" src={edit} alt="Logo" />
+          <img className="h-5 w-5 self-center" src={edit} alt="edit" />
 
           <span className="ml-1.5">Edit</span>
-        </button>
+        </Button>
       </div>
       <br />
       <div className="grid w-full grid-flow-row rounded-xl border border-solid border-gray-600">
@@ -120,13 +126,13 @@ const AccountDetails = () => {
       </div>
       {account.Url && (
         <div className="flex flex-col overflow-hidden p-2.5">
-          <p className="text-sm text-headline">website</p>
+          <p className="text-sm text-blue-500">website</p>
           <p className="text-white">{account.Url}</p>
         </div>
       )}
       {account.Notes && (
         <div className="flex w-full flex-col overflow-hidden p-2.5">
-          <p className="text-sm text-headline">notes</p>
+          <p className="text-sm text-blue-500">notes</p>
           <p className="text-white">{account.Notes}</p>
         </div>
       )}
@@ -144,31 +150,5 @@ const AccountDetails = () => {
     </div>
   );
 };
-
-function Favorite(account: Account) {
-  const [favorite, setFavorite] = useState(account?.Favorite);
-
-  return (
-    <div className="mt-1 flex items-center">
-      <button
-        name="favorite"
-        className={`border-none p-0 text-[1.5rem] font-[400] ${
-          favorite ? 'text-amber-300' : 'text-gray-400 hover:text-amber-300'
-        }`}
-        aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
-        onClick={() => {
-          accountService.editAccount({
-            ...account,
-            Favorite: !favorite,
-          });
-
-          setFavorite(!favorite);
-        }}
-      >
-        {favorite ? '★' : '☆'}
-      </button>
-    </div>
-  );
-}
 
 export default AccountDetails;

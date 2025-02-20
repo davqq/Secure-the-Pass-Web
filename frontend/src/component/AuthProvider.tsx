@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { User } from '../types/User';
+import User from '../types/User';
 import authService from '../services/authService';
 
 interface AuthContextType {
@@ -16,6 +16,20 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const checkTokenValidity = async (signout: () => Promise<void>) => {
+  try {
+    const response = await authService.checkSession();
+
+    if (!response.ok) {
+      console.log('Session abgelaufen. Benutzer wird ausgeloggt.');
+      signout();
+    }
+  } catch (error) {
+    console.error('Fehler bei der Session-Überprüfung:', error);
+    signout();
+  }
+};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -29,24 +43,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     setLoading(false);
     // Alle 60 Sekunden überprüfen, ob das Token noch gültig ist
-    const interval = setInterval(checkTokenValidity, 60000);
+    const interval = setInterval(checkTokenValidity, 60000, signout);
 
     return () => clearInterval(interval);
   }, []);
-
-  const checkTokenValidity = async () => {
-    try {
-      const response = await authService.checkSession();
-
-      if (!response.ok) {
-        console.log('Session abgelaufen. Benutzer wird ausgeloggt.');
-        signout();
-      }
-    } catch (error) {
-      console.error('Fehler bei der Session-Überprüfung:', error);
-      signout();
-    }
-  };
 
   const signin = async (email: string, password: string) => {
     setLoading(true);

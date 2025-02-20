@@ -25,7 +25,7 @@ const Button: React.FC<Props> = ({
   props,
 }) => {
   let baseClassName =
-    'py-2 px-6 rounded-md shadow-sm text-sm font-medium text-white ';
+    'py-2 px-4 flex justify-center rounded-md content-center shadow-sm text-sm text-center font-medium text-white ';
 
   if (color === 'blue') {
     baseClassName += 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700';

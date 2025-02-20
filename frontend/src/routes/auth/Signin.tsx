@@ -31,13 +31,13 @@ function LoginPage() {
     <Layout className="flex items-center">
       <div className="mx-auto w-full max-w-md">
         <div className="text-center">
-          <a href="/accounts">
+          <Link href="/accounts">
             <img
               className="mx-auto h-12 w-auto text-white"
               src={logo}
               alt="Logo"
             />
-          </a>
+          </Link>
           <h2 className="mt-6 text-center text-3xl font-bold text-white">
             Sign in to your account
           </h2>

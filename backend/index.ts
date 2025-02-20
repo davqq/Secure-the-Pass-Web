@@ -6,8 +6,6 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import login from "./functions/login/login";
 import { User } from "./functions/user/createUser";
-import deleteUser from "./functions/user/deleteUser";
-import updateUser from "./functions/user/updateUser";
 import getAccounts, { Account } from "./functions/account/getAccounts";
 import getAccount from "./functions/account/getAccount";
 import deleteAccount from "./functions/account/deleteAccounts";
@@ -59,9 +57,7 @@ const authMiddleware = (req: any, res: Response, next: NextFunction) => {
 
   jwt.verify(token, process.env.JWT as string, (err: any, user: any) => {
     if (err) {
-      return res
-        .status(403)
-        .json({ message: "Token expired" });
+      return res.status(403).json({ message: "Token expired" });
     }
 
     req.user = user; // Benutzerinfos speichern
@@ -74,8 +70,8 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/logout", async (req, res) => {
-  res.clearCookie('session', { path: '/' });
-  res.status(200).json({ message: 'Erfolgreich ausgeloggt' });
+  res.clearCookie("session", { path: "/" });
+  res.status(200).json({ message: "Erfolgreich ausgeloggt" });
 });
 
 app.post("/register", async (req, res) => {

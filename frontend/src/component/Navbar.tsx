@@ -38,12 +38,7 @@ const Navbar = ({ loading }: NavbarProps) => {
             className={`h-4 w-4 bg-searchspinner ${loading ? 'animate-spin' : 'animate-none'}`}
           />
         </div>
-        <Button
-          onClick={handleNew}
-          color="blue"
-          form="search-form"
-          className="px-4"
-        >
+        <Button onClick={handleNew} color="blue" form="search-form">
           New
         </Button>
       </form>

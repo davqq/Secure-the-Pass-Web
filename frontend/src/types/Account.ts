@@ -1,4 +1,4 @@
-export interface Account {
+interface Account {
   Guid: string;
   Username: string;
   Email: string;
@@ -9,3 +9,5 @@ export interface Account {
   UpdatedAt: Date;
   Favorite: boolean;
 }
+
+export default Account;
